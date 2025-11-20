@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Warborne Above Ashes – Support Planner</title>
+  <style>
+    :root {
+      --bg: #0c1016;
+      --bg-alt: #141922;
+      --border: #2b3340;
+      --accent: #28b7ff;
+      --accent-soft: #163347;
+      --text: #f0f4ff;
+      --text-muted: #9ba3b5;
+      --good: #34d399;
+      --bad: #f87171;
+      --warn: #eab308;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: radial-gradient(circle at top, #182235 0, #050712 55%);
+      color: var(--text);
+    }
+
+    h1 {
+      margin: 0 0 4px;
+      font-size: 22px;
+      letter-spacing: 0.03em;
+    }
+
+    h2 {
+      margin: 24px 0 8px;
+      font-size: 16px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    p {
+      margin: 0 0 8px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .card {
+      background: linear-gradient(135deg, #131926, #0b0f17);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      padding: 16px 16px 12px;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.5), 0 18px 50px rgba(0,0,0,0.7);
+    }
+
+    .layout {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .drifter-grid {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 13px;
+    }
+
+    .drifter-grid th,
+    .drifter-grid td {
+      border: 1px solid var(--border);
+      padding: 6px 8px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .drifter-grid th {
+      background: #141b27;
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .drifter-grid td.label {
+      background: #10141e;
+      width: 90px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .drifter-select {
+      width: 100%;
+      background: #050912;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 4px 6px;
+      font-size: 13px;
+    }
+
+    .drifter-select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent-soft);
+    }
+
+    .drifter-select-wrap {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .clear-btn {
+      background: transparent;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0 6px;
+      font-size: 11px;
+      line-height: 18px;
+    }
+
+    .clear-btn:hover {
+      border-color: #64748b;
+      color: #e5e7eb;
+      background: #020617;
+    }
+
+    .buff {
+      color: var(--good);
+    }
+
+    .debuff {
+      color: var(--bad);
+    }
+
+    .muted {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .table-small {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 12px;
+    }
+
+    .table-small th,
+    .table-small td {
+      border: 1px solid var(--border);
+      padding: 5px 6px;
+      text-align: left;
+    }
+
+    .table-small th {
+      background: #141b27;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 6px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .pill.active {
+      background: rgba(22, 163, 74, 0.18);
+      color: var(--good);
+      border: 1px solid rgba(34, 197, 94, 0.8);
+    }
+
+    .pill.inactive {
+      background: rgba(148, 163, 184, 0.12);
+      color: var(--text-muted);
+      border: 1px solid rgba(75, 85, 99, 0.8);
+    }
+
+    .pill-qty {
+      background: rgba(56, 189, 248, 0.1);
+      color: #7dd3fc;
+      border: 1px solid rgba(56, 189, 248, 0.7);
+    }
+
+    .pill-cat {
+      background: rgba(129, 140, 248, 0.15);
+      color: #a5b4fc;
+      border: 1px solid rgba(129, 140, 248, 0.9);
+    }
+
+    .comp-member {
+      white-space: nowrap;
+    }
+
+    .comp-member + .comp-member::before {
+      content: ", ";
+      color: inherit;
+    }
+
+    .comp-member.selected {
+      color: var(--good);
+      font-weight: 600;
+    }
+
+    .undesirable-name {
+      color: var(--bad);
+    }
+
+    .companion-row-active {
+      background: rgba(34, 197, 94, 0.15);
+    }
+
+    .incompatible-column {
+      background: rgba(234, 179, 8, 0.18);
+    }
+
+    .footer-note {
+      margin-top: 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .summary-block {
+      margin-top: 8px;
+      padding-top: 4px;
+      border-top: 1px solid var(--border);
+    }
+
+    .summary-title {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .summary-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+      font-size: 12px;
+    }
+
+    .summary-list li {
+      margin-bottom: 2px;
+    }
+
+    .drifter-table-row.active {
+      background: rgba(34, 197, 94, 0.15);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 999px;
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    .badge-max {
+      border-color: rgba(34, 197, 94, 0.9);
+      color: var(--good);
+      background: rgba(22, 163, 74, 0.18);
+    }
+
+    .badge-partial {
+      border-color: rgba(234, 179, 8, 0.9);
+      color: var(--warn);
+      background: rgba(253, 224, 71, 0.08);
+    }
+
+    .badge-unknown {
+      border-color: rgba(148, 163, 184, 0.9);
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.6);
+    }
+
+    .sort-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 6px 0 4px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .sort-button {
+      background: transparent;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 1px 8px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .sort-button.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(56, 189, 248, 0.12);
+    }
+
+    code {
+      font-size: 11px;
+      background: #020617;
+      padding: 2px 4px;
+      border-radius: 3px;
+      border: 1px solid #1e293b;
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <div class="card">
+      <h1>Support Station Planner</h1>
+      <p>
+        Selecione até cinco Drifters para o Support Station. Os bônus individuais aparecem abaixo
+        e a ativação dos Companions é calculada automaticamente.
+      </p>
+
+      <table class="drifter-grid">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Drifter 1</th>
+            <th>Drifter 2</th>
+            <th>Drifter 3</th>
+            <th>Drifter 4</th>
+            <th>Drifter 5</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label">Drifter</td>
+            <td>
+              <div class="drifter-select-wrap">
+                <select id="slot-1" class="drifter-select"></select>
+                <button type="button" class="clear-btn" onclick="clearSlot(1)">×</button>
+              </div>
+            </td>
+            <td>
+              <div class="drifter-select-wrap">
+                <select id="slot-2" class="drifter-select"></select>
+                <button type="button" class="clear-btn" onclick="clearSlot(2)">×</button>
+              </div>
+            </td>
+            <td>
+              <div class="drifter-select-wrap">
+                <select id="slot-3" class="drifter-select"></select>
+                <button type="button" class="clear-btn" onclick="clearSlot(3)">×</button>
+              </div>
+            </td>
+            <td>
+              <div class="drifter-select-wrap">
+                <select id="slot-4" class="drifter-select"></select>
+                <button type="button" class="clear-btn" onclick="clearSlot(4)">×</button>
+              </div>
+            </td>
+            <td>
+              <div class="drifter-select-wrap">
+                <select id="slot-5" class="drifter-select"></select>
+                <button type="button" class="clear-btn" onclick="clearSlot(5)">×</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="label">Buff</td>
+            <td id="buff-1" class="buff muted">–</td>
+            <td id="buff-2" class="buff muted">–</td>
+            <td id="buff-3" class="buff muted">–</td>
+            <td id="buff-4" class="buff muted">–</td>
+            <td id="buff-5" class="buff muted">–</td>
+          </tr>
+          <tr>
+            <td class="label">Debuff</td>
+            <td id="debuff-1" class="debuff muted">–</td>
+            <td id="debuff-2" class="debuff muted">–</td>
+            <td id="debuff-3" class="debuff muted">–</td>
+            <td id="debuff-4" class="debuff muted">–</td>
+            <td id="debuff-5" class="debuff muted">–</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="margin-top:8px;">
+        <button type="button" onclick="clearAllSelections()" style="background:#1f2933;border:1px solid #4b5563;color:#e5e7eb;border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;">
+          Limpar todos
+        </button>
+      </div>
+
+      <div class="footer-note">
+        Para mudar os dados, edite o array <code>drifters</code> dentro deste arquivo
+        (<code>warborne_planner.html</code>).
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Companions / Links</h2>
+      <p>
+        Os efeitos são ativados quando o número necessário de Drifters do grupo está definido nos
+        cinco slots acima.
+      </p>
+
+      <table class="table-small" id="companion-table">
+        <thead>
+          <tr>
+            <th>Bonus</th>
+            <th>Qtd</th>
+            <th>Grupo</th>
+            <th>Categoria</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- preenchido via JS -->
+        </tbody>
+      </table>
+
+      <div class="footer-note">
+        Para adicionar mais combinações, edite o array <code>companions</code> no final do arquivo.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Resumo dos Bônus Ativos</h2>
+      <p>
+        Visão geral de todos os efeitos atualmente recebidos pelos cinco Drifters escolhidos e
+        pelos Companions ativados.
+      </p>
+
+      <div class="summary-block">
+        <div class="summary-title">Support Station (Drifters)</div>
+        <ul id="summary-drifters" class="summary-list"></ul>
+      </div>
+
+      <div class="summary-block">
+        <div class="summary-title">Companions Ativos</div>
+        <ul id="summary-companions" class="summary-list"></ul>
+      </div>
+
+      <div class="summary-block">
+        <div class="summary-title">Totais combinados</div>
+        <ul id="summary-totals" class="summary-list"></ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Lista de Drifters (Suporte)</h2>
+      <p>
+        Consulta rápida de todos os Drifters, mostrando Tier, nível e bônus individuais de suporte.
+        Quando um Drifter é escolhido em cima, a linha correspondente aqui fica destacada em verde.
+      </p>
+
+      <div class="sort-controls">
+        <span>Ordenar por:</span>
+        <button type="button" class="sort-button active" data-sort="name">Nome</button>
+        <button type="button" class="sort-button" data-sort="status">Status</button>
+      </div>
+
+      <table class="table-small" id="drifter-table">
+        <thead>
+          <tr>
+            <th>Drifter</th>
+            <th>Tier</th>
+            <th>LV</th>
+            <th>Buff</th>
+            <th>Debuff</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- preenchido via JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // Drifters cujo bônus de suporte é utilitário/fraco (ex.: XP, gathering).
+    // Usado apenas para sinalizar visualmente no select/tabela.
+    const undesirableDrifters = [
+      "Astral Magus",
+      "Blade",
+      "Draknor",
+      "Illusarch",
+      "Mole",
+      "Revelation",
+      "Sanguor"
+    ];
+
+    // Dados de Drifters – buff/debuff extraídos dos prints do Support Station.
+    // Se precisar ajustar valores futuros (tier máximo etc.), altere aqui.
+    const drifters = [
+      // maxed: true quando temos print claro de LV 50 / TIER XI.
+      { name: "Vryssia", tier: "XI", level: 50, maxed: true, buff: "Dodge Rate +7.60%", debuff: "Basic Attack Bonus -4.75%" },
+      { name: "Sanguor", tier: "XI", level: 50, maxed: true, buff: "Gathering Rate Bonus +3.80%", debuff: "" },
+      { name: "Astral Magus", tier: "XI", level: 50, maxed: true, buff: "Gathering Experience Bonus +3.80%", debuff: "" },
+      { name: "Solenne", tier: "XI", level: 50, maxed: true, buff: "Healing Bonus +5.15%", debuff: "Healing Received -3.43%" },
+      { name: "Hive Queen", tier: "XI", level: 50, maxed: true, buff: "Magic Resistance +8.28%", debuff: "Magic Damage Bonus -3.31%" },
+      { name: "Veska", tier: "XI", level: 50, maxed: true, buff: "Damage Resistance (PvP) +2.85%", debuff: "Damage Bonus (PvP) -1.90%" },
+      { name: "Zero", tier: "XI", level: 50, maxed: true, buff: "Basic Attack Bonus +4.75%", debuff: "Critical Rate -2.85%" },
+      { name: "Varnax", tier: "XI", level: 50, maxed: true, buff: "Damage Bonus (PvE) +5.70%", debuff: "Damage Resistance (PvE) -3.80%" },
+      { name: "Illusarch", tier: "XI", level: 50, maxed: true, buff: "Experience Bonus +2.81%", debuff: "" },
+      { name: "Kyra", tier: "XI", level: 50, maxed: true, buff: "Armor +9.50%", debuff: "Physical Damage Bonus -3.80%" },
+      { name: "Nyxa", tier: "XI", level: 50, maxed: true, buff: "Physical Damage Bonus +5.70%", debuff: "Armor -5.70%" },
+      { name: "Overdrive", tier: "XI", level: 50, maxed: true, buff: "Basic Attack Critical Rate +9.50%", debuff: "Basic Attack Critical Damage Multiplier -7.60%" },
+      { name: "Durion", tier: "XI", level: 50, maxed: true, buff: "Max HP Bonus +5.70%", debuff: "Max MP Bonus -5.70%" },
+      { name: "Tayana", tier: "XI", level: 50, maxed: true, buff: "Damage Resistance +5.70%", debuff: "Damage Boost -1.90%" },
+      { name: "Elektrix", tier: "XI", level: 50, maxed: true, buff: "Attack Speed +9.50%", debuff: "Basic Attack Bonus -4.75%" },
+      { name: "Auri", tier: "XI", level: 50, maxed: true, buff: "Healing Received +5.31%", debuff: "Healing Bonus -3.54%" },
+      { name: "Mole", tier: "VIII", level: 30, maxed: false, buff: "Carry Weight +52.5", debuff: "" },
+      { name: "Sirokos", tier: "XI", level: 50, maxed: true, buff: "Base Control Resistance +5.70%", debuff: "Damage Boost -1.90%" },
+      { name: "Shadowseer", tier: "XI", level: 50, maxed: true, buff: "Magic Damage Bonus +5.70%", debuff: "Magic Resistance -3.23%" },
+      { name: "Izzy", tier: "?", level: null, maxed: false, buff: "Control Boost (PvP) +3.23%", debuff: "Damage Resistance -1.07%" },
+      { name: "Aegis", tier: "XI", level: 50, maxed: true, buff: "Damage Resistance (PvE) +5.70%", debuff: "Damage Bonus (PvE) -3.80%" },
+      { name: "Moonveil", tier: "XI", level: 50, maxed: true, buff: "Damage Bonus (PvP) +2.85%", debuff: "Damage Resistance (PvP) -1.90%" },
+      { name: "Raven", tier: "XI", level: 50, maxed: true, buff: "Max MP Bonus +5.38%", debuff: "Max HP Bonus -2.15%" },
+      { name: "Draknor", tier: "XI", level: 50, maxed: true, buff: "Gathering Yield Bonus +3.80%", debuff: "" },
+      { name: "Mad Barrel", tier: "XI", level: 50, maxed: true, buff: "Ranged Damage +3.41%", debuff: "Damage Resistance -1.90%" },
+      { name: "Umbra", tier: "XI", level: 50, maxed: true, buff: "Melee Damage +3.42%", debuff: "Damage Resistance -1.90%" },
+      { name: "Blade", tier: "XI", level: 50, maxed: true, buff: "Starfall Token Bonus +3.80%", debuff: "" },
+      { name: "Helix", tier: "XI", level: 50, maxed: true, buff: "Skill Cooldown Rate +2.85%", debuff: "Skill Bonus -1.90%" },
+      { name: "Revelation", tier: "?", level: null, maxed: false, buff: "World Loot Bonus +2.15%", debuff: "" },
+      { name: "Vire", tier: "?", level: null, maxed: false, buff: "Healing Bonus +3.23%", debuff: "Damage Boost -1.07%" }
+    ];
+
+    // Companions / Links – todos os da planilha.
+    const companions = [
+      {
+        name: "Healing Circle",
+        bonus: "Increases Healing Effect by 4%",
+        required: 2,
+        members: ["Solenne", "Moonveil", "Revelation", "Helix"],
+        category: "Healer"
+      },
+      {
+        name: "Sharpshooters",
+        bonus: "Increases Ranged Damage by 4%",
+        required: 2,
+        members: ["Shadowseer", "Raven", "Veska", "Hive Queen"],
+        category: "DPS"
+      },
+      {
+        name: "Quick Thinkers",
+        bonus: "Increases Skill Cooldown Speed by 2.5%",
+        required: 2,
+        members: ["Astral Magus", "Shadowseer", "Mad Barrel"],
+        category: "Healer"
+      },
+      {
+        name: "Bulwark",
+        bonus: "Damage Resistance Enhanced by 2%",
+        required: 2,
+        members: ["Durion", "Sirokos", "Izzy", "Auri"],
+        category: "Tank"
+      },
+      {
+        name: "Crowd Control",
+        bonus: "Increases Crowd Control Resistance by 5",
+        required: 2,
+        members: ["Kyra", "Varnax", "Aegis", "Draknor"],
+        category: "Tank"
+      },
+      {
+        name: "Task Force",
+        bonus: "Increases Melee Damage by 4%",
+        required: 2,
+        members: ["Elektrix", "Vryssia", "Illusarch", "Overdrive"],
+        category: "DPS"
+      },
+      {
+        name: "Force of Nature",
+        bonus: "Increases Critical Damage of Basic Attack by 8%",
+        required: 2,
+        members: ["Nyxa", "Vryssia", "Umbra", "Blade"],
+        category: "DPS"
+      },
+      {
+        name: "Arcane Minds",
+        bonus: "Increases Intelligence by 10",
+        required: 3,
+        members: ["Izzy", "Zero", "Moonveil"],
+        category: "Healer"
+      },
+      {
+        name: "Vitality Core",
+        bonus: "Max HP increased by 4%",
+        required: 3,
+        members: ["Kyra", "Sanguor", "Hive Queen", "Tayana"],
+        category: "Tank"
+      },
+      {
+        name: "Skill Arts",
+        bonus: "Enhancement to Skill Damage and Healing by 2.5%",
+        required: 3,
+        members: ["Varnax", "Elektrix", "Solenne"],
+        category: "Healer"
+      },
+      {
+        name: "Brute Force",
+        bonus: "Enhances Strength by 10",
+        required: 3,
+        members: ["Sirokos", "Illusarch", "Veska"],
+        category: "Tank"
+      },
+      {
+        name: "Fleetfoot",
+        bonus: "Boosts Agility by 10",
+        required: 3,
+        members: ["Aegis", "Overdrive", "Raven"],
+        category: "DPS"
+      },
+      {
+        name: "Deep Recovery",
+        bonus: "Increases Healing Received by 2.5%",
+        required: 3,
+        members: ["Draknor", "Sanguor", "Vire"],
+        category: "Tank"
+      }
+    ];
+
+    let currentDrifterEffects = [];
+    let currentActiveCompanions = [];
+    let drifterSortMode = "name";
+    let slotEffects = {};
+
+    function parseEffectStr(effectStr) {
+      if (!effectStr || effectStr === "—") return null;
+      const m = effectStr.match(/^(.*)\s([+-]?\d+(?:\.\d+)?)(%?)$/);
+      if (!m) return null;
+      const label = m[1].trim();
+      const value = parseFloat(m[2]);
+      if (!Number.isFinite(value)) return null;
+      const unit = m[3] || "";
+      const key = `${label} ${unit}`;
+      return { key, value, label, unit };
+    }
+
+    function initDrifterSelects() {
+      const selects = [];
+      const sortedByName = [...drifters].sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+      for (let i = 1; i <= 5; i++) {
+        const sel = document.getElementById(`slot-${i}`);
+        selects.push(sel);
+        // primeira opção vazia
+        const empty = document.createElement("option");
+        empty.value = "";
+        empty.textContent = "—";
+        sel.appendChild(empty);
+        // drifters
+        for (const d of sortedByName) {
+          const opt = document.createElement("option");
+          opt.value = d.name;
+          opt.textContent = d.name;
+          if (undesirableDrifters.includes(d.name)) {
+            opt.classList.add("undesirable-name");
+            // aplicar cor diretamente para garantir em opções de select
+            opt.style.color = "#f87171";
+          }
+          sel.appendChild(opt);
+        }
+        sel.addEventListener("change", () => {
+          updateSelectOptions();
+          updateBuffs();
+          updateCompanions();
+        });
+      }
+    }
+
+    // Impede escolher o mesmo Drifter em mais de um slot.
+    function updateSelectOptions() {
+      const selects = [];
+      const selectedByIndex = {};
+
+      for (let i = 1; i <= 5; i++) {
+        const sel = document.getElementById(`slot-${i}`);
+        selects.push(sel);
+        selectedByIndex[i] = sel.value || "";
+      }
+
+      const used = new Set(
+        Object.values(selectedByIndex).filter((v) => v && v.length > 0)
+      );
+
+      selects.forEach((sel, idx) => {
+        const ownValue = selectedByIndex[idx + 1];
+        for (const opt of sel.options) {
+          if (!opt.value) {
+            opt.disabled = false;
+            continue;
+          }
+          // A opção só é desabilitada se já estiver usada em outro slot.
+          opt.disabled = used.has(opt.value) && opt.value !== ownValue;
+        }
+      });
+    }
+
+    function updateBuffs() {
+      currentDrifterEffects = [];
+      slotEffects = {};
+
+      for (let i = 1; i <= 5; i++) {
+        const sel = document.getElementById(`slot-${i}`);
+        const buffCell = document.getElementById(`buff-${i}`);
+        const debuffCell = document.getElementById(`debuff-${i}`);
+
+        const name = sel.value;
+        const drifter = drifters.find(d => d.name === name);
+
+        if (!drifter) {
+          buffCell.textContent = "–";
+          debuffCell.textContent = "–";
+          buffCell.classList.add("muted");
+          debuffCell.classList.add("muted");
+          continue;
+        }
+
+        buffCell.textContent = drifter.buff || "—";
+        debuffCell.textContent = drifter.debuff || "—";
+
+        buffCell.classList.toggle("muted", !drifter.buff);
+        debuffCell.classList.toggle("muted", !drifter.debuff);
+
+        currentDrifterEffects.push({
+          slot: i,
+          name: drifter.name,
+          buff: drifter.buff,
+          debuff: drifter.debuff
+        });
+
+        const effectsForSlot = [];
+        const effBuff = parseEffectStr(drifter.buff);
+        if (effBuff) effectsForSlot.push(effBuff);
+        const effDebuff = parseEffectStr(drifter.debuff);
+        if (effDebuff) effectsForSlot.push(effDebuff);
+        slotEffects[i] = effectsForSlot;
+      }
+
+      updateIncompatibilities();
+    }
+
+    function buildCompanionTable() {
+      const tbody = document.querySelector("#companion-table tbody");
+      tbody.innerHTML = "";
+
+      for (const comp of companions) {
+        const tr = document.createElement("tr");
+        tr.dataset.name = comp.name;
+
+        const bonusTd = document.createElement("td");
+        bonusTd.textContent = comp.bonus;
+
+        const qtyTd = document.createElement("td");
+        const qtyPill = document.createElement("span");
+        qtyPill.className = "pill pill-qty";
+        qtyPill.textContent = comp.required;
+        qtyTd.appendChild(qtyPill);
+
+        const membersTd = document.createElement("td");
+        for (const name of comp.members) {
+          const span = document.createElement("span");
+          span.className = "comp-member";
+          span.dataset.name = name;
+          span.textContent = name;
+          membersTd.appendChild(span);
+        }
+
+        const catTd = document.createElement("td");
+        const catPill = document.createElement("span");
+        catPill.className = "pill pill-cat";
+        catPill.textContent = comp.category;
+        catTd.appendChild(catPill);
+
+        const statusTd = document.createElement("td");
+        const statusPill = document.createElement("span");
+        statusPill.className = "pill inactive";
+        statusPill.textContent = "NO";
+        statusTd.appendChild(statusPill);
+
+        tr.appendChild(bonusTd);
+        tr.appendChild(qtyTd);
+        tr.appendChild(membersTd);
+        tr.appendChild(catTd);
+        tr.appendChild(statusTd);
+
+        tbody.appendChild(tr);
+      }
+
+      updateCompanions();
+    }
+
+    function buildDrifterTable() {
+      const tbody = document.querySelector("#drifter-table tbody");
+      if (!tbody) return;
+      tbody.innerHTML = "";
+
+      const sorted = [...drifters];
+
+      if (drifterSortMode === "status") {
+        const weight = (d) => {
+          if (!d.level && d.tier === "?") return 0; // falta info
+          if (d.maxed) return 2; // max
+          return 1; // parcial
+        };
+        sorted.sort((a, b) => {
+          const wa = weight(a);
+          const wb = weight(b);
+          if (wa !== wb) return wa - wb;
+          return a.name.localeCompare(b.name);
+        });
+      } else {
+        // padrão: ordem alfabética por nome
+        sorted.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      for (const d of sorted) {
+        const tr = document.createElement("tr");
+        tr.dataset.name = d.name;
+        tr.classList.add("drifter-table-row");
+
+        const tdName = document.createElement("td");
+        tdName.textContent = d.name;
+        if (undesirableDrifters.includes(d.name)) {
+          tdName.classList.add("undesirable-name");
+        }
+
+        const tdTier = document.createElement("td");
+        tdTier.textContent = d.tier || "?";
+
+        const tdLv = document.createElement("td");
+        tdLv.textContent = d.level != null ? String(d.level) : "?";
+
+        const tdBuff = document.createElement("td");
+        tdBuff.textContent = d.buff || "—";
+
+        const tdDebuff = document.createElement("td");
+        tdDebuff.textContent = d.debuff || "—";
+
+        const tdStatus = document.createElement("td");
+        const badge = document.createElement("span");
+        badge.classList.add("badge");
+        if (d.maxed) {
+          badge.classList.add("badge-max");
+          badge.textContent = "MAX LV/TIER";
+        } else if (d.level != null || d.tier !== "?") {
+          badge.classList.add("badge-partial");
+          badge.textContent = "PARCIAL";
+        } else {
+          badge.classList.add("badge-unknown");
+          badge.textContent = "FALTA INFO";
+        }
+        tdStatus.appendChild(badge);
+
+        tr.appendChild(tdName);
+        tr.appendChild(tdTier);
+        tr.appendChild(tdLv);
+        tr.appendChild(tdBuff);
+        tr.appendChild(tdDebuff);
+        tr.appendChild(tdStatus);
+
+        tbody.appendChild(tr);
+      }
+
+      updateDrifterTableHighlight();
+    }
+
+    function updateCompanions() {
+      const selected = new Set();
+      for (let i = 1; i <= 5; i++) {
+        const name = document.getElementById(`slot-${i}`).value;
+        if (name) selected.add(name);
+      }
+
+      currentActiveCompanions = [];
+
+      const tbody = document.querySelector("#companion-table tbody");
+      const rows = tbody.querySelectorAll("tr");
+
+      rows.forEach((tr, index) => {
+        const comp = companions[index];
+        if (!comp) return;
+
+        let count = 0;
+        for (const m of comp.members) {
+          if (selected.has(m)) count++;
+        }
+
+        const active = count >= comp.required;
+        const pill = tr.querySelector(".pill");
+        const statusPill = tr.querySelectorAll(".pill")[2]; // qty, cat, status
+
+        if (statusPill) {
+          statusPill.textContent = active ? "ON" : "OFF";
+          statusPill.className = "pill " + (active ? "active" : "inactive");
+        }
+
+        tr.classList.toggle("companion-row-active", active);
+
+        // Highlight membros do grupo que estão selecionados nos slots.
+        const memberSpans = tr.querySelectorAll(".comp-member");
+        memberSpans.forEach((span) => {
+          const name = span.dataset.name;
+          span.classList.toggle("selected", selected.has(name));
+        });
+
+        if (active) {
+          currentActiveCompanions.push(comp);
+        }
+      });
+
+      updateSummary();
+      updateDrifterTableHighlight();
+    }
+
+    function updateDrifterTableHighlight() {
+      const tbody = document.querySelector("#drifter-table tbody");
+      if (!tbody) return;
+
+      const selected = new Set();
+      for (let i = 1; i <= 5; i++) {
+        const name = document.getElementById(`slot-${i}`).value;
+        if (name) selected.add(name);
+      }
+
+      tbody.querySelectorAll(".drifter-table-row").forEach((tr) => {
+        const name = tr.dataset.name;
+        tr.classList.toggle("active", selected.has(name));
+      });
+    }
+
+    function updateSummary() {
+      const dList = document.getElementById("summary-drifters");
+      const cList = document.getElementById("summary-companions");
+      const tList = document.getElementById("summary-totals");
+
+      dList.innerHTML = "";
+      cList.innerHTML = "";
+      tList.innerHTML = "";
+
+      if (currentDrifterEffects.length === 0) {
+        const li = document.createElement("li");
+        li.className = "muted";
+        li.textContent = "Nenhum Drifter selecionado.";
+        dList.appendChild(li);
+      } else {
+        for (const eff of currentDrifterEffects) {
+          const li = document.createElement("li");
+          const parts = [];
+          if (eff.buff) parts.push(eff.buff);
+          if (eff.debuff) parts.push(eff.debuff);
+          li.textContent = `${eff.name}: ${parts.join(" / ") || "—"}`;
+          dList.appendChild(li);
+        }
+      }
+
+      if (currentActiveCompanions.length === 0) {
+        const li = document.createElement("li");
+        li.className = "muted";
+        li.textContent = "Nenhum Companion ativo.";
+        cList.appendChild(li);
+      } else {
+        for (const comp of currentActiveCompanions) {
+          const li = document.createElement("li");
+          li.textContent = `${comp.name}: ${comp.bonus} (${comp.category})`;
+          cList.appendChild(li);
+        }
+      }
+
+      // Totais combinados de buffs/debuffs (sem nomes individuais).
+      const totals = {};
+      const effects = currentDrifterEffects || [];
+
+      function accumulate(effectStr) {
+        const eff = parseEffectStr(effectStr);
+        if (!eff) return;
+        totals[eff.key] = (totals[eff.key] || 0) + eff.value;
+      }
+
+      for (const eff of effects) {
+        if (eff.buff) accumulate(eff.buff);
+        if (eff.debuff) accumulate(eff.debuff);
+      }
+
+      // Inclui também os bônus dos Companions ativos (links).
+      const activeComps = currentActiveCompanions || [];
+      for (const comp of activeComps) {
+        if (comp.bonus) accumulate(comp.bonus);
+      }
+
+      const totalEntries = Object.entries(totals).filter(
+        ([, value]) => Math.abs(value) > 1e-6
+      );
+
+      if (totalEntries.length === 0) {
+        const li = document.createElement("li");
+        li.className = "muted";
+        li.textContent = "Nenhum efeito combinado.";
+        tList.appendChild(li);
+      } else {
+        totalEntries
+          .sort(([kA, vA], [kB, vB]) => {
+            const signA = vA >= 0 ? 0 : 1;
+            const signB = vB >= 0 ? 0 : 1;
+            if (signA !== signB) return signA - signB;
+            return kA.localeCompare(kB);
+          })
+          .forEach(([key, value]) => {
+            const li = document.createElement("li");
+            const hasPercent = key.endsWith("%");
+            const label = hasPercent ? key.slice(0, -1).trim() : key.trim();
+            const formatted =
+              (value >= 0 ? "+" : "") +
+              (hasPercent ? value.toFixed(2) + "%" : value.toFixed(2));
+            li.textContent = `${label}: ${formatted}`;
+            if (value > 0) {
+              li.classList.add("buff");
+            } else if (value < 0) {
+              li.classList.add("debuff");
+            }
+            tList.appendChild(li);
+          });
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initDrifterSelects();
+      updateSelectOptions();
+      buildDrifterTable();
+      updateBuffs();
+      buildCompanionTable();
+      updateSummary();
+    });
+
+    // Limpa todos os slots de Drifter de uma vez.
+    function clearAllSelections() {
+      for (let i = 1; i <= 5; i++) {
+        const sel = document.getElementById(`slot-${i}`);
+        sel.value = "";
+      }
+      updateSelectOptions();
+      updateBuffs();
+      updateCompanions();
+    }
+
+    // Limpa apenas um slot específico.
+    function clearSlot(index) {
+      const sel = document.getElementById(`slot-${index}`);
+      if (!sel) return;
+      sel.value = "";
+      updateSelectOptions();
+      updateBuffs();
+      updateCompanions();
+    }
+
+    function updateIncompatibilities() {
+      const conflictSlots = new Set();
+      const sumsBySlot = {};
+
+      for (let i = 1; i <= 5; i++) {
+        const effects = slotEffects[i] || [];
+        const map = {};
+        for (const eff of effects) {
+          map[eff.key] = (map[eff.key] || 0) + eff.value;
+        }
+        sumsBySlot[i] = map;
+      }
+
+      for (let a = 1; a <= 5; a++) {
+        for (let b = a + 1; b <= 5; b++) {
+          const mapA = sumsBySlot[a];
+          const mapB = sumsBySlot[b];
+          if (!mapA || !mapB) continue;
+
+          const keys = new Set([
+            ...Object.keys(mapA),
+            ...Object.keys(mapB),
+          ]);
+          let incompatible = false;
+          for (const key of keys) {
+            const va = mapA[key] || 0;
+            const vb = mapB[key] || 0;
+            if ((va > 0 && vb < 0) || (va < 0 && vb > 0)) {
+              incompatible = true;
+              break;
+            }
+          }
+          if (incompatible) {
+            conflictSlots.add(a);
+            conflictSlots.add(b);
+          }
+        }
+      }
+
+      for (let i = 1; i <= 5; i++) {
+        const incompatible = conflictSlots.has(i);
+        const sel = document.getElementById(`slot-${i}`);
+        const selCell = sel ? sel.closest("td") : null;
+        const buffCell = document.getElementById(`buff-${i}`);
+        const debuffCell = document.getElementById(`debuff-${i}`);
+
+        [selCell, buffCell, debuffCell].forEach((cell) => {
+          if (!cell) return;
+          cell.classList.toggle("incompatible-column", incompatible);
+        });
+      }
+    }
+
+    // Alterna modo de ordenação da tabela de Drifters.
+    document.addEventListener("click", (evt) => {
+      const btn = evt.target.closest(".sort-button");
+      if (!btn) return;
+      const mode = btn.dataset.sort;
+      if (!mode || mode === drifterSortMode) return;
+      drifterSortMode = mode;
+
+      document
+        .querySelectorAll(".sort-button")
+        .forEach((b) => b.classList.toggle("active", b.dataset.sort === mode));
+
+      buildDrifterTable();
+      updateDrifterTableHighlight();
+    });
+  </script>
+</body>
+</html>
