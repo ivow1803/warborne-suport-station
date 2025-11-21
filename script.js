@@ -24,6 +24,7 @@ const nameAliases = {
 let rawDrifters = [];
 let drifters = [];
 let companions = [];
+let driftersById = {};
 
 let currentDrifterEffects = [];
 let currentActiveCompanions = [];
@@ -42,6 +43,7 @@ function buildBuffText(bonus, value) {
 }
 
 function drifterFromJson(d) {
+  if (d.show === false) return null;
   const name = nameAliases[d.name] || d.name;
   const preferMax =
     d.useMaximizedSupport === true ||
@@ -86,6 +88,7 @@ async function loadExternalData() {
   }
   rawDrifters = rawLoaded;
   drifters = rawDrifters.map((d) => drifterFromJson(d));
+  driftersById = Object.fromEntries(drifters.map((d) => [d.id, d]));
   drifterNameById = Object.fromEntries(drifters.map((d) => [d.id, d.name]));
 
   const compData = await fetchJson(companionsFile);
@@ -96,7 +99,7 @@ async function loadExternalData() {
     name: c.name,
     bonus: c.bonus,
     required: Number(c.required || c.driftersNeeded || 0),
-    memberIds: c.drifterIds,
+    memberIds: c.drifterIds || [],
     category: c.category || "N/A"
   }));
 }
@@ -179,7 +182,16 @@ function updateBuffs() {
     const debuffCell = document.getElementById(`debuff-${i}`);
 
     const drifterId = sel.value;
-    const drifter = drifters.find(d => d.id === drifterId);
+    const drifter = driftersById[drifterId];
+
+    if (!drifter) {
+      buffCell.textContent = "–";
+      debuffCell.textContent = "–";
+      buffCell.classList.add("muted");
+      debuffCell.classList.add("muted");
+      slotEffects[i] = [];
+      continue;
+    }
 
     buffCell.textContent = drifter.buff || "—";
     debuffCell.textContent = drifter.debuff || "—";
@@ -225,11 +237,11 @@ function buildCompanionTable() {
 
     const membersTd = document.createElement("td");
     const members = comp.memberIds;
-    for (const name of members) {
+    for (const id of members) {
       const span = document.createElement("span");
       span.className = "comp-member";
-      span.dataset.id = name;
-      span.textContent = drifterNameById[name] || name;
+      span.dataset.id = id;
+      span.textContent = drifterNameById[id];
       membersTd.appendChild(span);
     }
 
@@ -494,9 +506,7 @@ function updateMaxToggleButton() {
 }
 
 function rebuildDriftersFromRaw() {
-  drifters = rawDrifters
-    .map((d) => drifterFromJson(d))
-    .filter(Boolean);
+  drifters = rawDrifters.map((d) => drifterFromJson(d));
 }
 
 function toggleMaximizedMode() {
