@@ -30,11 +30,28 @@ const statTypeMap = {
   "Magic Damage Bonus": "magic_dmg_bonus",
   "Healing Bonus": "healing_bonus",
   "Damage Bonus (PvE)": "dmg_bonus_pve",
+  "Damage Boost": "dmg_boost",
   "Critical Rate": "crit_rate",
   "Max HP Bonus": "max_hp_bonus",
   "Max MP Bonus": "max_mp_bonus",
   "Control Resistance": "control_resist_base",
   "Base Control Resistance": "control_resist_base"
+};
+
+const typeLabelMap = {
+  dmg_boost: "Damage Boost",
+  magic_dmg_bonus: "Magic Damage Bonus",
+  physical_dmg_bonus: "Physical Damage Bonus",
+  dmg_bonus_pve: "Damage Bonus (PvE)",
+  attack_speed: "Attack Speed Bonus",
+  skill_cdr: "Skill Cooldown Rate Bonus",
+  crit_rate: "Critical Rate",
+  max_hp_bonus: "Max HP Bonus",
+  max_mp_bonus: "Max MP Bonus",
+  healing_bonus: "Healing Bonus",
+  armor: "Armor",
+  magic_resist: "Magic Resistance",
+  control_resist_base: "Control Resistance"
 };
 
 let rawDrifters = [];
@@ -544,9 +561,18 @@ function updateSummary() {
     if (!type) return;
     const eff = parseEffectStr(effectStr);
     if (!eff) return;
-    const entry = totals[type] || { value: 0, label: eff.label, unit: eff.unit };
-    entry.value += eff.value;
-    totals[type] = entry;
+    const fanOut = [type];
+    // Damage Boost affects both physical and magic damage bonuses as a general modifier.
+    if (type === "dmg_boost") {
+      fanOut.push("physical_dmg_bonus", "magic_dmg_bonus");
+    }
+    for (const t of fanOut) {
+      const label = typeLabelMap[t] || eff.label;
+      const entry = totals[t] || { value: 0, label, unit: eff.unit };
+      entry.value += eff.value;
+      entry.label = label;
+      totals[t] = entry;
+    }
   }
 
   for (const eff of effects) {
@@ -559,7 +585,20 @@ function updateSummary() {
     if (comp.bonus) accumulateFrom(comp.bonus, comp.type_bonus);
   }
 
-  const totalEntries = Object.entries(totals).filter(
+  // Consolidate entries by label to avoid duplicate lines (e.g., multiple Damage Boost sources)
+  const consolidated = new Map();
+  for (const [, data] of Object.entries(totals)) {
+    const key = data.label || "";
+    const unit = data.unit || "";
+    if (!consolidated.has(key)) {
+      consolidated.set(key, { value: 0, unit, label: data.label });
+    }
+    const entry = consolidated.get(key);
+    entry.value += data.value;
+    consolidated.set(key, entry);
+  }
+
+  const totalEntries = Array.from(consolidated.entries()).filter(
     ([, data]) => Math.abs(data.value) > 1e-6
   );
   currentTotalsByType = totals;
@@ -753,20 +792,27 @@ function renderMainDrifterStats(targetList) {
         : null
   };
 
+  const attrTotals = {
+    STR:
+      customAttrs.STR != null && Number.isFinite(customAttrs.STR)
+        ? customAttrs.STR
+        : (parseFloat(raw.baseStr || 0) || 0) +
+          attrPerLevel.STR * Math.max(0, mainDrifterLevel - 1),
+    DEX:
+      customAttrs.DEX != null && Number.isFinite(customAttrs.DEX)
+        ? customAttrs.DEX
+        : (parseFloat(raw.baseDex || 0) || 0) +
+          attrPerLevel.DEX * Math.max(0, mainDrifterLevel - 1),
+    INT:
+      customAttrs.INT != null && Number.isFinite(customAttrs.INT)
+        ? customAttrs.INT
+        : (parseFloat(raw.baseInt || 0) || 0) +
+          attrPerLevel.INT * Math.max(0, mainDrifterLevel - 1)
+  };
+
   const attrAdjust = {};
   for (const [attr, rows] of Object.entries(attrBonusMap)) {
-    const baseVal =
-      attr === "STR"
-        ? parseFloat(raw.baseStr || 0) || 0
-        : attr === "DEX"
-        ? parseFloat(raw.baseDex || 0) || 0
-        : parseFloat(raw.baseInt || 0) || 0;
-    const actual = actualAttrs[attr];
-    let gain =
-      actual != null && Number.isFinite(actual)
-        ? actual - baseVal
-        : gainedAttrs[attr] || 0;
-    if (!Number.isFinite(gain) || gain < 0) gain = 0;
+    const gain = Number.isFinite(attrTotals[attr]) ? attrTotals[attr] : 0;
     for (const [statKey, perPoint, unit] of rows) {
       const inc = gain * perPoint;
       if (!attrAdjust[statKey]) attrAdjust[statKey] = { value: 0, unit };
@@ -781,13 +827,8 @@ function renderMainDrifterStats(targetList) {
       const perNum = parseFloat(per);
       const attrKey =
         label === "Strength" ? "STR" : label === "Dexterity" ? "DEX" : "INT";
-      const custom = actualAttrs[attrKey];
       const scaled =
-        custom != null && Number.isFinite(custom)
-          ? custom
-          : Number.isFinite(baseNum) && Number.isFinite(perNum)
-          ? baseNum + perNum * Math.max(0, mainDrifterLevel - 1)
-          : null;
+        Number.isFinite(attrTotals[attrKey]) ? attrTotals[attrKey] : null;
       const perText = per != null && String(per).trim() !== "" ? ` (+${per} por nível)` : "";
       const baseText = scaled != null ? scaled.toFixed(2) : base;
       addLine(`${label}: ${baseText}${perText}`);
@@ -813,10 +854,14 @@ function renderMainDrifterStats(targetList) {
   }
 
   const statMap = new Map(entries);
-  // For stats covered by attribute bonuses, treat base as 0 (so we don't double count),
-  // and add if missing.
+  // For stats covered by attribute bonuses, treat base as 0 (so we don't double count base JSON),
+  // and add if missing. But if we have an explicit manual override for that stat (future), we could keep it.
   for (const [k, adj] of Object.entries(attrAdjust)) {
-    statMap.set(k, adj.unit ? `0${adj.unit}` : "0");
+    if (!statMap.has(k)) {
+      statMap.set(k, adj.unit ? `0${adj.unit}` : "0");
+    } else {
+      statMap.set(k, adj.unit ? `0${adj.unit}` : "0");
+    }
   }
 
   const enriched = Array.from(statMap.entries()).map(([key, value]) => {
@@ -827,7 +872,18 @@ function renderMainDrifterStats(targetList) {
     const deltaUnit = total ? total.unit : "";
     const attrDelta = attrAdjust[key] ? attrAdjust[key].value : 0;
     const attrUnit = attrAdjust[key] ? attrAdjust[key].unit : "";
-    return { key, rawValue: value, parsed, type, delta, deltaUnit, attrDelta, attrUnit };
+    const isAttrDriven = Boolean(attrAdjust[key]);
+    return {
+      key,
+      rawValue: value,
+      parsed,
+      type,
+      delta,
+      deltaUnit,
+      attrDelta,
+      attrUnit,
+      isAttrDriven
+    };
   });
 
   const sorter =
@@ -851,17 +907,18 @@ function renderMainDrifterStats(targetList) {
     const baseVal = Number.isFinite(base.value) ? base.value : null;
     const deltaVal = item.delta;
     const attrVal = item.attrDelta || 0;
-    let finalVal = baseVal;
-    if (baseVal != null) {
-      finalVal = baseVal + attrVal + deltaVal;
-    }
+    const isAttrDriven = item.isAttrDriven;
+    // For stats driven by attributes, base is treated as 0; final is attr + buffs
+    let finalVal = isAttrDriven ? attrVal + deltaVal : (baseVal != null ? baseVal + attrVal + deltaVal : attrVal + deltaVal);
 
-    const baseStr = baseVal != null
+    const baseStr = isAttrDriven
+      ? null
+      : baseVal != null
       ? (usePercent ? baseVal.toFixed(2) + "%" : baseVal.toFixed(2))
       : item.rawValue;
-    const finalStr = finalVal != null
-      ? (usePercent ? finalVal.toFixed(2) + "%" : finalVal.toFixed(2))
-      : item.rawValue;
+    const finalStr = usePercent
+      ? finalVal.toFixed(2) + "%"
+      : finalVal.toFixed(2);
 
     const fmtDelta = (val) =>
       (val > 0 ? "+" : "") +
@@ -876,8 +933,11 @@ function renderMainDrifterStats(targetList) {
     const parts = [];
     if (attrStr) parts.push(`attr ${attrStr}`);
     if (deltaStr) parts.push(`buffs ${deltaStr}`);
-    const detail = parts.length ? ` (base ${baseStr}; ${parts.join("; ")})` : "";
-    li.textContent = `${item.key}: ${finalStr}${detail}`;
+    const detail = [];
+    if (!isAttrDriven && baseStr != null) detail.push(`base ${baseStr}`);
+    if (parts.length) detail.push(parts.join("; "));
+    const detailStr = detail.length ? ` (${detail.join("; ")})` : "";
+    li.textContent = `${item.key}: ${finalStr}${detailStr}`;
     // Color only for external buffs/debuffs (support station + companions)
     if (deltaVal > 0) li.classList.add("buff");
     if (deltaVal < 0) li.classList.add("debuff");
