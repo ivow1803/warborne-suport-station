@@ -16,6 +16,12 @@
         "supportBonusValue": " +3.23%",
         "supportMalusValue": "-3.23%"
       },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "Magic Damage Bonus",
+        "supportMalus": "Magic Resistance ",
+        "supportBonusValue": "+5.70%",
+        "supportMalusValue": "-3.23%"
+      },
       "stats": {
         "Max HP Bonus": "6.2%",
         "Max MP Bonus": "6.3%",
@@ -70,6 +76,12 @@
         "supportMalus": "Healing Received",
         "supportBonusValue": " +3.23%",
         "supportMalusValue": " -2.15%"
+      },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "Healing Bonus",
+        "supportMalus": "Healing Received",
+        "supportBonusValue": "+5.15%",
+        "supportMalusValue": "-3.43%"
       },
       "stats": {
         "Max HP Bonus": "6.2%",
@@ -126,6 +138,12 @@
         "supportBonusValue": " +9.25%",
         "supportMalusValue": " -3.70%"
       },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "Magic Resistance",
+        "supportMalus": "Magic Damage Bonus",
+        "supportBonusValue": "+8.28%",
+        "supportMalusValue": "-3.31%"
+      },
       "stats": {
         "Max HP Bonus": "7.5%",
         "Max MP Bonus": "5.4%",
@@ -180,6 +198,12 @@
         "supportMalus": "Damage Bonus (PvP)",
         "supportBonusValue": " +1.61%",
         "supportMalusValue": " -1.07%"
+      },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "Damage Resistance (PvP)",
+        "supportMalus": "Damage Bonus (PvP)",
+        "supportBonusValue": "+2.85%",
+        "supportMalusValue": "-1.90%"
       },
       "stats": {
         "Max HP Bonus": "10%",
@@ -236,6 +260,12 @@
         "supportBonusValue": " +1.61%",
         "supportMalusValue": "-1.07%"
       },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "Skill Cooldown Rate",
+        "supportMalus": "Skill Bonus ",
+        "supportBonusValue": "+2.85%",
+        "supportMalusValue": "-1.90%"
+      },
       "stats": {
         "Max HP Bonus": "5.5%",
         "Max MP Bonus": "4.5%",
@@ -289,6 +319,12 @@
         "supportBonus": "Max MP Bonus",
         "supportMalus": "Max HP Bonus ",
         "supportBonusValue": " +5.38%",
+        "supportMalusValue": "-2.15%"
+      },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "Max MP Bonus",
+        "supportMalus": "Max HP Bonus ",
+        "supportBonusValue": "+5.38%",
         "supportMalusValue": "-2.15%"
       },
       "stats": {
@@ -346,6 +382,12 @@
         "supportBonusValue": "+1.61%",
         "supportMalusValue": " -1.07%"
       },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "Damage Bonus (PvP) ",
+        "supportMalus": "Damage Resistance (PvP)",
+        "supportBonusValue": "+2.85%",
+        "supportMalusValue": "-1.90%"
+      },
       "stats": {
         "Max HP Bonus": "8.2%",
         "Max MP Bonus": "4.5%",
@@ -401,6 +443,12 @@
         "supportBonusValue": " +2.15%",
         "supportMalusValue": ""
       },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "World Loot Bonus",
+        "supportMalus": "",
+        "supportBonusValue": "+2.15%",
+        "supportMalusValue": ""
+      },
       "stats": {
         "Max HP Bonus": "8.7%",
         "Max MP Bonus": "4.5%",
@@ -454,6 +502,12 @@
         "supportBonus": "Gathering Experience Bonus",
         "supportMalus": "",
         "supportBonusValue": " +2.15%",
+        "supportMalusValue": ""
+      },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "Gathering Experience Bonus",
+        "supportMalus": "",
+        "supportBonusValue": "+3.80%",
         "supportMalusValue": ""
       },
       "stats": {
@@ -526,6 +580,12 @@
         "supportBonus": "Healing Bonus",
         "supportMalus": "Damage Boost",
         "supportBonusValue": "3.23%",
+        "supportMalusValue": "-1.07%"
+      },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "Healing Bonus",
+        "supportMalus": "Damage Boost",
+        "supportBonusValue": "+3.23%",
         "supportMalusValue": "-1.07%"
       },
       "skill": {

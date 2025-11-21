@@ -33,6 +33,12 @@
         "supportBonusValue": "",
         "supportMalusValue": ""
       },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "Carry Weight",
+        "supportMalus": "",
+        "supportBonusValue": "+52.5",
+        "supportMalusValue": ""
+      },
       "skill": {
         "gameId": "Avatar_Skill_Gather_1",
         "gearName": "Mole",

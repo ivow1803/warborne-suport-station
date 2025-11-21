@@ -16,6 +16,12 @@
         "supportBonusValue": " +5.38%",
         "supportMalusValue": " -2.69%"
       },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "Attack Speed",
+        "supportMalus": "Basic Attack Bonus",
+        "supportBonusValue": "+9.50%",
+        "supportMalusValue": "-4.75%"
+      },
       "stats": {
         "Max HP Bonus": "5%",
         "Max MP Bonus": "3.6%",
@@ -70,6 +76,12 @@
         "supportMalus": "Armor ",
         "supportBonusValue": " +4.81%",
         "supportMalusValue": "-4.81%"
+      },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "Physical Damage Bonus",
+        "supportMalus": "Armor ",
+        "supportBonusValue": "+5.70%",
+        "supportMalusValue": "-5.70%"
       },
       "stats": {
         "Max HP Bonus": "6.2%",
@@ -126,6 +138,12 @@
         "supportBonusValue": " +8.40%",
         "supportMalusValue": " -6.72%"
       },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "Basic Attack Critical Rate",
+        "supportMalus": "Basic Attack Critical Damage Multiplier",
+        "supportBonusValue": "+9.50%",
+        "supportMalusValue": "-7.60%"
+      },
       "stats": {
         "Max HP Bonus": "7.5%",
         "Max MP Bonus": "2.3%",
@@ -180,6 +198,12 @@
         "supportMalus": "Critical Rate",
         "supportBonusValue": " +4.12%",
         "supportMalusValue": " -2.48%"
+      },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "Basic Attack Bonus",
+        "supportMalus": "Critical Rate",
+        "supportBonusValue": "+4.75%",
+        "supportMalusValue": "-2.85%"
       },
       "stats": {
         "Max HP Bonus": "7.3%",
@@ -236,6 +260,12 @@
         "supportBonusValue": "+6.50%",
         "supportMalusValue": " -4.06%"
       },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "Dodge Rate ",
+        "supportMalus": "Basic Attack Bonus",
+        "supportBonusValue": "+7.60%",
+        "supportMalusValue": "-4.75%"
+      },
       "stats": {
         "Max HP Bonus": "3.7%",
         "Max MP Bonus": "4.5%",
@@ -291,6 +321,12 @@
         "supportBonusValue": " +1.93%",
         "supportMalusValue": "-1.07%"
       },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "Melee Damage",
+        "supportMalus": "Damage Resistance ",
+        "supportBonusValue": "+3.42%",
+        "supportMalusValue": "-1.90%"
+      },
       "stats": {
         "Max HP Bonus": "6.2%",
         "Max MP Bonus": "3.6%",
@@ -344,6 +380,12 @@
         "supportBonus": "Gathering Rate Bonus",
         "supportMalus": "",
         "supportBonusValue": " +3.74%",
+        "supportMalusValue": ""
+      },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "Gathering Rate Bonus",
+        "supportMalus": "",
+        "supportBonusValue": "+3.80%",
         "supportMalusValue": ""
       },
       "stats": {
@@ -401,6 +443,12 @@
         "supportBonusValue": "+2.15%",
         "supportMalusValue": ""
       },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "Starfall Token Bonus",
+        "supportMalus": "",
+        "supportBonusValue": "+3.80%",
+        "supportMalusValue": ""
+      },
       "stats": {
         "Max HP Bonus": "5.5%",
         "Max MP Bonus": "2.7%",
@@ -454,6 +502,12 @@
         "supportBonus": "Experience Bonus ",
         "supportMalus": "",
         "supportBonusValue": "+2.15%",
+        "supportMalusValue": ""
+      },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "Experience Bonus",
+        "supportMalus": "",
+        "supportBonusValue": "+2.81%",
         "supportMalusValue": ""
       },
       "stats": {

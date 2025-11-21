@@ -1,0 +1,109 @@
+{
+  "lastUpdate": "2025-06-21",
+  "companions": [
+    {
+      "name": "Healing Circle",
+      "bonus": "Increases Healing Effect by 4%",
+      "required": 2,
+      "drifters": ["Solenne", "Moonveil", "Revelation", "Helix"],
+      "category": "Healer",
+      "tags": ["all"]
+    },
+    {
+      "name": "Sharpshooters",
+      "bonus": "Increases Ranged Damage by 4%",
+      "required": 2,
+      "drifters": ["Shadowseer", "Raven", "Veska", "Hive Queen"],
+      "category": "DPS",
+      "tags": ["ranged"]
+    },
+    {
+      "name": "Quick Thinkers",
+      "bonus": "Increases Skill Cooldown Speed by 2.5%",
+      "required": 2,
+      "drifters": ["Astral Magus", "Shadowseer", "Mad Barrel"],
+      "category": "Healer",
+      "tags": ["all"]
+    },
+    {
+      "name": "Bulwark",
+      "bonus": "Damage Resistance Enhanced by 2%",
+      "required": 2,
+      "drifters": ["Durion", "Sirokos", "Izzy", "Auri"],
+      "category": "Tank",
+      "tags": ["all"]
+    },
+    {
+      "name": "Crowd Control",
+      "bonus": "Increases Crowd Control Resistance by 5",
+      "required": 2,
+      "drifters": ["Kyra", "Varnax", "Aegis", "Draknor"],
+      "category": "Tank",
+      "tags": ["all"]
+    },
+    {
+      "name": "Task Force",
+      "bonus": "Increases Melee Damage by 4%",
+      "required": 2,
+      "drifters": ["Elektrix", "Vryssia", "Illusarch", "Overdrive"],
+      "category": "DPS",
+      "tags": ["melee"]
+    },
+    {
+      "name": "Force of Nature",
+      "bonus": "Increases Critical Damage of Basic Attack by 8%",
+      "required": 2,
+      "drifters": ["Nyxa", "Vryssia", "Umbra", "Blade"],
+      "category": "DPS",
+      "tags": ["melee"]
+    },
+    {
+      "name": "Arcane Minds",
+      "bonus": "Increases Intelligence by 10",
+      "required": 3,
+      "drifters": ["Izzy", "Zero", "Moonveil"],
+      "category": "Healer",
+      "tags": ["all"]
+    },
+    {
+      "name": "Vitality Core",
+      "bonus": "Max HP increased by 4%",
+      "required": 3,
+      "drifters": ["Kyra", "Sanguor", "Hive Queen", "Tayana"],
+      "category": "Tank",
+      "tags": ["all"]
+    },
+    {
+      "name": "Skill Arts",
+      "bonus": "Enhancement to Skill Damage and Healing by 2.5%",
+      "required": 3,
+      "drifters": ["Varnax", "Elektrix", "Solenne"],
+      "category": "Healer",
+      "tags": ["all"]
+    },
+    {
+      "name": "Brute Force",
+      "bonus": "Enhances Strength by 10",
+      "required": 3,
+      "drifters": ["Sirokos", "Illusarch", "Veska"],
+      "category": "Tank",
+      "tags": ["all"]
+    },
+    {
+      "name": "Fleetfoot",
+      "bonus": "Boosts Agility by 10",
+      "required": 3,
+      "drifters": ["Aegis", "Overdrive", "Raven"],
+      "category": "DPS",
+      "tags": ["all"]
+    },
+    {
+      "name": "Deep Recovery",
+      "bonus": "Increases Healing Received by 2.5%",
+      "required": 3,
+      "drifters": ["Draknor", "Sanguor", "Vire"],
+      "category": "Tank",
+      "tags": ["all"]
+    }
+  ]
+}
