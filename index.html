@@ -503,9 +503,96 @@
       "Sanguor"
     ];
 
+    // Fontes externas de dados (JSON) para drifters e companions.
+    const drifterFiles = [
+      "data/drifters/str_drifter.json",
+      "data/drifters/dex_drifter.json",
+      "data/drifters/int_drifter.json",
+      "data/drifters/gather_drifter.json"
+    ];
+    const companionsFile = "data/companions_planner.json";
+
+    // Aliases para harmonizar nomes entre JSON e planner.
+    const nameAliases = {
+      ShadowSeer: "Shadowseer"
+    };
+
+    const cleanStr = (s) => (s || "").replace(/\s+/g, " ").trim();
+
+    function buildBuffText(bonus, value) {
+      const b = cleanStr(bonus);
+      const v = cleanStr(value);
+      if (!b || b.toUpperCase() === "N/A") return "";
+      return `${b} ${v}`.trim();
+    }
+
+    function drifterFromJson(d) {
+      const src = d.maximizedSupportStationBonus || d.supportStationBonus;
+      if (!src) return null;
+      const name = nameAliases[d.name] || d.name;
+      const buff = buildBuffText(src.supportBonus, src.supportBonusValue);
+      const debuff = buildBuffText(src.supportMalus, src.supportMalusValue);
+      if (!buff && !debuff) return null;
+      return {
+        name,
+        buff: buff || "—",
+        debuff: debuff || "",
+        tier: "XI",
+        level: 50,
+        maxed: true
+      };
+    }
+
+    async function fetchJson(url) {
+      const resp = await fetch(url);
+      if (!resp.ok) throw new Error(`Falha ao carregar ${url}: ${resp.status}`);
+      return resp.json();
+    }
+
+    async function loadExternalData() {
+      // Carrega drifters a partir dos arquivos JSON (formato Elkite + maximized).
+      try {
+        const loaded = [];
+        for (const file of drifterFiles) {
+          try {
+            const data = await fetchJson(file);
+            const objs = Object.values(data.drifters || {});
+            for (const obj of objs) {
+              const d = drifterFromJson(obj);
+              if (d) loaded.push(d);
+            }
+          } catch (e) {
+            console.warn("Falha ao carregar drifters de", file, e);
+          }
+        }
+        if (loaded.length) {
+          drifters = loaded;
+        }
+      } catch (e) {
+        console.warn("Falha geral ao carregar drifters externos", e);
+      }
+
+      // Carrega companions a partir do JSON externo.
+      try {
+        const compData = await fetchJson(companionsFile);
+        if (compData.companions) {
+          companions = compData.companions.map((c) => ({
+            name: c.name,
+            bonus: c.bonus,
+            required: Number(c.required || c.driftersNeeded || 0),
+            members: c.drifters,
+            category: c.category || "N/A"
+          }));
+        }
+      } catch (e) {
+        console.warn("Falha ao carregar companions externos", e);
+      }
+    }
+
     // Dados de Drifters – buff/debuff extraídos dos prints do Support Station.
     // Se precisar ajustar valores futuros (tier máximo etc.), altere aqui.
-    const drifters = [
+    // Declarado como let para podermos sobrescrever via JSON externo.
+    let drifters = [
       // maxed: true quando temos print claro de LV 50 / TIER XI.
       { name: "Vryssia", tier: "XI", level: 50, maxed: true, buff: "Dodge Rate +7.60%", debuff: "Basic Attack Bonus -4.75%" },
       { name: "Sanguor", tier: "XI", level: 50, maxed: true, buff: "Gathering Rate Bonus +3.80%", debuff: "" },
@@ -540,7 +627,8 @@
     ];
 
     // Companions / Links – todos os da planilha.
-    const companions = [
+    // Declarado como let para podermos sobrescrever via JSON externo.
+    let companions = [
       {
         name: "Healing Circle",
         bonus: "Increases Healing Effect by 4%",
@@ -1039,7 +1127,8 @@
       }
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", async () => {
+      await loadExternalData();
       initDrifterSelects();
       updateSelectOptions();
       buildDrifterTable();
