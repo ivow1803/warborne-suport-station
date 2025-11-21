@@ -125,6 +125,14 @@
     </div>
 
     <div class="card">
+      <h2>Main Drifter</h2>
+      <p>Escolha seu Drifter principal para ver os status base (sem aplicar efeitos ainda).</p>
+      <div style="margin-top:8px; max-width: 280px;">
+        <select id="main-drifter" class="drifter-select"></select>
+      </div>
+    </div>
+
+    <div class="card">
       <h2>Resumo dos Bônus Ativos</h2>
       <p>
         Visão geral de todos os efeitos atualmente recebidos pelos cinco Drifters escolhidos e
@@ -144,6 +152,14 @@
       <div class="summary-block">
         <div class="summary-title">Totais combinados</div>
         <ul id="summary-totals" class="summary-list"></ul>
+      </div>
+
+      <div class="summary-block">
+        <div class="summary-title">Status do Main Drifter</div>
+        <button type="button" id="main-stats-sort" class="toggle-button" style="margin-bottom:6px;">
+          Ordenar por buff/debuff
+        </button>
+        <ul id="summary-main-stats" class="summary-list"></ul>
       </div>
     </div>
 
