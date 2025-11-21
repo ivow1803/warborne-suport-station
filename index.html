@@ -404,8 +404,7 @@
       </div>
 
       <div class="footer-note">
-        Para mudar os dados, edite o array <code>drifters</code> dentro deste arquivo
-        (<code>warborne_planner.html</code>).
+        Os Drifters são carregados dos JSON em <code>data/drifters</code>. Atualize-os lá.
       </div>
     </div>
 
@@ -432,7 +431,7 @@
       </table>
 
       <div class="footer-note">
-        Para adicionar mais combinações, edite o array <code>companions</code> no final do arquivo.
+        Os Companions vêm de <code>data/companions_planner.json</code>.
       </div>
     </div>
 
@@ -551,176 +550,38 @@
 
     async function loadExternalData() {
       // Carrega drifters a partir dos arquivos JSON (formato Elkite + maximized).
-      try {
-        const loaded = [];
-        for (const file of drifterFiles) {
-          try {
-            const data = await fetchJson(file);
-            const objs = Object.values(data.drifters || {});
-            for (const obj of objs) {
-              const d = drifterFromJson(obj);
-              if (d) loaded.push(d);
-            }
-          } catch (e) {
-            console.warn("Falha ao carregar drifters de", file, e);
-          }
+      const loaded = [];
+      for (const file of drifterFiles) {
+        const data = await fetchJson(file);
+        const objs = Object.values(data.drifters || {});
+        for (const obj of objs) {
+          const d = drifterFromJson(obj);
+          if (d) loaded.push(d);
         }
-        if (loaded.length) {
-          drifters = loaded;
-        }
-      } catch (e) {
-        console.warn("Falha geral ao carregar drifters externos", e);
       }
+
+      if (!loaded.length) {
+        throw new Error("Nenhum Drifter carregado dos arquivos JSON.");
+      }
+      drifters = loaded;
 
       // Carrega companions a partir do JSON externo.
-      try {
-        const compData = await fetchJson(companionsFile);
-        if (compData.companions) {
-          companions = compData.companions.map((c) => ({
-            name: c.name,
-            bonus: c.bonus,
-            required: Number(c.required || c.driftersNeeded || 0),
-            members: c.drifters,
-            category: c.category || "N/A"
-          }));
-        }
-      } catch (e) {
-        console.warn("Falha ao carregar companions externos", e);
+      const compData = await fetchJson(companionsFile);
+      if (!compData.companions || !compData.companions.length) {
+        throw new Error("Nenhum Companion carregado do arquivo JSON.");
       }
+      companions = compData.companions.map((c) => ({
+        name: c.name,
+        bonus: c.bonus,
+        required: Number(c.required || c.driftersNeeded || 0),
+        members: c.drifters,
+        category: c.category || "N/A"
+      }));
     }
 
-    // Dados de Drifters – buff/debuff extraídos dos prints do Support Station.
-    // Se precisar ajustar valores futuros (tier máximo etc.), altere aqui.
-    // Declarado como let para podermos sobrescrever via JSON externo.
-    let drifters = [
-      // maxed: true quando temos print claro de LV 50 / TIER XI.
-      { name: "Vryssia", tier: "XI", level: 50, maxed: true, buff: "Dodge Rate +7.60%", debuff: "Basic Attack Bonus -4.75%" },
-      { name: "Sanguor", tier: "XI", level: 50, maxed: true, buff: "Gathering Rate Bonus +3.80%", debuff: "" },
-      { name: "Astral Magus", tier: "XI", level: 50, maxed: true, buff: "Gathering Experience Bonus +3.80%", debuff: "" },
-      { name: "Solenne", tier: "XI", level: 50, maxed: true, buff: "Healing Bonus +5.15%", debuff: "Healing Received -3.43%" },
-      { name: "Hive Queen", tier: "XI", level: 50, maxed: true, buff: "Magic Resistance +8.28%", debuff: "Magic Damage Bonus -3.31%" },
-      { name: "Veska", tier: "XI", level: 50, maxed: true, buff: "Damage Resistance (PvP) +2.85%", debuff: "Damage Bonus (PvP) -1.90%" },
-      { name: "Zero", tier: "XI", level: 50, maxed: true, buff: "Basic Attack Bonus +4.75%", debuff: "Critical Rate -2.85%" },
-      { name: "Varnax", tier: "XI", level: 50, maxed: true, buff: "Damage Bonus (PvE) +5.70%", debuff: "Damage Resistance (PvE) -3.80%" },
-      { name: "Illusarch", tier: "XI", level: 50, maxed: true, buff: "Experience Bonus +2.81%", debuff: "" },
-      { name: "Kyra", tier: "XI", level: 50, maxed: true, buff: "Armor +9.50%", debuff: "Physical Damage Bonus -3.80%" },
-      { name: "Nyxa", tier: "XI", level: 50, maxed: true, buff: "Physical Damage Bonus +5.70%", debuff: "Armor -5.70%" },
-      { name: "Overdrive", tier: "XI", level: 50, maxed: true, buff: "Basic Attack Critical Rate +9.50%", debuff: "Basic Attack Critical Damage Multiplier -7.60%" },
-      { name: "Durion", tier: "XI", level: 50, maxed: true, buff: "Max HP Bonus +5.70%", debuff: "Max MP Bonus -5.70%" },
-      { name: "Tayana", tier: "XI", level: 50, maxed: true, buff: "Damage Resistance +5.70%", debuff: "Damage Boost -1.90%" },
-      { name: "Elektrix", tier: "XI", level: 50, maxed: true, buff: "Attack Speed +9.50%", debuff: "Basic Attack Bonus -4.75%" },
-      { name: "Auri", tier: "XI", level: 50, maxed: true, buff: "Healing Received +5.31%", debuff: "Healing Bonus -3.54%" },
-      { name: "Mole", tier: "VIII", level: 30, maxed: false, buff: "Carry Weight +52.5", debuff: "" },
-      { name: "Sirokos", tier: "XI", level: 50, maxed: true, buff: "Base Control Resistance +5.70%", debuff: "Damage Boost -1.90%" },
-      { name: "Shadowseer", tier: "XI", level: 50, maxed: true, buff: "Magic Damage Bonus +5.70%", debuff: "Magic Resistance -3.23%" },
-      { name: "Izzy", tier: "?", level: null, maxed: false, buff: "Control Boost (PvP) +3.23%", debuff: "Damage Resistance -1.07%" },
-      { name: "Aegis", tier: "XI", level: 50, maxed: true, buff: "Damage Resistance (PvE) +5.70%", debuff: "Damage Bonus (PvE) -3.80%" },
-      { name: "Moonveil", tier: "XI", level: 50, maxed: true, buff: "Damage Bonus (PvP) +2.85%", debuff: "Damage Resistance (PvP) -1.90%" },
-      { name: "Raven", tier: "XI", level: 50, maxed: true, buff: "Max MP Bonus +5.38%", debuff: "Max HP Bonus -2.15%" },
-      { name: "Draknor", tier: "XI", level: 50, maxed: true, buff: "Gathering Yield Bonus +3.80%", debuff: "" },
-      { name: "Mad Barrel", tier: "XI", level: 50, maxed: true, buff: "Ranged Damage +3.41%", debuff: "Damage Resistance -1.90%" },
-      { name: "Umbra", tier: "XI", level: 50, maxed: true, buff: "Melee Damage +3.42%", debuff: "Damage Resistance -1.90%" },
-      { name: "Blade", tier: "XI", level: 50, maxed: true, buff: "Starfall Token Bonus +3.80%", debuff: "" },
-      { name: "Helix", tier: "XI", level: 50, maxed: true, buff: "Skill Cooldown Rate +2.85%", debuff: "Skill Bonus -1.90%" },
-      { name: "Revelation", tier: "?", level: null, maxed: false, buff: "World Loot Bonus +2.15%", debuff: "" },
-      { name: "Vire", tier: "?", level: null, maxed: false, buff: "Healing Bonus +3.23%", debuff: "Damage Boost -1.07%" }
-    ];
-
-    // Companions / Links – todos os da planilha.
-    // Declarado como let para podermos sobrescrever via JSON externo.
-    let companions = [
-      {
-        name: "Healing Circle",
-        bonus: "Increases Healing Effect by 4%",
-        required: 2,
-        members: ["Solenne", "Moonveil", "Revelation", "Helix"],
-        category: "Healer"
-      },
-      {
-        name: "Sharpshooters",
-        bonus: "Increases Ranged Damage by 4%",
-        required: 2,
-        members: ["Shadowseer", "Raven", "Veska", "Hive Queen"],
-        category: "DPS"
-      },
-      {
-        name: "Quick Thinkers",
-        bonus: "Increases Skill Cooldown Speed by 2.5%",
-        required: 2,
-        members: ["Astral Magus", "Shadowseer", "Mad Barrel"],
-        category: "Healer"
-      },
-      {
-        name: "Bulwark",
-        bonus: "Damage Resistance Enhanced by 2%",
-        required: 2,
-        members: ["Durion", "Sirokos", "Izzy", "Auri"],
-        category: "Tank"
-      },
-      {
-        name: "Crowd Control",
-        bonus: "Increases Crowd Control Resistance by 5",
-        required: 2,
-        members: ["Kyra", "Varnax", "Aegis", "Draknor"],
-        category: "Tank"
-      },
-      {
-        name: "Task Force",
-        bonus: "Increases Melee Damage by 4%",
-        required: 2,
-        members: ["Elektrix", "Vryssia", "Illusarch", "Overdrive"],
-        category: "DPS"
-      },
-      {
-        name: "Force of Nature",
-        bonus: "Increases Critical Damage of Basic Attack by 8%",
-        required: 2,
-        members: ["Nyxa", "Vryssia", "Umbra", "Blade"],
-        category: "DPS"
-      },
-      {
-        name: "Arcane Minds",
-        bonus: "Increases Intelligence by 10",
-        required: 3,
-        members: ["Izzy", "Zero", "Moonveil"],
-        category: "Healer"
-      },
-      {
-        name: "Vitality Core",
-        bonus: "Max HP increased by 4%",
-        required: 3,
-        members: ["Kyra", "Sanguor", "Hive Queen", "Tayana"],
-        category: "Tank"
-      },
-      {
-        name: "Skill Arts",
-        bonus: "Enhancement to Skill Damage and Healing by 2.5%",
-        required: 3,
-        members: ["Varnax", "Elektrix", "Solenne"],
-        category: "Healer"
-      },
-      {
-        name: "Brute Force",
-        bonus: "Enhances Strength by 10",
-        required: 3,
-        members: ["Sirokos", "Illusarch", "Veska"],
-        category: "Tank"
-      },
-      {
-        name: "Fleetfoot",
-        bonus: "Boosts Agility by 10",
-        required: 3,
-        members: ["Aegis", "Overdrive", "Raven"],
-        category: "DPS"
-      },
-      {
-        name: "Deep Recovery",
-        bonus: "Increases Healing Received by 2.5%",
-        required: 3,
-        members: ["Draknor", "Sanguor", "Vire"],
-        category: "Tank"
-      }
-    ];
+    // Dados de Drifters e Companions são preenchidos exclusivamente via JSON externo.
+    let drifters = [];
+    let companions = [];
 
     let currentDrifterEffects = [];
     let currentActiveCompanions = [];
@@ -1127,8 +988,31 @@
       }
     }
 
+    function showDataLoadError(error) {
+      const layout = document.querySelector(".layout");
+      if (!layout) return;
+      const message =
+        (error && error.message) ||
+        "Não foi possível carregar os arquivos JSON.";
+      layout.innerHTML = `
+        <div class="card">
+          <h2>Erro ao carregar dados</h2>
+          <p>${message}</p>
+          <p class="footer-note">
+            Os dados são obtidos dos arquivos em <code>data/drifters</code> e <code>data/companions_planner.json</code>.
+          </p>
+        </div>
+      `;
+    }
+
     document.addEventListener("DOMContentLoaded", async () => {
-      await loadExternalData();
+      try {
+        await loadExternalData();
+      } catch (err) {
+        console.error(err);
+        showDataLoadError(err);
+        return;
+      }
       initDrifterSelects();
       updateSelectOptions();
       buildDrifterTable();
