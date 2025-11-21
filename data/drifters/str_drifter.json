@@ -7,7 +7,7 @@
       "strBonus": "2.5",
       "dexBonus": "1",
       "intBonus": "0.8",
-      "baseStr": "30",
+      "baseStr": "35",
       "baseDex": "10",
       "baseInt": "20",
       "supportStationBonus": {
@@ -148,7 +148,7 @@
       "dexBonus": "0.5",
       "intBonus": "0.5",
       "baseStr": "35",
-      "baseDex": "5",
+      "baseDex": "15",
       "baseInt": "20",
       "useMaximizedSupport": false,
       "supportStationBonus": {
@@ -214,7 +214,7 @@
     "paragon_str_4": {
       "gameId": "paragon_str_4",
       "name": "Varnax",
-      "strBonus": "2.2",
+      "strBonus": "2.4",
       "dexBonus": "1.3",
       "intBonus": "0.8",
       "baseStr": "25",
@@ -284,10 +284,10 @@
     "paragon_str_5": {
       "gameId": "paragon_str_5",
       "name": "Aegis",
-      "strBonus": "2.2",
+      "strBonus": "2.4",
       "dexBonus": "0.5",
       "intBonus": "1.4",
-      "baseStr": "30",
+      "baseStr": "35",
       "baseDex": "15",
       "baseInt": "15",
       "supportStationBonus": {
@@ -634,11 +634,11 @@
     "paragon_str_10": {
       "gameId": "paragon_str_10",
       "name": "Tayana",
-      "strBonus": "N/A",
-      "dexBonus": "N/A",
+      "strBonus": "2.1",
+      "dexBonus": "1.7",
       "intBonus": "N/A",
-      "baseStr": "",
-      "baseDex": "",
+      "baseStr": "38",
+      "baseDex": "24",
       "baseInt": "",
       "supportStationBonus": {
         "supportBonus": "N/A",

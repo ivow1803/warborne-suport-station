@@ -214,7 +214,7 @@
     "paragon_int_4": {
       "gameId": "paragon_int_4",
       "name": "Veska",
-      "strBonus": "1.2",
+      "strBonus": "1.1",
       "dexBonus": "0.7",
       "intBonus": "2.1",
       "baseStr": "14",
@@ -354,10 +354,10 @@
     "paragon_int_6": {
       "gameId": "paragon_int_6",
       "name": "Raven",
-      "strBonus": "1.2",
+      "strBonus": "1.1",
       "dexBonus": "1",
       "intBonus": "1.9",
-      "baseStr": "20",
+      "baseStr": "15",
       "baseDex": "18",
       "baseInt": "22",
       "supportStationBonus": {
@@ -637,9 +637,9 @@
       "strBonus": "1.5",
       "dexBonus": "0.9",
       "intBonus": "1.8",
-      "baseStr": "22",
+      "baseStr": "30",
       "baseDex": "8",
-      "baseInt": "30",
+      "baseInt": "32",
       "useMaximizedSupport": false,
       "stats": {
         "Max HP Bonus": "5.5%",

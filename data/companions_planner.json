@@ -2,7 +2,7 @@
   "lastUpdate": "2025-06-21",
   "companions": [
     {
-      "name": "Healing Circle",
+      "name": "Warden",
       "bonus": "Increases Healing Effect by 4%",
       "required": 2,
       "drifters": [
@@ -24,7 +24,7 @@
       "type_bonus": "healing_effect"
     },
     {
-      "name": "Sharpshooters",
+      "name": "Master of Strategy",
       "bonus": "Increases Ranged Damage by 4%",
       "required": 2,
       "drifters": [
@@ -46,9 +46,9 @@
       "type_bonus": "ranged_dmg_bonus"
     },
     {
-      "name": "Quick Thinkers",
+      "name": "Novice Stargazer",
       "bonus": "Increases Skill Cooldown Speed by 2.5%",
-      "required": 2,
+      "required": 3,
       "drifters": [
         "Astral Magus",
         "Shadowseer",
@@ -66,7 +66,7 @@
       "type_bonus": "skill_cdr"
     },
     {
-      "name": "Bulwark",
+      "name": "Iron Will",
       "bonus": "Damage Resistance Enhanced by 2%",
       "required": 2,
       "drifters": [
@@ -88,7 +88,7 @@
       "type_bonus": "dmg_resist"
     },
     {
-      "name": "Crowd Control",
+      "name": "Strike Team",
       "bonus": "Increases Crowd Control Resistance by 5",
       "required": 2,
       "drifters": [
@@ -154,7 +154,7 @@
       "type_bonus": "basic_crit_dmg"
     },
     {
-      "name": "Arcane Minds",
+      "name": "Orphan",
       "bonus": "Increases Intelligence by 10",
       "required": 3,
       "drifters": [
@@ -174,7 +174,7 @@
       "type_bonus": "int_flat"
     },
     {
-      "name": "Vitality Core",
+      "name": "Vibrant Bloodline",
       "bonus": "Max HP increased by 4%",
       "required": 3,
       "drifters": [
@@ -196,7 +196,7 @@
       "type_bonus": "max_hp_bonus"
     },
     {
-      "name": "Skill Arts",
+      "name": "Warborne Warrior",
       "bonus": "Enhancement to Skill Damage and Healing by 2.5%",
       "required": 3,
       "drifters": [
@@ -216,7 +216,7 @@
       "type_bonus": "skill_dmg_heal"
     },
     {
-      "name": "Brute Force",
+      "name": "Exotic Brawn",
       "bonus": "Enhances Strength by 10",
       "required": 3,
       "drifters": [
@@ -236,7 +236,7 @@
       "type_bonus": "str_flat"
     },
     {
-      "name": "Fleetfoot",
+      "name": "Powerhouse",
       "bonus": "Boosts Agility by 10",
       "required": 3,
       "drifters": [
@@ -256,7 +256,7 @@
       "type_bonus": "agi_flat"
     },
     {
-      "name": "Deep Recovery",
+      "name": "Abyssal Source",
       "bonus": "Increases Healing Received by 2.5%",
       "required": 3,
       "drifters": [

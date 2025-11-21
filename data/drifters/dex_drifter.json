@@ -4,10 +4,10 @@
     "paragon_dex_1": {
       "gameId": "paragon_dex_1",
       "name": "Elektrix",
-      "strBonus": "1",
+      "strBonus": "1.1",
       "dexBonus": "2.2",
       "intBonus": "0.9",
-      "baseStr": "10",
+      "baseStr": "15",
       "baseDex": "30",
       "baseInt": "20",
       "supportStationBonus": {
@@ -76,10 +76,10 @@
       "name": "Nyxa",
       "strBonus": "1",
       "dexBonus": "2.1",
-      "intBonus": "1",
+      "intBonus": "1.7",
       "baseStr": "15",
       "baseDex": "25",
-      "baseInt": "20",
+      "baseInt": "25",
       "supportStationBonus": {
         "supportBonus": "Physical Damage Bonus",
         "supportMalus": "Armor ",
@@ -354,10 +354,10 @@
     "paragon_dex_6": {
       "gameId": "paragon_dex_6",
       "name": "Umbra",
-      "strBonus": "0.8",
+      "strBonus": "0.9",
       "dexBonus": "2.3",
       "intBonus": "1",
-      "baseStr": "15",
+      "baseStr": "20",
       "baseDex": "25",
       "baseInt": "20",
       "supportStationBonus": {

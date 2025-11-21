@@ -30,6 +30,7 @@ const statTypeMap = {
   "Magic Damage Bonus": "magic_dmg_bonus",
   "Healing Bonus": "healing_bonus",
   "Damage Bonus (PvE)": "dmg_bonus_pve",
+  "Damage Bonus (PvP)": "dmg_bonus_pvp",
   "Damage Boost": "dmg_boost",
   "Critical Rate": "crit_rate",
   "Max HP Bonus": "max_hp_bonus",
@@ -43,6 +44,7 @@ const typeLabelMap = {
   magic_dmg_bonus: "Magic Damage Bonus",
   physical_dmg_bonus: "Physical Damage Bonus",
   dmg_bonus_pve: "Damage Bonus (PvE)",
+  dmg_bonus_pvp: "Damage Bonus (PvP)",
   attack_speed: "Attack Speed Bonus",
   skill_cdr: "Skill Cooldown Rate Bonus",
   crit_rate: "Critical Rate",
@@ -669,6 +671,24 @@ function updateSummary() {
       buckets[categorize(label)].push([label, formatted, cls, data.value]);
     });
 
+    // Guarantee key offensive modifiers are always shown if they exist,
+    // even after consolidation.
+    const ensureTypes = ["magic_dmg_bonus", "physical_dmg_bonus", "dmg_boost"];
+    for (const type of ensureTypes) {
+      const data = totals[type];
+      if (!data || Math.abs(data.value) < 1e-6) continue;
+      const label = data.label || typeLabelMap[type] || type;
+      const bucketKey = categorize(label);
+      const already = buckets[bucketKey].some(([lbl]) => lbl === label);
+      if (already) continue;
+      const hasPercent = (data.unit || "").includes("%");
+      const formatted =
+        (data.value >= 0 ? "+" : "") +
+        (hasPercent ? data.value.toFixed(2) + "%" : data.value.toFixed(2));
+      const cls = data.value > 0 ? "buff" : data.value < 0 ? "debuff" : "";
+      buckets[bucketKey].push([label, formatted, cls, data.value]);
+    }
+
     renderBucket("ataque", buckets.ataque);
     renderBucket("defesa", buckets.defesa);
     renderBucket("cura", buckets.cura);
@@ -746,9 +766,10 @@ function renderMainDrifterStats(targetList) {
   const attrBonusMap = {
     STR: [
       ["Max HP Bonus", 0.25, "%"],
-      ["Base Damage and Healing Bonus", 0.05, "%"],
+      ["Base Damage and Healing Bonus", 0, "%"],
       ["Damage Bonus (PvE)", 0.1, "%"],
-      ["Block", 0.5, ""],
+      ["Damage Bonus (PvP)", 0.1, "%"],
+      ["Block", 0.3, ""],
       ["Control Resistance", 0.1, ""]
     ],
     DEX: [
