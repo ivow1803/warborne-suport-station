@@ -20,7 +20,8 @@
         "paragon_int_9",
         "paragon_int_11",
         "paragon_int_10"
-      ]
+      ],
+      "type_bonus": "healing_effect"
     },
     {
       "name": "Sharpshooters",
@@ -41,7 +42,8 @@
         "paragon_int_6",
         "paragon_int_7",
         "paragon_int_4"
-      ]
+      ],
+      "type_bonus": "ranged_dmg_bonus"
     },
     {
       "name": "Quick Thinkers",
@@ -60,7 +62,8 @@
         "paragon_int_3",
         "paragon_int_1",
         "paragon_str_8"
-      ]
+      ],
+      "type_bonus": "skill_cdr"
     },
     {
       "name": "Bulwark",
@@ -81,7 +84,8 @@
         "paragon_str_1",
         "paragon_str_3",
         "paragon_str_9"
-      ]
+      ],
+      "type_bonus": "dmg_resist"
     },
     {
       "name": "Crowd Control",
@@ -102,7 +106,8 @@
         "paragon_str_4",
         "paragon_str_6",
         "paragon_str_5"
-      ]
+      ],
+      "type_bonus": "cc_resist"
     },
     {
       "name": "Task Force",
@@ -123,7 +128,8 @@
         "paragon_dex_9",
         "paragon_dex_3",
         "paragon_dex_7"
-      ]
+      ],
+      "type_bonus": "melee_dmg"
     },
     {
       "name": "Force of Nature",
@@ -144,7 +150,8 @@
         "paragon_dex_9",
         "paragon_dex_2",
         "paragon_dex_8"
-      ]
+      ],
+      "type_bonus": "basic_crit_dmg"
     },
     {
       "name": "Arcane Minds",
@@ -163,7 +170,8 @@
         "paragon_str_3",
         "paragon_dex_1",
         "paragon_int_9"
-      ]
+      ],
+      "type_bonus": "int_flat"
     },
     {
       "name": "Vitality Core",
@@ -184,7 +192,8 @@
         "paragon_dex_4",
         "paragon_int_4",
         "paragon_str_7"
-      ]
+      ],
+      "type_bonus": "max_hp_bonus"
     },
     {
       "name": "Skill Arts",
@@ -203,7 +212,8 @@
         "paragon_str_4",
         "paragon_dex_6",
         "paragon_int_2"
-      ]
+      ],
+      "type_bonus": "skill_dmg_heal"
     },
     {
       "name": "Brute Force",
@@ -222,7 +232,8 @@
         "paragon_str_1",
         "paragon_dex_3",
         "paragon_int_7"
-      ]
+      ],
+      "type_bonus": "str_flat"
     },
     {
       "name": "Fleetfoot",
@@ -241,7 +252,8 @@
         "paragon_str_6",
         "paragon_dex_7",
         "paragon_int_6"
-      ]
+      ],
+      "type_bonus": "agi_flat"
     },
     {
       "name": "Deep Recovery",
@@ -260,7 +272,8 @@
         "paragon_str_5",
         "paragon_dex_4",
         "paragon_int_13"
-      ]
+      ],
+      "type_bonus": "healing_received"
     }
   ]
 }

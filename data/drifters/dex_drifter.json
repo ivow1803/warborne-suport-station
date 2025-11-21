@@ -14,13 +14,17 @@
         "supportBonus": "Attack Speed",
         "supportMalus": "Basic Attack Bonus",
         "supportBonusValue": " +5.38%",
-        "supportMalusValue": " -2.69%"
+        "supportMalusValue": " -2.69%",
+        "type_buff": "attack_speed",
+        "type_debuff": "basic_attack_bonus"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Attack Speed",
         "supportMalus": "Basic Attack Bonus",
         "supportBonusValue": "+9.50%",
-        "supportMalusValue": "-4.75%"
+        "supportMalusValue": "-4.75%",
+        "type_buff": "attack_speed",
+        "type_debuff": "basic_attack_bonus"
       },
       "stats": {
         "Max HP Bonus": "5%",
@@ -80,13 +84,17 @@
         "supportBonus": "Physical Damage Bonus",
         "supportMalus": "Armor ",
         "supportBonusValue": " +4.81%",
-        "supportMalusValue": "-4.81%"
+        "supportMalusValue": "-4.81%",
+        "type_buff": "physical_dmg_bonus",
+        "type_debuff": "armor"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Physical Damage Bonus",
         "supportMalus": "Armor ",
         "supportBonusValue": "+5.70%",
-        "supportMalusValue": "-5.70%"
+        "supportMalusValue": "-5.70%",
+        "type_buff": "physical_dmg_bonus",
+        "type_debuff": "armor"
       },
       "stats": {
         "Max HP Bonus": "6.2%",
@@ -146,13 +154,17 @@
         "supportBonus": "Critical Rate",
         "supportMalus": "Critical Damage",
         "supportBonusValue": " +8.40%",
-        "supportMalusValue": " -6.72%"
+        "supportMalusValue": " -6.72%",
+        "type_buff": "crit_rate",
+        "type_debuff": "crit_dmg"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Basic Attack Critical Rate",
         "supportMalus": "Basic Attack Critical Damage Multiplier",
         "supportBonusValue": "+9.50%",
-        "supportMalusValue": "-7.60%"
+        "supportMalusValue": "-7.60%",
+        "type_buff": "basic_attack_crit_rate",
+        "type_debuff": "basic_attack_crit_dmg"
       },
       "stats": {
         "Max HP Bonus": "7.5%",
@@ -212,13 +224,17 @@
         "supportBonus": "Basic Attack Bonus",
         "supportMalus": "Critical Rate",
         "supportBonusValue": " +4.12%",
-        "supportMalusValue": " -2.48%"
+        "supportMalusValue": " -2.48%",
+        "type_buff": "basic_attack_bonus",
+        "type_debuff": "crit_rate"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Basic Attack Bonus",
         "supportMalus": "Critical Rate",
         "supportBonusValue": "+4.75%",
-        "supportMalusValue": "-2.85%"
+        "supportMalusValue": "-2.85%",
+        "type_buff": "basic_attack_bonus",
+        "type_debuff": "crit_rate"
       },
       "stats": {
         "Max HP Bonus": "7.3%",
@@ -278,13 +294,17 @@
         "supportBonus": "Dodge Rate ",
         "supportMalus": "Basic Attack Bonus",
         "supportBonusValue": "+6.50%",
-        "supportMalusValue": " -4.06%"
+        "supportMalusValue": " -4.06%",
+        "type_buff": "dodge",
+        "type_debuff": "basic_attack_bonus"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Dodge Rate ",
         "supportMalus": "Basic Attack Bonus",
         "supportBonusValue": "+7.60%",
-        "supportMalusValue": "-4.75%"
+        "supportMalusValue": "-4.75%",
+        "type_buff": "dodge",
+        "type_debuff": "basic_attack_bonus"
       },
       "stats": {
         "Max HP Bonus": "3.7%",
@@ -344,13 +364,17 @@
         "supportBonus": "Melee Damage Bonus",
         "supportMalus": "Damage Resistance ",
         "supportBonusValue": " +1.93%",
-        "supportMalusValue": "-1.07%"
+        "supportMalusValue": "-1.07%",
+        "type_buff": "melee_dmg_bonus",
+        "type_debuff": "dmg_resist"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Melee Damage",
         "supportMalus": "Damage Resistance ",
         "supportBonusValue": "+3.42%",
-        "supportMalusValue": "-1.90%"
+        "supportMalusValue": "-1.90%",
+        "type_buff": "melee_dmg",
+        "type_debuff": "dmg_resist"
       },
       "stats": {
         "Max HP Bonus": "6.2%",
@@ -410,13 +434,17 @@
         "supportBonus": "Gathering Rate Bonus",
         "supportMalus": "",
         "supportBonusValue": " +3.74%",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": "gathering_rate",
+        "type_debuff": null
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Gathering Rate Bonus",
         "supportMalus": "",
         "supportBonusValue": "+3.80%",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": "gathering_rate",
+        "type_debuff": null
       },
       "stats": {
         "Max HP Bonus": "5.5%",
@@ -476,13 +504,17 @@
         "supportBonus": "Starfall Token Acquisition Bonus ",
         "supportMalus": "",
         "supportBonusValue": "+2.15%",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": "starfall_token_acq",
+        "type_debuff": null
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Starfall Token Bonus",
         "supportMalus": "",
         "supportBonusValue": "+3.80%",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": "starfall_token_bonus",
+        "type_debuff": null
       },
       "stats": {
         "Max HP Bonus": "5.5%",
@@ -542,13 +574,17 @@
         "supportBonus": "Experience Bonus ",
         "supportMalus": "",
         "supportBonusValue": "+2.15%",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": "exp_bonus",
+        "type_debuff": null
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Experience Bonus",
         "supportMalus": "",
         "supportBonusValue": "+2.81%",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": "exp_bonus",
+        "type_debuff": null
       },
       "stats": {
         "Max HP Bonus": "6.7%",

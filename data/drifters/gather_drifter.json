@@ -32,13 +32,17 @@
         "supportBonus": "Carry Weight",
         "supportMalus": "",
         "supportBonusValue": "+52.5",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": "carry_weight",
+        "type_debuff": null
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "",
         "supportMalus": "",
         "supportBonusValue": "",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": null,
+        "type_debuff": null
       },
       "skill": {
         "gameId": "Avatar_Skill_Gather_1",
@@ -100,13 +104,17 @@
         "supportBonus": "N/A",
         "supportMalus": "",
         "supportBonusValue": "",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": null,
+        "type_debuff": null
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "",
         "supportMalus": "",
         "supportBonusValue": "",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": null,
+        "type_debuff": null
       },
       "skill": {
         "gameId": "Avatar_Skill_Gather_Engineer_Shield",
