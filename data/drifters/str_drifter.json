@@ -60,7 +60,12 @@
         "type": "passive",
         "description": "Creates a circular storm field around the caster for 4s when causing Forced Movement (Pull, Knockback). Deals [Damage Rate: 100%] Physical Damage to enemies in field, inflicting Silence and a 40% chance to miss Basic Attacks for 3s. (\nCooldown: 20s)",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_str_2": {
       "gameId": "paragon_str_2",
@@ -121,7 +126,12 @@
         "type": "passive",
         "description": "After casting a skill, if damage is dealt within 5 seconds, increases Damage Resistance by 25% for 6 seconds. Unleashes frost in all directions, dealing [Damage Rate: 80%] Magic Damage per second and reducing Attack Speed by 30% and Slowing by 30% for 4 seconds (\nCooldown: 20s)",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_str_3": {
       "gameId": "paragon_str_3",
@@ -132,17 +142,18 @@
       "baseStr": "35",
       "baseDex": "5",
       "baseInt": "20",
+      "useMaximizedSupport": false,
       "supportStationBonus": {
-        "supportBonus": "Control Boost (PvP)",
-        "supportMalus": "Damage Resistance",
-        "supportBonusValue": " +3.23",
-        "supportMalusValue": " -1.07%"
-      },
-      "maximizedSupportStationBonus": {
         "supportBonus": "Control Boost (PvP)",
         "supportMalus": "Damage Resistance",
         "supportBonusValue": "+3.23%",
         "supportMalusValue": "-1.07%"
+      },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "",
+        "supportMalus": "",
+        "supportBonusValue": "",
+        "supportMalusValue": ""
       },
       "stats": {
         "Max HP Bonus": "11%",
@@ -182,7 +193,11 @@
         "type": "passive",
         "description": "After taking 5 instances of damage, releases acid outward, dealing [Damage Rate: 70%] Magic Damage to enemies in range, reducing their damage dealt by 25% and Movement Speed by 25% for 4s.",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI"
     },
     "paragon_str_4": {
       "gameId": "paragon_str_4",
@@ -243,7 +258,12 @@
         "type": "passive",
         "description": "When inflicting Immobilize or Hard Control (Stun, Fear, Freeze, Knockup, Petrify), drops a meteor after 1s, dealing[Damage Rate: 150%] Physical Damage and 30% Slow for 3s. (\nCooldown: 5s)",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_str_5": {
       "gameId": "paragon_str_5",
@@ -304,7 +324,12 @@
         "type": "passive",
         "description": "Gains immunity to control effects and 20% Damage Increase for as long as the shield remains after obtaining any shield effect. (Trigger \nCooldown: 20s)",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_str_6": {
       "gameId": "paragon_str_6",
@@ -365,7 +390,12 @@
         "type": "passive",
         "description": "Taking damage equal to 10% of Max HP within 5s after skill cast grants 25% Damage Resistance for 6s. During this time, reflect Magic Damage equal to 65% + 1.5% of Max HP to the attacker. (\nCooldown: 25s)",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_str_7": {
       "gameId": "paragon_str_7",
@@ -426,7 +456,12 @@
         "type": "passive",
         "description": "When inflicting Forced Movement (Pull, Knockback) on enemies, creates a circular prison lasting 4s. Enemies touching the prison take [Damage Rate: 100%] Magic Damage and are Immobilized until the prison ends (\nCooldown: 20s)",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_str_8": {
       "gameId": "paragon_str_8",
@@ -487,7 +522,12 @@
         "type": "passive",
         "description": "After casting the skill, if HP is below 75%, increases Damage Resistance by 25% for 6s. Restores [Healing Rate: 60%] HP to nearby allies every 1s. (\nCooldown: 20s)",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_str_9": {
       "gameId": "paragon_str_9",
@@ -548,7 +588,12 @@
         "type": "passive",
         "description": "While standing still, gain 1 stack of [Steadfast] every second.\n[Steadfast]: +2% Critical Rate, +2% Damage Resistance for 3s. Stacks up to 15 times.",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_str_10": {
       "gameId": "paragon_str_10",
@@ -609,7 +654,12 @@
         "type": "passive",
         "description": "When enemies dies nearby, infuses the caster and Loge",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     }
   }
 }
