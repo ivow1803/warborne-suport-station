@@ -17,7 +17,7 @@
       ],
       "drifterIds": [
         "paragon_int_2",
-        "paragon_int_9",
+        "paragon_int_7",
         "paragon_int_11",
         "paragon_int_10"
       ],
@@ -40,8 +40,8 @@
       "drifterIds": [
         "paragon_int_1",
         "paragon_int_6",
-        "paragon_int_7",
-        "paragon_int_4"
+        "paragon_int_4",
+        "paragon_int_3"
       ],
       "type_bonus": "ranged_dmg_bonus"
     },
@@ -59,9 +59,9 @@
         "all"
       ],
       "drifterIds": [
-        "paragon_int_3",
+        "paragon_int_9",
         "paragon_int_1",
-        "paragon_str_8"
+        "paragon_str_9"
       ],
       "type_bonus": "skill_cdr"
     },
@@ -80,10 +80,10 @@
         "all"
       ],
       "drifterIds": [
-        "paragon_str_10",
+        "paragon_str_6",
         "paragon_str_1",
         "paragon_str_3",
-        "paragon_str_9"
+        "paragon_str_8"
       ],
       "type_bonus": "dmg_resist"
     },
@@ -104,8 +104,8 @@
       "drifterIds": [
         "paragon_str_2",
         "paragon_str_4",
-        "paragon_str_6",
-        "paragon_str_5"
+        "paragon_str_5",
+        "paragon_str_7"
       ],
       "type_bonus": "cc_resist"
     },
@@ -124,10 +124,10 @@
         "melee"
       ],
       "drifterIds": [
-        "paragon_dex_6",
+        "paragon_dex_1",
+        "paragon_dex_5",
         "paragon_dex_9",
-        "paragon_dex_3",
-        "paragon_dex_7"
+        "paragon_dex_3"
       ],
       "type_bonus": "melee_dmg"
     },
@@ -146,9 +146,9 @@
         "melee"
       ],
       "drifterIds": [
-        "paragon_dex_5",
-        "paragon_dex_9",
         "paragon_dex_2",
+        "paragon_dex_5",
+        "paragon_dex_6",
         "paragon_dex_8"
       ],
       "type_bonus": "basic_crit_dmg"
@@ -168,8 +168,8 @@
       ],
       "drifterIds": [
         "paragon_str_3",
-        "paragon_dex_1",
-        "paragon_int_9"
+        "paragon_dex_4",
+        "paragon_int_7"
       ],
       "type_bonus": "int_flat"
     },
@@ -189,9 +189,9 @@
       ],
       "drifterIds": [
         "paragon_str_2",
-        "paragon_dex_4",
-        "paragon_int_4",
-        "paragon_str_7"
+        "paragon_dex_7",
+        "paragon_int_3",
+        "paragon_str_10"
       ],
       "type_bonus": "max_hp_bonus"
     },
@@ -210,7 +210,7 @@
       ],
       "drifterIds": [
         "paragon_str_4",
-        "paragon_dex_6",
+        "paragon_dex_1",
         "paragon_int_2"
       ],
       "type_bonus": "skill_dmg_heal"
@@ -230,8 +230,8 @@
       ],
       "drifterIds": [
         "paragon_str_1",
-        "paragon_dex_3",
-        "paragon_int_7"
+        "paragon_dex_9",
+        "paragon_int_4"
       ],
       "type_bonus": "str_flat"
     },
@@ -249,8 +249,8 @@
         "all"
       ],
       "drifterIds": [
-        "paragon_str_6",
-        "paragon_dex_7",
+        "paragon_str_5",
+        "paragon_dex_3",
         "paragon_int_6"
       ],
       "type_bonus": "agi_flat"
@@ -269,8 +269,8 @@
         "all"
       ],
       "drifterIds": [
-        "paragon_str_5",
-        "paragon_dex_4",
+        "paragon_str_7",
+        "paragon_dex_7",
         "paragon_int_13"
       ],
       "type_bonus": "healing_received"
