@@ -30,6 +30,7 @@ let currentActiveCompanions = [];
 let drifterSortMode = "name";
 let slotEffects = {};
 let useMaximizedDefault = true;
+let drifterNameById = {};
 
 const cleanStr = (s) => (s || "").replace(/\s+/g, " ").trim();
 
@@ -38,17 +39,6 @@ function buildBuffText(bonus, value) {
   const v = cleanStr(value);
   if (!b || b.toUpperCase() === "N/A") return "";
   return `${b} ${v}`.trim();
-}
-
-function hasSupportData(obj) {
-  if (!obj) return false;
-  const fields = [
-    obj.supportBonus,
-    obj.supportMalus,
-    obj.supportBonusValue,
-    obj.supportMalusValue
-  ];
-  return fields.some((v) => Boolean(cleanStr(v)));
 }
 
 function drifterFromJson(d) {
@@ -96,6 +86,7 @@ async function loadExternalData() {
   }
   rawDrifters = rawLoaded;
   drifters = rawDrifters.map((d) => drifterFromJson(d));
+  drifterNameById = Object.fromEntries(drifters.map((d) => [d.id, d.name]));
 
   const compData = await fetchJson(companionsFile);
   if (!compData.companions || !compData.companions.length) {
@@ -233,12 +224,12 @@ function buildCompanionTable() {
     qtyTd.appendChild(qtyPill);
 
     const membersTd = document.createElement("td");
-    const members = comp.memberIds && comp.memberIds.length ? comp.memberIds : comp.members;
+    const members = comp.memberIds;
     for (const name of members) {
       const span = document.createElement("span");
       span.className = "comp-member";
       span.dataset.id = name;
-      span.textContent = name;
+      span.textContent = drifterNameById[name] || name;
       membersTd.appendChild(span);
     }
 
@@ -358,7 +349,7 @@ function updateCompanions() {
     if (!comp) return;
 
     let count = 0;
-    for (const m of comp.members) {
+    for (const m of comp.memberIds) {
       if (selected.has(m)) count++;
     }
 
@@ -398,8 +389,8 @@ function updateDrifterTableHighlight() {
   }
 
   tbody.querySelectorAll(".drifter-table-row").forEach((tr) => {
-    const name = tr.dataset.name;
-    tr.classList.toggle("active", selected.has(name));
+    const id = tr.dataset.id;
+    tr.classList.toggle("active", selected.has(id));
   });
 }
 
