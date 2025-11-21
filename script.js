@@ -52,38 +52,15 @@ function hasSupportData(obj) {
 }
 
 function drifterFromJson(d) {
-  if (d.show === false) return null;
-  if (!d.gameId) return null;
-  const normal = d.supportStationBonus;
-  const maximized = d.maximizedSupportStationBonus;
-  const normalHas = hasSupportData(normal);
-  const maxHas = hasSupportData(maximized);
+  const name = nameAliases[d.name] || d.name;
   const preferMax =
     d.useMaximizedSupport === true ||
     (d.useMaximizedSupport == null && useMaximizedDefault);
-
-  let src = preferMax ? maximized : normal;
-
-  if (!hasSupportData(src)) {
-    if (!preferMax && maxHas) {
-      src = maximized;
-    } else if (preferMax && normalHas) {
-      src = normal;
-    }
-  }
-
-  if (!hasSupportData(src)) return null;
-
-  const usingMax = src === maximized && hasSupportData(maximized);
-  const name = nameAliases[d.name] || d.name;
+  const src = preferMax ? d.maximizedSupportStationBonus : d.supportStationBonus;
   const buff = buildBuffText(src.supportBonus, src.supportBonusValue);
   const debuff = buildBuffText(src.supportMalus, src.supportMalusValue);
-  if (!buff && !debuff) return null;
-
-  const tier = usingMax
-    ? d.maxSupportTier || "XI"
-    : d.supportTier || "I";
-  const level = usingMax
+  const tier = preferMax ? d.maxSupportTier || "XI" : d.supportTier || "I";
+  const level = preferMax
     ? (d.maxSupportLevel != null ? d.maxSupportLevel : 50)
     : (d.supportLevel != null ? d.supportLevel : 1);
 
@@ -91,10 +68,10 @@ function drifterFromJson(d) {
     id: d.gameId,
     name,
     buff: buff || "—",
-    debuff: debuff || "",
-    tier: tier || "?",
-    level: level != null ? level : null,
-    maxed: usingMax || (!normalHas && maxHas)
+    debuff: debuff || "—",
+    tier,
+    level,
+    maxed: preferMax
   };
 }
 
@@ -118,9 +95,7 @@ async function loadExternalData() {
     throw new Error("Nenhum Drifter carregado dos arquivos JSON.");
   }
   rawDrifters = rawLoaded;
-  drifters = rawDrifters
-    .map((d) => drifterFromJson(d))
-    .filter(Boolean);
+  drifters = rawDrifters.map((d) => drifterFromJson(d));
 
   const compData = await fetchJson(companionsFile);
   if (!compData.companions || !compData.companions.length) {
@@ -130,8 +105,7 @@ async function loadExternalData() {
     name: c.name,
     bonus: c.bonus,
     required: Number(c.required || c.driftersNeeded || 0),
-    memberIds: c.drifterIds && c.drifterIds.length ? c.drifterIds : c.drifters,
-    members: c.drifters,
+    memberIds: c.drifterIds,
     category: c.category || "N/A"
   }));
 }
@@ -216,19 +190,11 @@ function updateBuffs() {
     const drifterId = sel.value;
     const drifter = drifters.find(d => d.id === drifterId);
 
-    if (!drifter) {
-      buffCell.textContent = "–";
-      debuffCell.textContent = "–";
-      buffCell.classList.add("muted");
-      debuffCell.classList.add("muted");
-      continue;
-    }
-
     buffCell.textContent = drifter.buff || "—";
     debuffCell.textContent = drifter.debuff || "—";
 
-    buffCell.classList.toggle("muted", !drifter.buff);
-    debuffCell.classList.toggle("muted", !drifter.debuff);
+    buffCell.classList.remove("muted");
+    debuffCell.classList.remove("muted");
 
     currentDrifterEffects.push({
       slot: i,
