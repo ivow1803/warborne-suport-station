@@ -21,10 +21,27 @@ const nameAliases = {
   ShadowSeer: "Shadowseer"
 };
 
+const statTypeMap = {
+  "Armor": "armor",
+  "Magic Resistance": "magic_resist",
+  "Attack Speed Bonus": "attack_speed",
+  "Skill Cooldown Rate Bonus": "skill_cdr",
+  "Physical Damage Bonus": "physical_dmg_bonus",
+  "Magic Damage Bonus": "magic_dmg_bonus",
+  "Healing Bonus": "healing_bonus",
+  "Damage Bonus (PvE)": "dmg_bonus_pve",
+  "Critical Rate": "crit_rate",
+  "Max HP Bonus": "max_hp_bonus",
+  "Max MP Bonus": "max_mp_bonus",
+  "Control Resistance": "control_resist_base",
+  "Base Control Resistance": "control_resist_base"
+};
+
 let rawDrifters = [];
 let drifters = [];
 let companions = [];
 let driftersById = {};
+let rawDriftersById = {};
 
 let currentDrifterEffects = [];
 let currentActiveCompanions = [];
@@ -32,6 +49,9 @@ let drifterSortMode = "name";
 let slotEffects = {};
 let useMaximizedDefault = true;
 let drifterNameById = {};
+let mainDrifterId = "";
+let mainStatsSortMode = "alpha";
+let currentTotalsByType = {};
 
 const cleanStr = (s) => (s || "").replace(/\s+/g, " ").trim();
 
@@ -40,6 +60,16 @@ function buildBuffText(bonus, value) {
   const v = cleanStr(value);
   if (!b || b.toUpperCase() === "N/A") return "";
   return `${b} ${v}`.trim();
+}
+
+function parseStatValue(raw) {
+  if (raw == null) return { raw };
+  const s = String(raw).trim();
+  if (!s) return { raw };
+  const hasPercent = s.includes("%");
+  const num = parseFloat(s.replace("%", "").trim());
+  if (!Number.isFinite(num)) return { raw };
+  return { value: num, unit: hasPercent ? "%" : "", raw };
 }
 
 function drifterFromJson(d) {
@@ -91,6 +121,7 @@ async function loadExternalData() {
     throw new Error("Nenhum Drifter carregado dos arquivos JSON.");
   }
   rawDrifters = rawLoaded;
+  rawDriftersById = Object.fromEntries(rawDrifters.map((r) => [r.gameId, r]));
   drifters = rawDrifters.map((d) => drifterFromJson(d)).filter(Boolean);
   driftersById = Object.fromEntries(drifters.map((d) => [d.id, d]));
   drifterNameById = Object.fromEntries(drifters.map((d) => [d.id, d.name]));
@@ -148,6 +179,37 @@ function initDrifterSelects() {
       updateCompanions();
     });
   }
+
+  const mainSel = document.getElementById("main-drifter");
+  if (mainSel && !mainSel.dataset.initialized) {
+    mainSel.addEventListener("change", () => {
+      mainDrifterId = mainSel.value || "";
+      renderMainDrifterStats();
+    });
+    mainSel.dataset.initialized = "1";
+  }
+  populateMainDrifterSelect();
+}
+
+function populateMainDrifterSelect() {
+  const sel = document.getElementById("main-drifter");
+  if (!sel) return;
+  const current = sel.value || mainDrifterId || "";
+  sel.innerHTML = "";
+  const empty = document.createElement("option");
+  empty.value = "";
+  empty.textContent = "—";
+  sel.appendChild(empty);
+  const sorted = [...drifters].sort((a, b) => a.name.localeCompare(b.name));
+  for (const d of sorted) {
+    const opt = document.createElement("option");
+    opt.value = d.id;
+    opt.textContent = d.name;
+    sel.appendChild(opt);
+  }
+  const nextValue = sorted.find((d) => d.id === current) ? current : "";
+  sel.value = nextValue;
+  mainDrifterId = nextValue;
 }
 
 function updateSelectOptions() {
@@ -416,10 +478,12 @@ function updateSummary() {
   const dList = document.getElementById("summary-drifters");
   const cList = document.getElementById("summary-companions");
   const tList = document.getElementById("summary-totals");
+  const mainList = document.getElementById("summary-main-stats");
 
   dList.innerHTML = "";
   cList.innerHTML = "";
   tList.innerHTML = "";
+  if (mainList) mainList.innerHTML = "";
 
   if (currentDrifterEffects.length === 0) {
     const li = document.createElement("li");
@@ -475,6 +539,7 @@ function updateSummary() {
   const totalEntries = Object.entries(totals).filter(
     ([, data]) => Math.abs(data.value) > 1e-6
   );
+  currentTotalsByType = totals;
 
   const buckets = {
     ataque: [],
@@ -512,7 +577,12 @@ function updateSummary() {
     tList.appendChild(header);
 
     entries
-      .sort(([kA], [kB]) => kA.localeCompare(kB))
+      .sort(([, , , vA], [, , , vB]) => {
+        const sA = vA > 0 ? -1 : vA < 0 ? 1 : 0; // buff first, then debuff
+        const sB = vB > 0 ? -1 : vB < 0 ? 1 : 0;
+        if (sA !== sB) return sA - sB;
+        return 0;
+      })
       .forEach(([label, value, cls]) => {
         const li = document.createElement("li");
         li.textContent = `${label}: ${value}`;
@@ -534,7 +604,7 @@ function updateSummary() {
         (data.value >= 0 ? "+" : "") +
         (hasPercent ? data.value.toFixed(2) + "%" : data.value.toFixed(2));
       const cls = data.value > 0 ? "buff" : data.value < 0 ? "debuff" : "";
-      buckets[categorize(label)].push([label, formatted, cls]);
+      buckets[categorize(label)].push([label, formatted, cls, data.value]);
     });
 
     renderBucket("ataque", buckets.ataque);
@@ -542,6 +612,86 @@ function updateSummary() {
     renderBucket("cura", buckets.cura);
     renderBucket("outros", buckets.outros);
   }
+
+  renderMainDrifterStats(mainList);
+}
+
+function renderMainDrifterStats(targetList) {
+  const list = targetList || document.getElementById("summary-main-stats");
+  if (!list) return;
+  list.innerHTML = "";
+  if (!mainDrifterId) {
+    const li = document.createElement("li");
+    li.className = "muted";
+    li.textContent = "Nenhum Main Drifter selecionado.";
+    list.appendChild(li);
+    return;
+  }
+  const raw = rawDriftersById[mainDrifterId];
+  if (!raw || !raw.stats) {
+    const li = document.createElement("li");
+    li.className = "muted";
+    li.textContent = "Stats não encontrados para o Main Drifter.";
+    list.appendChild(li);
+    return;
+  }
+  const entries = Object.entries(raw.stats).filter(([, v]) => v != null && String(v).trim().length > 0);
+  if (!entries.length) {
+    const li = document.createElement("li");
+    li.className = "muted";
+    li.textContent = "Nenhum stat disponível.";
+    list.appendChild(li);
+    return;
+  }
+  const enriched = entries.map(([key, value]) => {
+    const parsed = parseStatValue(value);
+    const type = statTypeMap[key] || null;
+    const total = type ? currentTotalsByType[type] : null;
+    const delta = total ? total.value : 0;
+    const deltaUnit = total ? total.unit : "";
+    return { key, rawValue: value, parsed, type, delta, deltaUnit };
+  });
+
+  const sorter =
+    mainStatsSortMode === "buff"
+      ? (a, b) => {
+          const sA = a.delta > 0 ? -1 : a.delta < 0 ? 1 : 0;
+          const sB = b.delta > 0 ? -1 : b.delta < 0 ? 1 : 0;
+          if (sA !== sB) return sA - sB;
+          return a.key.localeCompare(b.key);
+        }
+      : (a, b) => a.key.localeCompare(b.key);
+
+  enriched.sort(sorter).forEach((item) => {
+    const li = document.createElement("li");
+    const base = item.parsed;
+    const usePercent = (base.unit === "%") || (item.deltaUnit && item.deltaUnit.includes("%"));
+    const baseVal = Number.isFinite(base.value) ? base.value : null;
+    const deltaVal = item.delta;
+    let finalVal = baseVal;
+    if (baseVal != null) {
+      finalVal = baseVal + deltaVal;
+    }
+
+    const baseStr = baseVal != null
+      ? (usePercent ? baseVal.toFixed(2) + "%" : baseVal.toFixed(2))
+      : item.rawValue;
+    const finalStr = finalVal != null
+      ? (usePercent ? finalVal.toFixed(2) + "%" : finalVal.toFixed(2))
+      : item.rawValue;
+    const deltaStr =
+      deltaVal && Math.abs(deltaVal) > 1e-6
+        ? (deltaVal > 0 ? "+" : "") +
+          (usePercent ? deltaVal.toFixed(2) + "%" : deltaVal.toFixed(2))
+        : null;
+
+    li.textContent = deltaStr
+      ? `${item.key}: ${finalStr} (base ${baseStr}; ${deltaStr})`
+      : `${item.key}: ${baseStr}`;
+    if (item.delta > 0) li.classList.add("buff");
+    if (item.delta < 0) li.classList.add("debuff");
+    list.appendChild(li);
+  });
 }
 
 function updateMaxToggleButton() {
@@ -555,6 +705,8 @@ function rebuildDriftersFromRaw() {
   drifters = rawDrifters.map((d) => drifterFromJson(d)).filter(Boolean);
   driftersById = Object.fromEntries(drifters.map((d) => [d.id, d]));
   drifterNameById = Object.fromEntries(drifters.map((d) => [d.id, d.name]));
+  rawDriftersById = Object.fromEntries(rawDrifters.map((r) => [r.gameId, r]));
+  populateMainDrifterSelect();
 }
 
 function toggleMaximizedMode() {
@@ -565,6 +717,7 @@ function toggleMaximizedMode() {
   buildDrifterTable();
   updateCompanions();
   updateSummary();
+  renderMainDrifterStats();
 }
 
 function showDataLoadError(error) {
@@ -599,6 +752,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   buildCompanionTable();
   updateSummary();
   updateMaxToggleButton();
+  renderMainDrifterStats();
 });
 
 document.addEventListener("click", (evt) => {
@@ -618,6 +772,18 @@ document.addEventListener("click", (evt) => {
       .forEach((b) => b.classList.toggle("active", b.dataset.sort === mode));
     buildDrifterTable();
     updateDrifterTableHighlight();
+  }
+
+  const mainSortBtn = evt.target.closest("#main-stats-sort");
+  if (mainSortBtn) {
+    if (mainStatsSortMode === "alpha") {
+      mainStatsSortMode = "buff";
+      mainSortBtn.textContent = "Ordenar alfabeticamente";
+    } else {
+      mainStatsSortMode = "alpha";
+      mainSortBtn.textContent = "Ordenar por buff/debuff";
+    }
+    renderMainDrifterStats();
   }
 });
 
