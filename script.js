@@ -762,10 +762,11 @@ function renderMainDrifterStats(targetList) {
         ? parseFloat(raw.baseDex || 0) || 0
         : parseFloat(raw.baseInt || 0) || 0;
     const actual = actualAttrs[attr];
-    const gain =
+    let gain =
       actual != null && Number.isFinite(actual)
         ? actual - baseVal
         : gainedAttrs[attr] || 0;
+    if (!Number.isFinite(gain) || gain < 0) gain = 0;
     for (const [statKey, perPoint, unit] of rows) {
       const inc = gain * perPoint;
       if (!attrAdjust[statKey]) attrAdjust[statKey] = { value: 0, unit };
@@ -812,12 +813,10 @@ function renderMainDrifterStats(targetList) {
   }
 
   const statMap = new Map(entries);
-  // Add stats that only come from attribute-derived bonuses (start base at 0)
+  // For stats covered by attribute bonuses, treat base as 0 (so we don't double count),
+  // and add if missing.
   for (const [k, adj] of Object.entries(attrAdjust)) {
-    if (!statMap.has(k)) {
-      const baseVal = adj.unit ? `0${adj.unit}` : "0";
-      statMap.set(k, baseVal);
-    }
+    statMap.set(k, adj.unit ? `0${adj.unit}` : "0");
   }
 
   const enriched = Array.from(statMap.entries()).map(([key, value]) => {
