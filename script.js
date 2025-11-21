@@ -67,6 +67,13 @@ let currentActiveCompanions = [];
 let drifterSortMode = "name";
 let slotEffects = {};
 let useMaximizedDefault = true;
+let slotUseMaximized = {
+  1: true,
+  2: true,
+  3: true,
+  4: true,
+  5: true
+};
 let drifterNameById = {};
 let mainDrifterId = "";
 let mainStatsSortMode = "alpha";
@@ -98,12 +105,14 @@ function parseStatValue(raw) {
   return { value: num, unit: hasPercent ? "%" : "", raw };
 }
 
-function drifterFromJson(d) {
+function drifterFromJson(d, preferOverride = null) {
   if (d.show === false) return null;
   const name = nameAliases[d.name] || d.name;
   const preferMax =
-    d.useMaximizedSupport === true ||
-    (d.useMaximizedSupport == null && useMaximizedDefault);
+    preferOverride != null
+      ? preferOverride
+      : d.useMaximizedSupport === true ||
+        (d.useMaximizedSupport == null && useMaximizedDefault);
   const src = preferMax ? d.maximizedSupportStationBonus : d.supportStationBonus;
   const buff = buildBuffText(src.supportBonus, src.supportBonusValue);
   const debuff = buildBuffText(src.supportMalus, src.supportMalusValue);
@@ -206,6 +215,20 @@ function initDrifterSelects() {
     });
   }
 
+  // Slot-level maximized toggles
+  for (let i = 1; i <= 5; i++) {
+    const cb = document.getElementById(`slot-max-${i}`);
+    if (!cb || cb.dataset.initialized) continue;
+    cb.checked = useMaximizedDefault;
+    slotUseMaximized[i] = cb.checked;
+    cb.addEventListener("change", () => {
+      slotUseMaximized[i] = cb.checked;
+      updateBuffs();
+      updateCompanions();
+    });
+    cb.dataset.initialized = "1";
+  }
+
   const mainSel = document.getElementById("main-drifter");
   if (mainSel && !mainSel.dataset.initialized) {
     mainSel.addEventListener("change", () => {
@@ -290,7 +313,10 @@ function updateBuffs() {
     const debuffCell = document.getElementById(`debuff-${i}`);
 
     const drifterId = sel.value;
-    const drifter = driftersById[drifterId];
+    const preferMax =
+      slotUseMaximized[i] != null ? slotUseMaximized[i] : useMaximizedDefault;
+    const raw = rawDriftersById[drifterId];
+    const drifter = raw ? drifterFromJson(raw, preferMax) : null;
 
     if (!drifter) {
       buffCell.textContent = "–";
@@ -1025,10 +1051,14 @@ function rebuildDriftersFromRaw() {
 
 function toggleMaximizedMode() {
   useMaximizedDefault = !useMaximizedDefault;
+  for (let i = 1; i <= 5; i++) {
+    slotUseMaximized[i] = useMaximizedDefault;
+  }
   rebuildDriftersFromRaw();
   resetMainDrifterLevel();
   resetCustomAttrs();
   updateMaxToggleButton();
+  syncSlotMaxCheckboxes();
   updateBuffs();
   buildDrifterTable();
   updateCompanions();
@@ -1064,6 +1094,15 @@ function updateAttrInputs(actualAttrs) {
         : "";
     inp.value = val === "" ? "" : String(val);
   });
+}
+
+function syncSlotMaxCheckboxes() {
+  for (let i = 1; i <= 5; i++) {
+    const cb = document.getElementById(`slot-max-${i}`);
+    if (!cb) continue;
+    cb.checked =
+      slotUseMaximized[i] != null ? slotUseMaximized[i] : useMaximizedDefault;
+  }
 }
 
 function showDataLoadError(error) {
