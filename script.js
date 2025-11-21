@@ -54,6 +54,11 @@ let mainStatsSortMode = "alpha";
 let currentTotalsByType = {};
 let mainDrifterLevel = 1;
 let mainDrifterMaxLevel = 50;
+let customAttrs = {
+  STR: null,
+  DEX: null,
+  INT: null
+};
 
 const cleanStr = (s) => (s || "").replace(/\s+/g, " ").trim();
 
@@ -187,6 +192,7 @@ function initDrifterSelects() {
     mainSel.addEventListener("change", () => {
       mainDrifterId = mainSel.value || "";
       resetMainDrifterLevel();
+      resetCustomAttrs();
       renderMainDrifterStats();
     });
     mainSel.dataset.initialized = "1";
@@ -634,6 +640,7 @@ function updateSummary() {
 }
 
 function renderMainDrifterStats(targetList) {
+  initAttrInputs();
   const list = targetList || document.getElementById("summary-main-stats");
   if (!list) return;
   list.innerHTML = "";
@@ -645,14 +652,16 @@ function renderMainDrifterStats(targetList) {
     return;
   }
   const raw = rawDriftersById[mainDrifterId];
-  if (!raw || !raw.stats) {
+  if (!raw) {
     const li = document.createElement("li");
     li.className = "muted";
     li.textContent = "Stats não encontrados para o Main Drifter.";
     list.appendChild(li);
     return;
   }
-  const entries = Object.entries(raw.stats).filter(([, v]) => v != null && String(v).trim().length > 0);
+  const entries = raw.stats
+    ? Object.entries(raw.stats).filter(([, v]) => v != null && String(v).trim().length > 0)
+    : [];
 
   const preferMax =
     raw.useMaximizedSupport === true ||
@@ -720,9 +729,43 @@ function renderMainDrifterStats(targetList) {
     ]
   };
 
+  const actualAttrs = {
+    STR:
+      customAttrs.STR != null
+        ? customAttrs.STR
+        : baseAttrs.find(([lbl]) => lbl === "Strength")
+        ? parseFloat(baseAttrs.find(([lbl]) => lbl === "Strength")[1]) +
+          attrPerLevel.STR * Math.max(0, mainDrifterLevel - 1)
+        : null,
+    DEX:
+      customAttrs.DEX != null
+        ? customAttrs.DEX
+        : baseAttrs.find(([lbl]) => lbl === "Dexterity")
+        ? parseFloat(baseAttrs.find(([lbl]) => lbl === "Dexterity")[1]) +
+          attrPerLevel.DEX * Math.max(0, mainDrifterLevel - 1)
+        : null,
+    INT:
+      customAttrs.INT != null
+        ? customAttrs.INT
+        : baseAttrs.find(([lbl]) => lbl === "Intelligence")
+        ? parseFloat(baseAttrs.find(([lbl]) => lbl === "Intelligence")[1]) +
+          attrPerLevel.INT * Math.max(0, mainDrifterLevel - 1)
+        : null
+  };
+
   const attrAdjust = {};
   for (const [attr, rows] of Object.entries(attrBonusMap)) {
-    const gain = gainedAttrs[attr] || 0;
+    const baseVal =
+      attr === "STR"
+        ? parseFloat(raw.baseStr || 0) || 0
+        : attr === "DEX"
+        ? parseFloat(raw.baseDex || 0) || 0
+        : parseFloat(raw.baseInt || 0) || 0;
+    const actual = actualAttrs[attr];
+    const gain =
+      actual != null && Number.isFinite(actual)
+        ? actual - baseVal
+        : gainedAttrs[attr] || 0;
     for (const [statKey, perPoint, unit] of rows) {
       const inc = gain * perPoint;
       if (!attrAdjust[statKey]) attrAdjust[statKey] = { value: 0, unit };
@@ -735,8 +778,13 @@ function renderMainDrifterStats(targetList) {
     baseAttrs.forEach(([label, base, per]) => {
       const baseNum = parseFloat(base);
       const perNum = parseFloat(per);
+      const attrKey =
+        label === "Strength" ? "STR" : label === "Dexterity" ? "DEX" : "INT";
+      const custom = actualAttrs[attrKey];
       const scaled =
-        Number.isFinite(baseNum) && Number.isFinite(perNum)
+        custom != null && Number.isFinite(custom)
+          ? custom
+          : Number.isFinite(baseNum) && Number.isFinite(perNum)
           ? baseNum + perNum * Math.max(0, mainDrifterLevel - 1)
           : null;
       const perText = per != null && String(per).trim() !== "" ? ` (+${per} por nível)` : "";
@@ -744,6 +792,9 @@ function renderMainDrifterStats(targetList) {
       addLine(`${label}: ${baseText}${perText}`);
     });
   }
+
+  // Update inputs shown in UI
+  updateAttrInputs(actualAttrs);
 
   // Support station bonus/malus
   if (supportSrc && (supportSrc.supportBonus || supportSrc.supportMalus)) {
@@ -760,7 +811,16 @@ function renderMainDrifterStats(targetList) {
     // Still render skill/passive below if present
   }
 
-  const enriched = entries.map(([key, value]) => {
+  const statMap = new Map(entries);
+  // Add stats that only come from attribute-derived bonuses (start base at 0)
+  for (const [k, adj] of Object.entries(attrAdjust)) {
+    if (!statMap.has(k)) {
+      const baseVal = adj.unit ? `0${adj.unit}` : "0";
+      statMap.set(k, baseVal);
+    }
+  }
+
+  const enriched = Array.from(statMap.entries()).map(([key, value]) => {
     const parsed = parseStatValue(value);
     const type = statTypeMap[key] || null;
     const total = type ? currentTotalsByType[type] : null;
@@ -819,9 +879,9 @@ function renderMainDrifterStats(targetList) {
     if (deltaStr) parts.push(`buffs ${deltaStr}`);
     const detail = parts.length ? ` (base ${baseStr}; ${parts.join("; ")})` : "";
     li.textContent = `${item.key}: ${finalStr}${detail}`;
-    const totalDelta = (attrVal || 0) + (deltaVal || 0);
-    if (totalDelta > 0) li.classList.add("buff");
-    if (totalDelta < 0) li.classList.add("debuff");
+    // Color only for external buffs/debuffs (support station + companions)
+    if (deltaVal > 0) li.classList.add("buff");
+    if (deltaVal < 0) li.classList.add("debuff");
     list.appendChild(li);
   });
 
@@ -870,6 +930,11 @@ function updateMainLevelLabel() {
   if (label) label.textContent = `Level: ${mainDrifterLevel}`;
 }
 
+function resetCustomAttrs() {
+  customAttrs = { STR: null, DEX: null, INT: null };
+  updateAttrInputs();
+}
+
 function rebuildDriftersFromRaw() {
   drifters = rawDrifters.map((d) => drifterFromJson(d)).filter(Boolean);
   driftersById = Object.fromEntries(drifters.map((d) => [d.id, d]));
@@ -882,12 +947,43 @@ function toggleMaximizedMode() {
   useMaximizedDefault = !useMaximizedDefault;
   rebuildDriftersFromRaw();
   resetMainDrifterLevel();
+  resetCustomAttrs();
   updateMaxToggleButton();
   updateBuffs();
   buildDrifterTable();
   updateCompanions();
   updateSummary();
   renderMainDrifterStats();
+}
+
+function initAttrInputs() {
+  const inputs = document.querySelectorAll(".attr-input");
+  inputs.forEach((inp) => {
+    if (inp.dataset.initialized) return;
+    inp.addEventListener("input", () => {
+      const attr = inp.dataset.attr;
+      if (!attr) return;
+      const val = parseFloat(inp.value);
+      customAttrs[attr] = Number.isFinite(val) ? val : null;
+      renderMainDrifterStats();
+    });
+    inp.dataset.initialized = "1";
+  });
+}
+
+function updateAttrInputs(actualAttrs) {
+  const inputs = document.querySelectorAll(".attr-input");
+  inputs.forEach((inp) => {
+    const attr = inp.dataset.attr;
+    if (!attr) return;
+    const val =
+      customAttrs[attr] != null && Number.isFinite(customAttrs[attr])
+        ? customAttrs[attr]
+        : actualAttrs && Number.isFinite(actualAttrs[attr])
+        ? actualAttrs[attr]
+        : "";
+    inp.value = val === "" ? "" : String(val);
+  });
 }
 
 function showDataLoadError(error) {
