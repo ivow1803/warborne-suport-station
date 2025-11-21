@@ -10,6 +10,7 @@
       "baseStr": "20",
       "baseDex": "20",
       "baseInt": "20",
+      "useMaximizedSupport": false,
       "stats": {
         "Max HP Bonus": "%",
         "Max MP Bonus": "%",
@@ -28,16 +29,20 @@
         "Control Resistance": ""
       },
       "supportStationBonus": {
-        "supportBonus": "Gathering Rate & Yield",
-        "supportMalus": "9.5% & 9.9%",
-        "supportBonusValue": "",
-        "supportMalusValue": ""
-      },
-      "maximizedSupportStationBonus": {
         "supportBonus": "Carry Weight",
         "supportMalus": "",
         "supportBonusValue": "+52.5",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": "carry_weight",
+        "type_debuff": null
+      },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "",
+        "supportMalus": "",
+        "supportBonusValue": "",
+        "supportMalusValue": "",
+        "type_buff": null,
+        "type_debuff": null
       },
       "skill": {
         "gameId": "Avatar_Skill_Gather_1",
@@ -60,18 +65,24 @@
         "type": "passive",
         "description": "Increases own weight limit by 200",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI"
     },
     "paragon_gather_4": {
       "isActive": false,
       "gameId": "paragon_gather_4",
       "name": "TBA",
+      "show": false,
       "strBonus": "N/A",
       "dexBonus": "N/A",
       "intBonus": "N/A",
       "baseStr": "",
       "baseDex": "",
       "baseInt": "",
+      "useMaximizedSupport": false,
       "stats": {
         "Max HP Bonus": "%",
         "Max MP Bonus": "%",
@@ -93,7 +104,17 @@
         "supportBonus": "N/A",
         "supportMalus": "",
         "supportBonusValue": "",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": null,
+        "type_debuff": null
+      },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "",
+        "supportMalus": "",
+        "supportBonusValue": "",
+        "supportMalusValue": "",
+        "type_buff": null,
+        "type_debuff": null
       },
       "skill": {
         "gameId": "Avatar_Skill_Gather_Engineer_Shield",
@@ -116,63 +137,11 @@
         "type": "passive",
         "description": "N/A",
         "tierUnlock": "4"
-      }
-    },
-    "paragon_gather_3": {
-      "isActive": false,
-      "gameId": "paragon_gather_3",
-      "name": "TBA",
-      "strBonus": "N/A",
-      "dexBonus": "N/A",
-      "intBonus": "N/A",
-      "baseStr": "",
-      "baseDex": "",
-      "baseInt": "",
-      "stats": {
-        "Max HP Bonus": "%",
-        "Max MP Bonus": "%",
-        "Attack Speed Bonus": "%",
-        "Casting Speed Bonus": "%",
-        "Skill Cooldown Rate Bonus": "%",
-        "Physical Damage Bonus": "%",
-        "Magic Damage Bonus": "%",
-        "Healing Bonus": "%",
-        "Damage Bonus (PvE)": "%",
-        "Critical Rate": "%",
-        "Tenacity Penetration": "%",
-        "Armor": "",
-        "Magic Resistance": "",
-        "Block": "",
-        "Control Resistance": ""
       },
-      "supportStationBonus": {
-        "supportBonus": "N/A",
-        "supportMalus": "",
-        "supportBonusValue": "",
-        "supportMalusValue": ""
-      },
-      "skill": {
-        "gameId": "Avatar_Skill_Gather_Scout_StunTrap",
-        "gearName": "N/A",
-        "skillName": "N/A",
-        "manaCost": "N/A",
-        "cooldown": "N/A",
-        "castingRange": "N/A",
-        "type": "skill",
-        "description": "N/A",
-        "tierUnlock": "1"
-      },
-      "passive": {
-        "gameId": "Avatar_Skill_Gather_Scout_Passive",
-        "gearName": "N/A",
-        "skillName": "N/A",
-        "manaCost": "N/A",
-        "cooldown": "N/A",
-        "castingRange": "N/A",
-        "type": "passive",
-        "description": "N/A",
-        "tierUnlock": "4"
-      }
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI"
     }
   }
 }

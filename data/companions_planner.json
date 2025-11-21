@@ -5,105 +5,275 @@
       "name": "Healing Circle",
       "bonus": "Increases Healing Effect by 4%",
       "required": 2,
-      "drifters": ["Solenne", "Moonveil", "Revelation", "Helix"],
+      "drifters": [
+        "Solenne",
+        "Moonveil",
+        "Revelation",
+        "Helix"
+      ],
       "category": "Healer",
-      "tags": ["all"]
+      "tags": [
+        "all"
+      ],
+      "drifterIds": [
+        "paragon_int_2",
+        "paragon_int_9",
+        "paragon_int_11",
+        "paragon_int_10"
+      ],
+      "type_bonus": "healing_effect"
     },
     {
       "name": "Sharpshooters",
       "bonus": "Increases Ranged Damage by 4%",
       "required": 2,
-      "drifters": ["Shadowseer", "Raven", "Veska", "Hive Queen"],
+      "drifters": [
+        "Shadowseer",
+        "Raven",
+        "Veska",
+        "Hive Queen"
+      ],
       "category": "DPS",
-      "tags": ["ranged"]
+      "tags": [
+        "ranged"
+      ],
+      "drifterIds": [
+        "paragon_int_1",
+        "paragon_int_6",
+        "paragon_int_7",
+        "paragon_int_4"
+      ],
+      "type_bonus": "ranged_dmg_bonus"
     },
     {
       "name": "Quick Thinkers",
       "bonus": "Increases Skill Cooldown Speed by 2.5%",
       "required": 2,
-      "drifters": ["Astral Magus", "Shadowseer", "Mad Barrel"],
+      "drifters": [
+        "Astral Magus",
+        "Shadowseer",
+        "Mad Barrel"
+      ],
       "category": "Healer",
-      "tags": ["all"]
+      "tags": [
+        "all"
+      ],
+      "drifterIds": [
+        "paragon_int_3",
+        "paragon_int_1",
+        "paragon_str_8"
+      ],
+      "type_bonus": "skill_cdr"
     },
     {
       "name": "Bulwark",
       "bonus": "Damage Resistance Enhanced by 2%",
       "required": 2,
-      "drifters": ["Durion", "Sirokos", "Izzy", "Auri"],
+      "drifters": [
+        "Durion",
+        "Sirokos",
+        "Izzy",
+        "Auri"
+      ],
       "category": "Tank",
-      "tags": ["all"]
+      "tags": [
+        "all"
+      ],
+      "drifterIds": [
+        "paragon_str_10",
+        "paragon_str_1",
+        "paragon_str_3",
+        "paragon_str_9"
+      ],
+      "type_bonus": "dmg_resist"
     },
     {
       "name": "Crowd Control",
       "bonus": "Increases Crowd Control Resistance by 5",
       "required": 2,
-      "drifters": ["Kyra", "Varnax", "Aegis", "Draknor"],
+      "drifters": [
+        "Kyra",
+        "Varnax",
+        "Aegis",
+        "Draknor"
+      ],
       "category": "Tank",
-      "tags": ["all"]
+      "tags": [
+        "all"
+      ],
+      "drifterIds": [
+        "paragon_str_2",
+        "paragon_str_4",
+        "paragon_str_6",
+        "paragon_str_5"
+      ],
+      "type_bonus": "cc_resist"
     },
     {
       "name": "Task Force",
       "bonus": "Increases Melee Damage by 4%",
       "required": 2,
-      "drifters": ["Elektrix", "Vryssia", "Illusarch", "Overdrive"],
+      "drifters": [
+        "Elektrix",
+        "Vryssia",
+        "Illusarch",
+        "Overdrive"
+      ],
       "category": "DPS",
-      "tags": ["melee"]
+      "tags": [
+        "melee"
+      ],
+      "drifterIds": [
+        "paragon_dex_6",
+        "paragon_dex_9",
+        "paragon_dex_3",
+        "paragon_dex_7"
+      ],
+      "type_bonus": "melee_dmg"
     },
     {
       "name": "Force of Nature",
       "bonus": "Increases Critical Damage of Basic Attack by 8%",
       "required": 2,
-      "drifters": ["Nyxa", "Vryssia", "Umbra", "Blade"],
+      "drifters": [
+        "Nyxa",
+        "Vryssia",
+        "Umbra",
+        "Blade"
+      ],
       "category": "DPS",
-      "tags": ["melee"]
+      "tags": [
+        "melee"
+      ],
+      "drifterIds": [
+        "paragon_dex_5",
+        "paragon_dex_9",
+        "paragon_dex_2",
+        "paragon_dex_8"
+      ],
+      "type_bonus": "basic_crit_dmg"
     },
     {
       "name": "Arcane Minds",
       "bonus": "Increases Intelligence by 10",
       "required": 3,
-      "drifters": ["Izzy", "Zero", "Moonveil"],
+      "drifters": [
+        "Izzy",
+        "Zero",
+        "Moonveil"
+      ],
       "category": "Healer",
-      "tags": ["all"]
+      "tags": [
+        "all"
+      ],
+      "drifterIds": [
+        "paragon_str_3",
+        "paragon_dex_1",
+        "paragon_int_9"
+      ],
+      "type_bonus": "int_flat"
     },
     {
       "name": "Vitality Core",
       "bonus": "Max HP increased by 4%",
       "required": 3,
-      "drifters": ["Kyra", "Sanguor", "Hive Queen", "Tayana"],
+      "drifters": [
+        "Kyra",
+        "Sanguor",
+        "Hive Queen",
+        "Tayana"
+      ],
       "category": "Tank",
-      "tags": ["all"]
+      "tags": [
+        "all"
+      ],
+      "drifterIds": [
+        "paragon_str_2",
+        "paragon_dex_4",
+        "paragon_int_4",
+        "paragon_str_7"
+      ],
+      "type_bonus": "max_hp_bonus"
     },
     {
       "name": "Skill Arts",
       "bonus": "Enhancement to Skill Damage and Healing by 2.5%",
       "required": 3,
-      "drifters": ["Varnax", "Elektrix", "Solenne"],
+      "drifters": [
+        "Varnax",
+        "Elektrix",
+        "Solenne"
+      ],
       "category": "Healer",
-      "tags": ["all"]
+      "tags": [
+        "all"
+      ],
+      "drifterIds": [
+        "paragon_str_4",
+        "paragon_dex_6",
+        "paragon_int_2"
+      ],
+      "type_bonus": "skill_dmg_heal"
     },
     {
       "name": "Brute Force",
       "bonus": "Enhances Strength by 10",
       "required": 3,
-      "drifters": ["Sirokos", "Illusarch", "Veska"],
+      "drifters": [
+        "Sirokos",
+        "Illusarch",
+        "Veska"
+      ],
       "category": "Tank",
-      "tags": ["all"]
+      "tags": [
+        "all"
+      ],
+      "drifterIds": [
+        "paragon_str_1",
+        "paragon_dex_3",
+        "paragon_int_7"
+      ],
+      "type_bonus": "str_flat"
     },
     {
       "name": "Fleetfoot",
       "bonus": "Boosts Agility by 10",
       "required": 3,
-      "drifters": ["Aegis", "Overdrive", "Raven"],
+      "drifters": [
+        "Aegis",
+        "Overdrive",
+        "Raven"
+      ],
       "category": "DPS",
-      "tags": ["all"]
+      "tags": [
+        "all"
+      ],
+      "drifterIds": [
+        "paragon_str_6",
+        "paragon_dex_7",
+        "paragon_int_6"
+      ],
+      "type_bonus": "agi_flat"
     },
     {
       "name": "Deep Recovery",
       "bonus": "Increases Healing Received by 2.5%",
       "required": 3,
-      "drifters": ["Draknor", "Sanguor", "Vire"],
+      "drifters": [
+        "Draknor",
+        "Sanguor",
+        "Vire"
+      ],
       "category": "Tank",
-      "tags": ["all"]
+      "tags": [
+        "all"
+      ],
+      "drifterIds": [
+        "paragon_str_5",
+        "paragon_dex_4",
+        "paragon_int_13"
+      ],
+      "type_bonus": "healing_received"
     }
   ]
 }

@@ -1,0 +1,861 @@
+// Utility helpers
+const undesirableDrifters = [
+  "Astral Magus",
+  "Blade",
+  "Draknor",
+  "Illusarch",
+  "Mole",
+  "Revelation",
+  "Sanguor"
+];
+
+const drifterFiles = [
+  "data/drifters/str_drifter.json",
+  "data/drifters/dex_drifter.json",
+  "data/drifters/int_drifter.json",
+  "data/drifters/gather_drifter.json"
+];
+const companionsFile = "data/companions_planner.json";
+
+const nameAliases = {
+  ShadowSeer: "Shadowseer"
+};
+
+const statTypeMap = {
+  "Armor": "armor",
+  "Magic Resistance": "magic_resist",
+  "Attack Speed Bonus": "attack_speed",
+  "Skill Cooldown Rate Bonus": "skill_cdr",
+  "Physical Damage Bonus": "physical_dmg_bonus",
+  "Magic Damage Bonus": "magic_dmg_bonus",
+  "Healing Bonus": "healing_bonus",
+  "Damage Bonus (PvE)": "dmg_bonus_pve",
+  "Critical Rate": "crit_rate",
+  "Max HP Bonus": "max_hp_bonus",
+  "Max MP Bonus": "max_mp_bonus",
+  "Control Resistance": "control_resist_base",
+  "Base Control Resistance": "control_resist_base"
+};
+
+let rawDrifters = [];
+let drifters = [];
+let companions = [];
+let driftersById = {};
+let rawDriftersById = {};
+
+let currentDrifterEffects = [];
+let currentActiveCompanions = [];
+let drifterSortMode = "name";
+let slotEffects = {};
+let useMaximizedDefault = true;
+let drifterNameById = {};
+let mainDrifterId = "";
+let mainStatsSortMode = "alpha";
+let currentTotalsByType = {};
+
+const cleanStr = (s) => (s || "").replace(/\s+/g, " ").trim();
+
+function buildBuffText(bonus, value) {
+  const b = cleanStr(bonus);
+  const v = cleanStr(value);
+  if (!b || b.toUpperCase() === "N/A") return "";
+  return `${b} ${v}`.trim();
+}
+
+function parseStatValue(raw) {
+  if (raw == null) return { raw };
+  const s = String(raw).trim();
+  if (!s) return { raw };
+  const hasPercent = s.includes("%");
+  const num = parseFloat(s.replace("%", "").trim());
+  if (!Number.isFinite(num)) return { raw };
+  return { value: num, unit: hasPercent ? "%" : "", raw };
+}
+
+function drifterFromJson(d) {
+  if (d.show === false) return null;
+  const name = nameAliases[d.name] || d.name;
+  const preferMax =
+    d.useMaximizedSupport === true ||
+    (d.useMaximizedSupport == null && useMaximizedDefault);
+  const src = preferMax ? d.maximizedSupportStationBonus : d.supportStationBonus;
+  const buff = buildBuffText(src.supportBonus, src.supportBonusValue);
+  const debuff = buildBuffText(src.supportMalus, src.supportMalusValue);
+  const typeBuff = src.type_buff || null;
+  const typeDebuff = src.type_debuff || null;
+  const tier = preferMax ? d.maxSupportTier || "XI" : d.supportTier || "I";
+  const level = preferMax
+    ? (d.maxSupportLevel != null ? d.maxSupportLevel : 50)
+    : (d.supportLevel != null ? d.supportLevel : 1);
+
+  return {
+    id: d.gameId,
+    name,
+    buff: buff || "—",
+    debuff: debuff || "—",
+    typeBuff,
+    typeDebuff,
+    tier,
+    level,
+    maxed: preferMax
+  };
+}
+
+async function fetchJson(url) {
+  const resp = await fetch(url);
+  if (!resp.ok) throw new Error(`Falha ao carregar ${url}: ${resp.status}`);
+  return resp.json();
+}
+
+async function loadExternalData() {
+  const rawLoaded = [];
+  for (const file of drifterFiles) {
+    const data = await fetchJson(file);
+    const objs = Object.values(data.drifters || {});
+    for (const obj of objs) {
+      rawLoaded.push(obj);
+    }
+  }
+
+  if (!rawLoaded.length) {
+    throw new Error("Nenhum Drifter carregado dos arquivos JSON.");
+  }
+  rawDrifters = rawLoaded;
+  rawDriftersById = Object.fromEntries(rawDrifters.map((r) => [r.gameId, r]));
+  drifters = rawDrifters.map((d) => drifterFromJson(d)).filter(Boolean);
+  driftersById = Object.fromEntries(drifters.map((d) => [d.id, d]));
+  drifterNameById = Object.fromEntries(drifters.map((d) => [d.id, d.name]));
+
+  const compData = await fetchJson(companionsFile);
+  if (!compData.companions || !compData.companions.length) {
+    throw new Error("Nenhum Companion carregado do arquivo JSON.");
+  }
+  companions = compData.companions.map((c) => ({
+    name: c.name,
+    bonus: c.bonus,
+    required: Number(c.required || c.driftersNeeded || 0),
+    memberIds: c.drifterIds || [],
+    type_bonus: c.type_bonus,
+    category: c.category || "N/A"
+  }));
+}
+
+function parseEffectStr(effectStr) {
+  if (!effectStr || effectStr === "—") return null;
+  const m = effectStr.match(/^(.*)\s([+-]?\d+(?:\.\d+)?)(%?)$/);
+  if (!m) return null;
+  const label = m[1].trim();
+  const value = parseFloat(m[2]);
+  if (!Number.isFinite(value)) return null;
+  const unit = m[3] || "";
+  return { value, label, unit };
+}
+
+function initDrifterSelects() {
+  const selects = [];
+  const sortedByName = [...drifters].sort((a, b) =>
+    a.name.localeCompare(b.name)
+  );
+  for (let i = 1; i <= 5; i++) {
+    const sel = document.getElementById(`slot-${i}`);
+    selects.push(sel);
+    const empty = document.createElement("option");
+    empty.value = "";
+    empty.textContent = "—";
+    sel.appendChild(empty);
+    for (const d of sortedByName) {
+      const opt = document.createElement("option");
+      opt.value = d.id;
+      opt.textContent = d.name;
+      if (undesirableDrifters.includes(d.name)) {
+        opt.classList.add("undesirable-name");
+        opt.style.color = "#f87171";
+      }
+      sel.appendChild(opt);
+    }
+    sel.addEventListener("change", () => {
+      updateSelectOptions();
+      updateBuffs();
+      updateCompanions();
+    });
+  }
+
+  const mainSel = document.getElementById("main-drifter");
+  if (mainSel && !mainSel.dataset.initialized) {
+    mainSel.addEventListener("change", () => {
+      mainDrifterId = mainSel.value || "";
+      renderMainDrifterStats();
+    });
+    mainSel.dataset.initialized = "1";
+  }
+  populateMainDrifterSelect();
+}
+
+function populateMainDrifterSelect() {
+  const sel = document.getElementById("main-drifter");
+  if (!sel) return;
+  const current = sel.value || mainDrifterId || "";
+  sel.innerHTML = "";
+  const empty = document.createElement("option");
+  empty.value = "";
+  empty.textContent = "—";
+  sel.appendChild(empty);
+  const sorted = [...drifters].sort((a, b) => a.name.localeCompare(b.name));
+  for (const d of sorted) {
+    const opt = document.createElement("option");
+    opt.value = d.id;
+    opt.textContent = d.name;
+    sel.appendChild(opt);
+  }
+  const nextValue = sorted.find((d) => d.id === current) ? current : "";
+  sel.value = nextValue;
+  mainDrifterId = nextValue;
+}
+
+function updateSelectOptions() {
+  const selects = [];
+  const selectedByIndex = {};
+
+  for (let i = 1; i <= 5; i++) {
+    const sel = document.getElementById(`slot-${i}`);
+    selects.push(sel);
+    selectedByIndex[i] = sel.value || "";
+  }
+
+    const used = new Set(
+      Object.values(selectedByIndex).filter((v) => v && v.length > 0)
+    );
+
+  selects.forEach((sel, idx) => {
+    const ownValue = selectedByIndex[idx + 1];
+    for (const opt of sel.options) {
+      if (!opt.value) {
+        opt.disabled = false;
+        continue;
+      }
+      opt.disabled = used.has(opt.value) && opt.value !== ownValue;
+    }
+  });
+}
+
+function updateBuffs() {
+  currentDrifterEffects = [];
+  slotEffects = {};
+
+  for (let i = 1; i <= 5; i++) {
+    const sel = document.getElementById(`slot-${i}`);
+    const buffCell = document.getElementById(`buff-${i}`);
+    const debuffCell = document.getElementById(`debuff-${i}`);
+
+    const drifterId = sel.value;
+    const drifter = driftersById[drifterId];
+
+    if (!drifter) {
+      buffCell.textContent = "–";
+      debuffCell.textContent = "–";
+      buffCell.classList.add("muted");
+      debuffCell.classList.add("muted");
+      slotEffects[i] = [];
+      continue;
+    }
+
+    buffCell.textContent = drifter.buff || "—";
+    debuffCell.textContent = drifter.debuff || "—";
+
+    buffCell.classList.remove("muted");
+    debuffCell.classList.remove("muted");
+
+    currentDrifterEffects.push({
+      slot: i,
+      id: drifter.id,
+      name: drifter.name,
+      buff: drifter.buff,
+      debuff: drifter.debuff,
+      typeBuff: drifter.typeBuff,
+      typeDebuff: drifter.typeDebuff
+    });
+
+    const effectsForSlot = [];
+    const effBuff = parseEffectStr(drifter.buff);
+    if (effBuff) effectsForSlot.push({ ...effBuff, type: drifter.typeBuff });
+    const effDebuff = parseEffectStr(drifter.debuff);
+    if (effDebuff) effectsForSlot.push({ ...effDebuff, type: drifter.typeDebuff });
+    slotEffects[i] = effectsForSlot;
+  }
+
+  updateIncompatibilities();
+}
+
+function buildCompanionTable() {
+  const tbody = document.querySelector("#companion-table tbody");
+  tbody.innerHTML = "";
+
+  for (const comp of companions) {
+    const tr = document.createElement("tr");
+    tr.dataset.name = comp.name;
+
+    const bonusTd = document.createElement("td");
+    bonusTd.textContent = comp.bonus;
+
+    const qtyTd = document.createElement("td");
+    const qtyPill = document.createElement("span");
+    qtyPill.className = "pill pill-qty";
+    qtyPill.textContent = comp.required;
+    qtyTd.appendChild(qtyPill);
+
+    const membersTd = document.createElement("td");
+    const members = comp.memberIds;
+    for (const id of members) {
+      const span = document.createElement("span");
+      span.className = "comp-member";
+      span.dataset.id = id;
+      span.textContent = drifterNameById[id];
+      membersTd.appendChild(span);
+    }
+
+    const catTd = document.createElement("td");
+    const catPill = document.createElement("span");
+    catPill.className = "pill pill-cat";
+    catPill.textContent = comp.category;
+    catTd.appendChild(catPill);
+
+    const statusTd = document.createElement("td");
+    const statusPill = document.createElement("span");
+    statusPill.className = "pill inactive";
+    statusPill.textContent = "NO";
+    statusTd.appendChild(statusPill);
+
+    tr.appendChild(bonusTd);
+    tr.appendChild(qtyTd);
+    tr.appendChild(membersTd);
+    tr.appendChild(catTd);
+    tr.appendChild(statusTd);
+
+    tbody.appendChild(tr);
+  }
+
+  updateCompanions();
+}
+
+function buildDrifterTable() {
+  const tbody = document.querySelector("#drifter-table tbody");
+  if (!tbody) return;
+  tbody.innerHTML = "";
+
+  const sorted = [...drifters];
+
+  if (drifterSortMode === "status") {
+    const weight = (d) => {
+      if (d.maxed) return 2;
+      if (d.buff || d.debuff) return 1;
+      return 0;
+    };
+    sorted.sort((a, b) => {
+      const wa = weight(a);
+      const wb = weight(b);
+      if (wa !== wb) return wa - wb;
+      return a.name.localeCompare(b.name);
+    });
+  } else {
+    sorted.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  for (const d of sorted) {
+    const tr = document.createElement("tr");
+    tr.dataset.name = d.name;
+    tr.dataset.id = d.id;
+    tr.classList.add("drifter-table-row");
+
+    const tdName = document.createElement("td");
+    tdName.textContent = d.name;
+    if (undesirableDrifters.includes(d.name)) {
+      tdName.classList.add("undesirable-name");
+    }
+
+    const tdTier = document.createElement("td");
+    tdTier.textContent = d.tier || "?";
+
+    const tdLv = document.createElement("td");
+    tdLv.textContent = d.level != null ? String(d.level) : "?";
+
+    const tdBuff = document.createElement("td");
+    tdBuff.textContent = d.buff || "—";
+
+    const tdDebuff = document.createElement("td");
+    tdDebuff.textContent = d.debuff || "—";
+
+    const tdStatus = document.createElement("td");
+    const badge = document.createElement("span");
+    badge.classList.add("badge");
+    if (d.maxed) {
+      badge.classList.add("badge-max");
+      badge.textContent = "MAX LV/TIER";
+    } else if (d.buff || d.debuff) {
+      badge.classList.add("badge-partial");
+      badge.textContent = "PARCIAL";
+    } else {
+      badge.classList.add("badge-unknown");
+      badge.textContent = "FALTA INFO";
+    }
+    tdStatus.appendChild(badge);
+
+    tr.appendChild(tdName);
+    tr.appendChild(tdTier);
+    tr.appendChild(tdLv);
+    tr.appendChild(tdBuff);
+    tr.appendChild(tdDebuff);
+    tr.appendChild(tdStatus);
+
+    tbody.appendChild(tr);
+  }
+
+  updateDrifterTableHighlight();
+}
+
+function updateCompanions() {
+  const selected = new Set();
+  for (let i = 1; i <= 5; i++) {
+    const id = document.getElementById(`slot-${i}`).value;
+    if (id) selected.add(id);
+  }
+
+  currentActiveCompanions = [];
+
+  const tbody = document.querySelector("#companion-table tbody");
+  const rows = tbody.querySelectorAll("tr");
+
+  rows.forEach((tr, index) => {
+    const comp = companions[index];
+    if (!comp) return;
+
+    let count = 0;
+    for (const m of comp.memberIds) {
+      if (selected.has(m)) count++;
+    }
+
+    const active = count >= comp.required;
+    const statusPill = tr.querySelectorAll(".pill")[2];
+
+    if (statusPill) {
+      statusPill.textContent = active ? "ON" : "OFF";
+      statusPill.className = "pill " + (active ? "active" : "inactive");
+    }
+
+    tr.classList.toggle("companion-row-active", active);
+
+    const memberSpans = tr.querySelectorAll(".comp-member");
+    memberSpans.forEach((span) => {
+      const id = span.dataset.id || span.dataset.name;
+      span.classList.toggle("selected", selected.has(id));
+    });
+
+    if (active) {
+      currentActiveCompanions.push(comp);
+    }
+  });
+
+  updateSummary();
+  updateDrifterTableHighlight();
+}
+
+function updateDrifterTableHighlight() {
+  const tbody = document.querySelector("#drifter-table tbody");
+  if (!tbody) return;
+
+  const selected = new Set();
+  for (let i = 1; i <= 5; i++) {
+    const id = document.getElementById(`slot-${i}`).value;
+    if (id) selected.add(id);
+  }
+
+  tbody.querySelectorAll(".drifter-table-row").forEach((tr) => {
+    const id = tr.dataset.id;
+    tr.classList.toggle("active", selected.has(id));
+  });
+}
+
+function updateSummary() {
+  const dList = document.getElementById("summary-drifters");
+  const cList = document.getElementById("summary-companions");
+  const tList = document.getElementById("summary-totals");
+  const mainList = document.getElementById("summary-main-stats");
+
+  dList.innerHTML = "";
+  cList.innerHTML = "";
+  tList.innerHTML = "";
+  if (mainList) mainList.innerHTML = "";
+
+  if (currentDrifterEffects.length === 0) {
+    const li = document.createElement("li");
+    li.className = "muted";
+    li.textContent = "Nenhum Drifter selecionado.";
+    dList.appendChild(li);
+  } else {
+    for (const eff of currentDrifterEffects) {
+      const li = document.createElement("li");
+      const parts = [];
+      if (eff.buff) parts.push(eff.buff);
+      if (eff.debuff) parts.push(eff.debuff);
+      li.textContent = `${eff.name}: ${parts.join(" / ") || "—"}`;
+      dList.appendChild(li);
+    }
+  }
+
+  if (currentActiveCompanions.length === 0) {
+    const li = document.createElement("li");
+    li.className = "muted";
+    li.textContent = "Nenhum Companion ativo.";
+    cList.appendChild(li);
+  } else {
+    for (const comp of currentActiveCompanions) {
+      const li = document.createElement("li");
+      li.textContent = `${comp.name}: ${comp.bonus} (${comp.category})`;
+      cList.appendChild(li);
+    }
+  }
+
+  const totals = {};
+  const effects = currentDrifterEffects || [];
+
+  function accumulateFrom(effectStr, type) {
+    if (!type) return;
+    const eff = parseEffectStr(effectStr);
+    if (!eff) return;
+    const entry = totals[type] || { value: 0, label: eff.label, unit: eff.unit };
+    entry.value += eff.value;
+    totals[type] = entry;
+  }
+
+  for (const eff of effects) {
+    if (eff.buff) accumulateFrom(eff.buff, eff.typeBuff);
+    if (eff.debuff) accumulateFrom(eff.debuff, eff.typeDebuff);
+  }
+
+  const activeComps = currentActiveCompanions || [];
+  for (const comp of activeComps) {
+    if (comp.bonus) accumulateFrom(comp.bonus, comp.type_bonus);
+  }
+
+  const totalEntries = Object.entries(totals).filter(
+    ([, data]) => Math.abs(data.value) > 1e-6
+  );
+  currentTotalsByType = totals;
+
+  const buckets = {
+    ataque: [],
+    defesa: [],
+    cura: [],
+    outros: []
+  };
+
+  function categorize(label) {
+    const l = label.toLowerCase();
+    if (l.includes("damage") || l.includes("attack") || l.includes("critical") || l.includes("melee") || l.includes("ranged") || l.includes("skill")) {
+      return "ataque";
+    }
+    if (l.includes("resistance") || l.includes("armor") || l.includes("hp") || l.includes("def")) {
+      return "defesa";
+    }
+    if (l.includes("healing") || l.includes("heal")) {
+      return "cura";
+    }
+    return "outros";
+  }
+
+  function renderBucket(key, entries) {
+    if (!entries.length) return;
+    const title = {
+      ataque: "Ataque",
+      defesa: "Defesa",
+      cura: "Cura/Suporte",
+      outros: "Outros"
+    }[key] || key;
+
+    const header = document.createElement("li");
+    header.className = "muted";
+    header.textContent = title;
+    tList.appendChild(header);
+
+    entries
+      .sort(([, , , vA], [, , , vB]) => {
+        const sA = vA > 0 ? -1 : vA < 0 ? 1 : 0; // buff first, then debuff
+        const sB = vB > 0 ? -1 : vB < 0 ? 1 : 0;
+        if (sA !== sB) return sA - sB;
+        return 0;
+      })
+      .forEach(([label, value, cls]) => {
+        const li = document.createElement("li");
+        li.textContent = `${label}: ${value}`;
+        if (cls) li.classList.add(cls);
+        tList.appendChild(li);
+      });
+  }
+
+  if (totalEntries.length === 0) {
+    const li = document.createElement("li");
+    li.className = "muted";
+    li.textContent = "Nenhum efeito combinado.";
+    tList.appendChild(li);
+  } else {
+    totalEntries.forEach(([type, data]) => {
+      const label = data.label || type;
+      const hasPercent = (data.unit || "").includes("%");
+      const formatted =
+        (data.value >= 0 ? "+" : "") +
+        (hasPercent ? data.value.toFixed(2) + "%" : data.value.toFixed(2));
+      const cls = data.value > 0 ? "buff" : data.value < 0 ? "debuff" : "";
+      buckets[categorize(label)].push([label, formatted, cls, data.value]);
+    });
+
+    renderBucket("ataque", buckets.ataque);
+    renderBucket("defesa", buckets.defesa);
+    renderBucket("cura", buckets.cura);
+    renderBucket("outros", buckets.outros);
+  }
+
+  renderMainDrifterStats(mainList);
+}
+
+function renderMainDrifterStats(targetList) {
+  const list = targetList || document.getElementById("summary-main-stats");
+  if (!list) return;
+  list.innerHTML = "";
+  if (!mainDrifterId) {
+    const li = document.createElement("li");
+    li.className = "muted";
+    li.textContent = "Nenhum Main Drifter selecionado.";
+    list.appendChild(li);
+    return;
+  }
+  const raw = rawDriftersById[mainDrifterId];
+  if (!raw || !raw.stats) {
+    const li = document.createElement("li");
+    li.className = "muted";
+    li.textContent = "Stats não encontrados para o Main Drifter.";
+    list.appendChild(li);
+    return;
+  }
+  const entries = Object.entries(raw.stats).filter(([, v]) => v != null && String(v).trim().length > 0);
+  if (!entries.length) {
+    const li = document.createElement("li");
+    li.className = "muted";
+    li.textContent = "Nenhum stat disponível.";
+    list.appendChild(li);
+    return;
+  }
+  const enriched = entries.map(([key, value]) => {
+    const parsed = parseStatValue(value);
+    const type = statTypeMap[key] || null;
+    const total = type ? currentTotalsByType[type] : null;
+    const delta = total ? total.value : 0;
+    const deltaUnit = total ? total.unit : "";
+    return { key, rawValue: value, parsed, type, delta, deltaUnit };
+  });
+
+  const sorter =
+    mainStatsSortMode === "buff"
+      ? (a, b) => {
+          const sA = a.delta > 0 ? -1 : a.delta < 0 ? 1 : 0;
+          const sB = b.delta > 0 ? -1 : b.delta < 0 ? 1 : 0;
+          if (sA !== sB) return sA - sB;
+          return a.key.localeCompare(b.key);
+        }
+      : (a, b) => a.key.localeCompare(b.key);
+
+  enriched.sort(sorter).forEach((item) => {
+    const li = document.createElement("li");
+    const base = item.parsed;
+    const usePercent = (base.unit === "%") || (item.deltaUnit && item.deltaUnit.includes("%"));
+    const baseVal = Number.isFinite(base.value) ? base.value : null;
+    const deltaVal = item.delta;
+    let finalVal = baseVal;
+    if (baseVal != null) {
+      finalVal = baseVal + deltaVal;
+    }
+
+    const baseStr = baseVal != null
+      ? (usePercent ? baseVal.toFixed(2) + "%" : baseVal.toFixed(2))
+      : item.rawValue;
+    const finalStr = finalVal != null
+      ? (usePercent ? finalVal.toFixed(2) + "%" : finalVal.toFixed(2))
+      : item.rawValue;
+    const deltaStr =
+      deltaVal && Math.abs(deltaVal) > 1e-6
+        ? (deltaVal > 0 ? "+" : "") +
+          (usePercent ? deltaVal.toFixed(2) + "%" : deltaVal.toFixed(2))
+        : null;
+
+    li.textContent = deltaStr
+      ? `${item.key}: ${finalStr} (base ${baseStr}; ${deltaStr})`
+      : `${item.key}: ${baseStr}`;
+    if (item.delta > 0) li.classList.add("buff");
+    if (item.delta < 0) li.classList.add("debuff");
+    list.appendChild(li);
+  });
+}
+
+function updateMaxToggleButton() {
+  const btn = document.getElementById("toggle-max-btn");
+  if (!btn) return;
+  btn.classList.toggle("active", useMaximizedDefault);
+  btn.textContent = useMaximizedDefault ? "Maximized ON" : "Maximized OFF";
+}
+
+function rebuildDriftersFromRaw() {
+  drifters = rawDrifters.map((d) => drifterFromJson(d)).filter(Boolean);
+  driftersById = Object.fromEntries(drifters.map((d) => [d.id, d]));
+  drifterNameById = Object.fromEntries(drifters.map((d) => [d.id, d.name]));
+  rawDriftersById = Object.fromEntries(rawDrifters.map((r) => [r.gameId, r]));
+  populateMainDrifterSelect();
+}
+
+function toggleMaximizedMode() {
+  useMaximizedDefault = !useMaximizedDefault;
+  rebuildDriftersFromRaw();
+  updateMaxToggleButton();
+  updateBuffs();
+  buildDrifterTable();
+  updateCompanions();
+  updateSummary();
+  renderMainDrifterStats();
+}
+
+function showDataLoadError(error) {
+  const layout = document.querySelector(".layout");
+  if (!layout) return;
+  const message =
+    (error && error.message) ||
+    "Não foi possível carregar os arquivos JSON.";
+  layout.innerHTML = `
+        <div class="card">
+          <h2>Erro ao carregar dados</h2>
+          <p>${message}</p>
+          <p class="footer-note">
+            Os dados são obtidos dos arquivos em <code>data/drifters</code> e <code>data/companions_planner.json</code>.
+          </p>
+        </div>
+      `;
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    await loadExternalData();
+  } catch (err) {
+    console.error(err);
+    showDataLoadError(err);
+    return;
+  }
+  initDrifterSelects();
+  updateSelectOptions();
+  buildDrifterTable();
+  updateBuffs();
+  buildCompanionTable();
+  updateSummary();
+  updateMaxToggleButton();
+  renderMainDrifterStats();
+});
+
+document.addEventListener("click", (evt) => {
+  const btn = evt.target.closest("#toggle-max-btn");
+  if (btn) {
+    toggleMaximizedMode();
+    return;
+  }
+
+  const sortBtn = evt.target.closest(".sort-button");
+  if (sortBtn) {
+    const mode = sortBtn.dataset.sort;
+    if (!mode || mode === drifterSortMode) return;
+    drifterSortMode = mode;
+    document
+      .querySelectorAll(".sort-button")
+      .forEach((b) => b.classList.toggle("active", b.dataset.sort === mode));
+    buildDrifterTable();
+    updateDrifterTableHighlight();
+  }
+
+  const mainSortBtn = evt.target.closest("#main-stats-sort");
+  if (mainSortBtn) {
+    if (mainStatsSortMode === "alpha") {
+      mainStatsSortMode = "buff";
+      mainSortBtn.textContent = "Ordenar alfabeticamente";
+    } else {
+      mainStatsSortMode = "alpha";
+      mainSortBtn.textContent = "Ordenar por buff/debuff";
+    }
+    renderMainDrifterStats();
+  }
+});
+
+function clearAllSelections() {
+  for (let i = 1; i <= 5; i++) {
+    const sel = document.getElementById(`slot-${i}`);
+    sel.value = "";
+  }
+  updateSelectOptions();
+  updateBuffs();
+  updateCompanions();
+}
+
+function clearSlot(index) {
+  const sel = document.getElementById(`slot-${index}`);
+  if (!sel) return;
+  sel.value = "";
+  updateSelectOptions();
+  updateBuffs();
+  updateCompanions();
+}
+
+function updateIncompatibilities() {
+  const conflictSlots = new Set();
+  const sumsBySlot = {};
+
+  for (let i = 1; i <= 5; i++) {
+    const effects = slotEffects[i] || [];
+    const map = {};
+    for (const eff of effects) {
+      if (!eff.type) continue;
+      map[eff.type] = (map[eff.type] || 0) + eff.value;
+    }
+    sumsBySlot[i] = map;
+  }
+
+  for (let a = 1; a <= 5; a++) {
+    for (let b = a + 1; b <= 5; b++) {
+      const mapA = sumsBySlot[a];
+      const mapB = sumsBySlot[b];
+      if (!mapA || !mapB) continue;
+
+      const keys = new Set([
+        ...Object.keys(mapA),
+        ...Object.keys(mapB),
+      ]);
+      let incompatible = false;
+      for (const key of keys) {
+        const va = mapA[key] || 0;
+        const vb = mapB[key] || 0;
+        if ((va > 0 && vb < 0) || (va < 0 && vb > 0)) {
+          incompatible = true;
+          break;
+        }
+      }
+      if (incompatible) {
+        conflictSlots.add(a);
+        conflictSlots.add(b);
+      }
+    }
+  }
+
+  for (let i = 1; i <= 5; i++) {
+    const incompatible = conflictSlots.has(i);
+    const sel = document.getElementById(`slot-${i}`);
+    const selCell = sel ? sel.closest("td") : null;
+    const buffCell = document.getElementById(`buff-${i}`);
+    const debuffCell = document.getElementById(`debuff-${i}`);
+
+    [selCell, buffCell, debuffCell].forEach((cell) => {
+      if (!cell) return;
+      cell.classList.toggle("incompatible-column", incompatible);
+    });
+  }
+}

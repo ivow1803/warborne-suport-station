@@ -14,13 +14,17 @@
         "supportBonus": "Magic Damage Bonus",
         "supportMalus": "Magic Resistance ",
         "supportBonusValue": " +3.23%",
-        "supportMalusValue": "-3.23%"
+        "supportMalusValue": "-3.23%",
+        "type_buff": "magic_dmg_bonus",
+        "type_debuff": "magic_resist"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Magic Damage Bonus",
         "supportMalus": "Magic Resistance ",
         "supportBonusValue": "+5.70%",
-        "supportMalusValue": "-3.23%"
+        "supportMalusValue": "-3.23%",
+        "type_buff": "magic_dmg_bonus",
+        "type_debuff": "magic_resist"
       },
       "stats": {
         "Max HP Bonus": "6.2%",
@@ -60,7 +64,12 @@
         "type": "passive",
         "description": "Gains 5% Movement Speed for 3s when inflicting anenemy with a DoT effect, stacking up to 6 times.",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_int_2": {
       "gameId": "paragon_int_2",
@@ -75,13 +84,17 @@
         "supportBonus": "Healing Bonus",
         "supportMalus": "Healing Received",
         "supportBonusValue": " +3.23%",
-        "supportMalusValue": " -2.15%"
+        "supportMalusValue": " -2.15%",
+        "type_buff": "healing_bonus",
+        "type_debuff": "healing_received"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Healing Bonus",
         "supportMalus": "Healing Received",
         "supportBonusValue": "+5.15%",
-        "supportMalusValue": "-3.43%"
+        "supportMalusValue": "-3.43%",
+        "type_buff": "healing_bonus",
+        "type_debuff": "healing_received"
       },
       "stats": {
         "Max HP Bonus": "6.2%",
@@ -121,7 +134,12 @@
         "type": "passive",
         "description": "Other allies within 12m receive +20% healing.",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_int_3": {
       "gameId": "paragon_int_3",
@@ -136,13 +154,17 @@
         "supportBonus": "Magic Resistance",
         "supportMalus": "Magic Damage Bonus",
         "supportBonusValue": " +9.25%",
-        "supportMalusValue": " -3.70%"
+        "supportMalusValue": " -3.70%",
+        "type_buff": "magic_resist",
+        "type_debuff": "magic_dmg_bonus"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Magic Resistance",
         "supportMalus": "Magic Damage Bonus",
         "supportBonusValue": "+8.28%",
-        "supportMalusValue": "-3.31%"
+        "supportMalusValue": "-3.31%",
+        "type_buff": "magic_resist",
+        "type_debuff": "magic_dmg_bonus"
       },
       "stats": {
         "Max HP Bonus": "7.5%",
@@ -182,7 +204,12 @@
         "type": "passive",
         "description": "Dealing damage with a skill grants 1 stack of Swarm,restoring [Healing Rate: 7.5%] HP every 2s for 6s(stacks do not boost healing effect). During this time,Damage Resistance increases by 5%, stacking up to 5times. (\nCooldown: 0.5s)",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_int_4": {
       "gameId": "paragon_int_4",
@@ -197,13 +224,17 @@
         "supportBonus": "Damage Resistance (PvP)",
         "supportMalus": "Damage Bonus (PvP)",
         "supportBonusValue": " +1.61%",
-        "supportMalusValue": " -1.07%"
+        "supportMalusValue": " -1.07%",
+        "type_buff": "dmg_resist_pvp",
+        "type_debuff": "dmg_bonus_pvp"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Damage Resistance (PvP)",
         "supportMalus": "Damage Bonus (PvP)",
         "supportBonusValue": "+2.85%",
-        "supportMalusValue": "-1.90%"
+        "supportMalusValue": "-1.90%",
+        "type_buff": "dmg_resist_pvp",
+        "type_debuff": "dmg_bonus_pvp"
       },
       "stats": {
         "Max HP Bonus": "10%",
@@ -243,7 +274,12 @@
         "type": "passive",
         "description": "Retains 1 HP upon taking lethal damage, transforminginto a spirit serpent, cleansing all negative effects(control, DoT, and debuffs), gaining immunity to control,debuffs and damage for 2s, and +100% Movement Speed,and healing 5% HP every 0.5s. (CD: 120s)",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_int_10": {
       "gameId": "paragon_int_10",
@@ -258,13 +294,17 @@
         "supportBonus": "Skill Cooldown Rate",
         "supportMalus": "Skill Bonus ",
         "supportBonusValue": " +1.61%",
-        "supportMalusValue": "-1.07%"
+        "supportMalusValue": "-1.07%",
+        "type_buff": "skill_cdr",
+        "type_debuff": "skill_bonus"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Skill Cooldown Rate",
         "supportMalus": "Skill Bonus ",
         "supportBonusValue": "+2.85%",
-        "supportMalusValue": "-1.90%"
+        "supportMalusValue": "-1.90%",
+        "type_buff": "skill_cdr",
+        "type_debuff": "skill_bonus"
       },
       "stats": {
         "Max HP Bonus": "5.5%",
@@ -304,7 +344,12 @@
         "type": "passive",
         "description": "After dealing damage 5 times, creates two Yin Vortexesaround the caster that deal [Damage Rate: 100%] MagicDamage to enemies hit and reduce healing received by 5%for 4s. Stacks up to 3 times. (\nCooldown: 0.5s)After healing 5 times, creates two Yang Vortexes aroundself that restore [Healing Rate: 50%] HP to allies hit andincrease healing received by 5% for 4s. Stacks up to 3times. (\nCooldown: 0.5s)",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_int_6": {
       "gameId": "paragon_int_6",
@@ -319,13 +364,17 @@
         "supportBonus": "Max MP Bonus",
         "supportMalus": "Max HP Bonus ",
         "supportBonusValue": " +5.38%",
-        "supportMalusValue": "-2.15%"
+        "supportMalusValue": "-2.15%",
+        "type_buff": "max_mp_bonus",
+        "type_debuff": "max_hp_bonus"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Max MP Bonus",
         "supportMalus": "Max HP Bonus ",
         "supportBonusValue": "+5.38%",
-        "supportMalusValue": "-2.15%"
+        "supportMalusValue": "-2.15%",
+        "type_buff": "max_mp_bonus",
+        "type_debuff": "max_hp_bonus"
       },
       "stats": {
         "Max HP Bonus": "7.5%",
@@ -365,7 +414,12 @@
         "type": "passive",
         "description": "Skills grant the caster Raven's Call when dealing damage. Upon reaching 6 stacks, the next skill damage within 8s will deal [Damage Rate: 120%] Magic Damage to up to 5 enemy targets in range, dispel 1 stack of buffs on hit targets, and restore [Healing Rate: 72%] HP to the caster. (Raven's Call ICD: 0.5s, Raven Summon \nCooldown: 10s)",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_int_7": {
       "gameId": "paragon_int_7",
@@ -380,13 +434,17 @@
         "supportBonus": "Damage Bonus (PvP) ",
         "supportMalus": "Damage Resistance (PvP)",
         "supportBonusValue": "+1.61%",
-        "supportMalusValue": " -1.07%"
+        "supportMalusValue": " -1.07%",
+        "type_buff": "dmg_bonus_pvp",
+        "type_debuff": "dmg_resist_pvp"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Damage Bonus (PvP) ",
         "supportMalus": "Damage Resistance (PvP)",
         "supportBonusValue": "+2.85%",
-        "supportMalusValue": "-1.90%"
+        "supportMalusValue": "-1.90%",
+        "type_buff": "dmg_bonus_pvp",
+        "type_debuff": "dmg_resist_pvp"
       },
       "stats": {
         "Max HP Bonus": "8.2%",
@@ -426,7 +484,12 @@
         "type": "passive",
         "description": "Restores Moonveil 1% Max MP to other allies within 12m every 2s",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_int_11": {
       "gameId": "paragon_int_11",
@@ -437,17 +500,22 @@
       "baseStr": "25",
       "baseDex": "10",
       "baseInt": "25",
+      "useMaximizedSupport": false,
       "supportStationBonus": {
-        "supportBonus": "Loot Bonus",
-        "supportMalus": "",
-        "supportBonusValue": " +2.15%",
-        "supportMalusValue": ""
-      },
-      "maximizedSupportStationBonus": {
         "supportBonus": "World Loot Bonus",
         "supportMalus": "",
         "supportBonusValue": "+2.15%",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": "world_loot",
+        "type_debuff": null
+      },
+      "maximizedSupportStationBonus": {
+        "supportBonus": "",
+        "supportMalus": "",
+        "supportBonusValue": "",
+        "supportMalusValue": "",
+        "type_buff": null,
+        "type_debuff": null
       },
       "stats": {
         "Max HP Bonus": "8.7%",
@@ -487,7 +555,11 @@
         "type": "passive",
         "description": "When healing with skills, the target gains 5% additionalDamage Resistance for 4s. Stacks up to 6 times",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI"
     },
     "paragon_int_9": {
       "gameId": "paragon_int_9",
@@ -502,13 +574,17 @@
         "supportBonus": "Gathering Experience Bonus",
         "supportMalus": "",
         "supportBonusValue": " +2.15%",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": "gathering_exp",
+        "type_debuff": null
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Gathering Experience Bonus",
         "supportMalus": "",
         "supportBonusValue": "+3.80%",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": "gathering_exp",
+        "type_debuff": null
       },
       "stats": {
         "Max HP Bonus": "7.5%",
@@ -548,7 +624,12 @@
         "type": "passive",
         "description": "Reduces the cooldown of all skills (not including TacticalItem skills) by 0.3s when this skill deals damage.(\nCooldown: 0.5s)",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_int_13": {
       "gameId": "paragon_int_13",
@@ -559,6 +640,7 @@
       "baseStr": "22",
       "baseDex": "8",
       "baseInt": "30",
+      "useMaximizedSupport": false,
       "stats": {
         "Max HP Bonus": "5.5%",
         "Max MP Bonus": "0%",
@@ -579,14 +661,18 @@
       "supportStationBonus": {
         "supportBonus": "Healing Bonus",
         "supportMalus": "Damage Boost",
-        "supportBonusValue": "3.23%",
-        "supportMalusValue": "-1.07%"
+        "supportBonusValue": "+3.23%",
+        "supportMalusValue": "-1.07%",
+        "type_buff": "healing_bonus",
+        "type_debuff": "dmg_boost"
       },
       "maximizedSupportStationBonus": {
-        "supportBonus": "Healing Bonus",
-        "supportMalus": "Damage Boost",
-        "supportBonusValue": "+3.23%",
-        "supportMalusValue": "-1.07%"
+        "supportBonus": "",
+        "supportMalus": "",
+        "supportBonusValue": "",
+        "supportMalusValue": "",
+        "type_buff": null,
+        "type_debuff": null
       },
       "skill": {
         "gameId": "Paragon_Skill_Int_13",
@@ -607,9 +693,13 @@
         "cooldown": "25",
         "castingRange": "",
         "type": "passive",
-        "description": "Dealing damage with skills or attacks marks the target. After 6s, the mark detonates, inflicting 30% True Damage of total damage received during the mark’s duration, and restoring 20% Health to the caster. (\nCooldown: 25s)",
+        "description": "Dealing damage with skills or attacks marks the target. After 6s, the mark detonates, inflicting 30% True Damage of total damage received during the mark\u2019s duration, and restoring 20% Health to the caster. (\nCooldown: 25s)",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI"
     }
   }
 }
