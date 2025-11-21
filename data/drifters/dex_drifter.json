@@ -60,7 +60,12 @@
         "type": "passive",
         "description": "Basic Attacks grant 1 stack of Electric Charge. At 5stacks, the next attack triggers EMP Blast dealing [Damage Rate: 160%] Physical Damage to enemies inrange.",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_dex_2": {
       "gameId": "paragon_dex_2",
@@ -121,7 +126,12 @@
         "type": "passive",
         "description": "Converts Physical Damage from Basic Attacks into Magic Damage. Eachtime an attack deals damage, it reduces the target's Magic Resistance by 4%, for 4s, stacking upto 10.",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_dex_3": {
       "gameId": "paragon_dex_3",
@@ -182,7 +192,12 @@
         "type": "passive",
         "description": "While without Armor, gains 5 Energy per second, andgains 5 Energy on Basic Attack Crit. When Energy reaches100, restores  [Target-based Max HP 15%] Armor.While with Armor, gains  [Target-based Max HP 3%] Armoron Basic Attack Crit. Armor restored cannot exceed[Target-based Max HP 25%]. (\nTrigger Interval: a cooldownof 1 seconds)",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_dex_4": {
       "gameId": "paragon_dex_4",
@@ -243,7 +258,12 @@
         "type": "passive",
         "description": "Has a 35% chance to dodge Basic Attack damage.",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_dex_5": {
       "gameId": "paragon_dex_5",
@@ -304,7 +324,12 @@
         "type": "passive",
         "description": "Enters Stealth when standing still unhurt and not using skills for a short duration. Taking damage, using skills, or moving will break Stealth. A Warning appears when enemies are within 7 to 14 meters. If an enemy remains within 7 meters for more than 3 seconds, the current Stealth effect ends. While in Stealth, regenerates 3% HP per second.    Adjustment: Removes the effect of restoring 6% HP every 2 seconds while a skill is in Stealth. Adds an effect that restores 3% HP every second while in Stealth. The HP restoration effect while Stealthed is affected by the Healing Received attribute",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_dex_6": {
       "gameId": "paragon_dex_6",
@@ -365,7 +390,12 @@
         "type": "passive",
         "description": "Grants Basic Attacks a 30% chance to trigger a shadowstrike for 6s, dealing [Damage Rate: 100%] PhysicalDamage (\nCooldown: 0.8s).Basic Attack Damage Bonuses affect damage and basicattack critical hits can cause the damage to crit.",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_dex_7": {
       "gameId": "paragon_dex_7",
@@ -426,7 +456,12 @@
         "type": "passive",
         "description": "Gains +4% Damage Resistance and +6% Attack Speed for every 10% HP lost.",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_dex_8": {
       "gameId": "paragon_dex_8",
@@ -487,7 +522,12 @@
         "type": "passive",
         "description": "On a Critical Hit, restores [Healing Rate: 42%] HP and deals additional [Damage Rate: 70%] Physical Damage to nearby enemy targets, reducing their Armor by 15% for 4s. (\nCooldown: 1.3s)",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     },
     "paragon_dex_9": {
       "gameId": "paragon_dex_9",
@@ -548,7 +588,12 @@
         "type": "passive",
         "description": "Skill and Basic Attack hits from the rear deal  [Damage Rate: 60%] additional Physical Damage (\nCooldown: 0.3s).Basic Attack Damage Bonuses affect damage and basicattack critical hits can cause the damage to crit.",
         "tierUnlock": "4"
-      }
+      },
+      "supportLevel": 1,
+      "supportTier": "I",
+      "maxSupportLevel": 50,
+      "maxSupportTier": "XI",
+      "useMaximizedSupport": null
     }
   }
 }

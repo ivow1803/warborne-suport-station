@@ -14,6 +14,14 @@
         e a ativação dos Companions é calculada automaticamente.
       </p>
 
+      <div class="toggle-row">
+        <span>Modo de bônus:</span>
+        <button type="button" id="toggle-max-btn" class="toggle-button active">
+          Maximized ON
+        </button>
+        <span class="muted">Se não houver bônus maximizado, cai no valor normal.</span>
+      </div>
+
       <table class="drifter-grid">
         <thead>
           <tr>
@@ -206,20 +214,60 @@
       return `${b} ${v}`.trim();
     }
 
+    function hasSupportData(obj) {
+      if (!obj) return false;
+      const fields = [
+        obj.supportBonus,
+        obj.supportMalus,
+        obj.supportBonusValue,
+        obj.supportMalusValue
+      ];
+      return fields.some((v) => Boolean(cleanStr(v)));
+    }
+
     function drifterFromJson(d) {
-      const src = d.maximizedSupportStationBonus || d.supportStationBonus;
-      if (!src) return null;
+      if (d.show === false) return null;
+      const normal = d.supportStationBonus;
+      const maximized = d.maximizedSupportStationBonus;
+      const normalHas = hasSupportData(normal);
+      const maxHas = hasSupportData(maximized);
+      const preferMax =
+        d.useMaximizedSupport === true ||
+        (d.useMaximizedSupport == null && useMaximizedDefault);
+
+      let src = preferMax ? maximized : normal;
+
+      // Se a fonte escolhida estiver vazia, tenta a outra disponível.
+      if (!hasSupportData(src)) {
+        if (!preferMax && maxHas) {
+          src = maximized;
+        } else if (preferMax && normalHas) {
+          src = normal;
+        }
+      }
+
+      if (!hasSupportData(src)) return null;
+
+      const usingMax = src === maximized && hasSupportData(maximized);
       const name = nameAliases[d.name] || d.name;
       const buff = buildBuffText(src.supportBonus, src.supportBonusValue);
       const debuff = buildBuffText(src.supportMalus, src.supportMalusValue);
       if (!buff && !debuff) return null;
+
+      const tier = usingMax
+        ? d.maxSupportTier || "XI"
+        : d.supportTier || "I";
+      const level = usingMax
+        ? (d.maxSupportLevel != null ? d.maxSupportLevel : 50)
+        : (d.supportLevel != null ? d.supportLevel : 1);
+
       return {
         name,
         buff: buff || "—",
         debuff: debuff || "",
-        tier: "XI",
-        level: 50,
-        maxed: true
+        tier: tier || "?",
+        level: level != null ? level : null,
+        maxed: usingMax || (!normalHas && maxHas)
       };
     }
 
@@ -231,20 +279,22 @@
 
     async function loadExternalData() {
       // Carrega drifters a partir dos arquivos JSON (formato Elkite + maximized).
-      const loaded = [];
+      const rawLoaded = [];
       for (const file of drifterFiles) {
         const data = await fetchJson(file);
         const objs = Object.values(data.drifters || {});
         for (const obj of objs) {
-          const d = drifterFromJson(obj);
-          if (d) loaded.push(d);
+          rawLoaded.push(obj);
         }
       }
 
-      if (!loaded.length) {
+      if (!rawLoaded.length) {
         throw new Error("Nenhum Drifter carregado dos arquivos JSON.");
       }
-      drifters = loaded;
+      rawDrifters = rawLoaded;
+      drifters = rawDrifters
+        .map((d) => drifterFromJson(d))
+        .filter(Boolean);
 
       // Carrega companions a partir do JSON externo.
       const compData = await fetchJson(companionsFile);
@@ -261,6 +311,7 @@
     }
 
     // Dados de Drifters e Companions são preenchidos exclusivamente via JSON externo.
+    let rawDrifters = [];
     let drifters = [];
     let companions = [];
 
@@ -268,6 +319,7 @@
     let currentActiveCompanions = [];
     let drifterSortMode = "name";
     let slotEffects = {};
+    let useMaximizedDefault = true;
 
     function parseEffectStr(effectStr) {
       if (!effectStr || effectStr === "—") return null;
@@ -445,9 +497,9 @@
 
       if (drifterSortMode === "status") {
         const weight = (d) => {
-          if (!d.level && d.tier === "?") return 0; // falta info
           if (d.maxed) return 2; // max
-          return 1; // parcial
+          if (d.buff || d.debuff) return 1; // parcial (tem algum dado)
+          return 0; // falta info
         };
         sorted.sort((a, b) => {
           const wa = weight(a);
@@ -489,7 +541,7 @@
         if (d.maxed) {
           badge.classList.add("badge-max");
           badge.textContent = "MAX LV/TIER";
-        } else if (d.level != null || d.tier !== "?") {
+        } else if (d.buff || d.debuff) {
           badge.classList.add("badge-partial");
           badge.textContent = "PARCIAL";
         } else {
@@ -669,6 +721,29 @@
       }
     }
 
+    function updateMaxToggleButton() {
+      const btn = document.getElementById("toggle-max-btn");
+      if (!btn) return;
+      btn.classList.toggle("active", useMaximizedDefault);
+      btn.textContent = useMaximizedDefault ? "Maximized ON" : "Maximized OFF";
+    }
+
+    function rebuildDriftersFromRaw() {
+      drifters = rawDrifters
+        .map((d) => drifterFromJson(d))
+        .filter(Boolean);
+    }
+
+    function toggleMaximizedMode() {
+      useMaximizedDefault = !useMaximizedDefault;
+      rebuildDriftersFromRaw();
+      updateMaxToggleButton();
+      updateBuffs();
+      buildDrifterTable();
+      updateCompanions();
+      updateSummary();
+    }
+
     function showDataLoadError(error) {
       const layout = document.querySelector(".layout");
       if (!layout) return;
@@ -700,6 +775,13 @@
       updateBuffs();
       buildCompanionTable();
       updateSummary();
+      updateMaxToggleButton();
+    });
+
+    document.addEventListener("click", (evt) => {
+      const btn = evt.target.closest("#toggle-max-btn");
+      if (!btn) return;
+      toggleMaximizedMode();
     });
 
     // Limpa todos os slots de Drifter de uma vez.
