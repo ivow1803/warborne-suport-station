@@ -52,6 +52,8 @@ let drifterNameById = {};
 let mainDrifterId = "";
 let mainStatsSortMode = "alpha";
 let currentTotalsByType = {};
+let mainDrifterLevel = 1;
+let mainDrifterMaxLevel = 50;
 
 const cleanStr = (s) => (s || "").replace(/\s+/g, " ").trim();
 
@@ -184,11 +186,26 @@ function initDrifterSelects() {
   if (mainSel && !mainSel.dataset.initialized) {
     mainSel.addEventListener("change", () => {
       mainDrifterId = mainSel.value || "";
+      resetMainDrifterLevel();
       renderMainDrifterStats();
     });
     mainSel.dataset.initialized = "1";
   }
   populateMainDrifterSelect();
+
+  const levelControls = document.getElementById("main-level-controls");
+  if (levelControls && !levelControls.dataset.initialized) {
+    levelControls.addEventListener("click", (e) => {
+      const btn = e.target.closest(".lvl-btn");
+      if (!btn) return;
+      const step = Number(btn.dataset.step || 0);
+      if (!Number.isFinite(step) || !mainDrifterId) return;
+      setMainDrifterLevel(mainDrifterLevel + step);
+      renderMainDrifterStats();
+    });
+    levelControls.dataset.initialized = "1";
+  }
+  updateMainLevelLabel();
 }
 
 function populateMainDrifterSelect() {
@@ -636,20 +653,122 @@ function renderMainDrifterStats(targetList) {
     return;
   }
   const entries = Object.entries(raw.stats).filter(([, v]) => v != null && String(v).trim().length > 0);
-  if (!entries.length) {
+
+  const preferMax =
+    raw.useMaximizedSupport === true ||
+    (raw.useMaximizedSupport == null && useMaximizedDefault);
+  const supportSrc = preferMax
+    ? raw.maximizedSupportStationBonus || raw.supportStationBonus
+    : raw.supportStationBonus;
+
+  const addHeader = (text) => {
     const li = document.createElement("li");
     li.className = "muted";
-    li.textContent = "Nenhum stat disponível.";
+    li.textContent = text;
     list.appendChild(li);
-    return;
+  };
+
+  const addLine = (text, cls) => {
+    const li = document.createElement("li");
+    li.textContent = text;
+    if (cls) li.classList.add(cls);
+    list.appendChild(li);
+  };
+
+  // Base attributes
+  const baseAttrs = [
+    ["Strength", raw.baseStr, raw.strBonus],
+    ["Dexterity", raw.baseDex, raw.dexBonus],
+    ["Intelligence", raw.baseInt, raw.intBonus]
+  ].filter(([, base]) => base != null);
+
+  // Attribute gains per level (n-1 levels)
+  const attrPerLevel = {
+    STR: parseFloat(raw.strBonus || 0) || 0,
+    DEX: parseFloat(raw.dexBonus || 0) || 0,
+    INT: parseFloat(raw.intBonus || 0) || 0
+  };
+  const gainedAttrs = {
+    STR: attrPerLevel.STR * Math.max(0, mainDrifterLevel - 1),
+    DEX: attrPerLevel.DEX * Math.max(0, mainDrifterLevel - 1),
+    INT: attrPerLevel.INT * Math.max(0, mainDrifterLevel - 1)
+  };
+
+  // Attribute-derived stat bonuses per point
+  const attrBonusMap = {
+    STR: [
+      ["Max HP Bonus", 0.25, "%"],
+      ["Base Damage and Healing Bonus", 0.05, "%"],
+      ["Damage Bonus (PvE)", 0.1, "%"],
+      ["Block", 0.5, ""],
+      ["Control Resistance", 0.1, ""]
+    ],
+    DEX: [
+      ["Attack Speed Bonus", 0.18, "%"],
+      ["Critical Rate", 0.05, "%"],
+      ["Physical Damage Bonus", 0.25, "%"],
+      ["Tenacity Penetration", 0.15, ""],
+      ["Armor", 0.15, ""]
+    ],
+    INT: [
+      ["MP", 0.5, ""],
+      ["Casting Speed Bonus", 0.3, "%"],
+      ["Skill Cooldown Rate Bonus", 0.06, "%"],
+      ["Magic Damage Bonus", 0.25, "%"],
+      ["Healing Bonus", 0.25, "%"],
+      ["Magic Resistance", 0.15, ""]
+    ]
+  };
+
+  const attrAdjust = {};
+  for (const [attr, rows] of Object.entries(attrBonusMap)) {
+    const gain = gainedAttrs[attr] || 0;
+    for (const [statKey, perPoint, unit] of rows) {
+      const inc = gain * perPoint;
+      if (!attrAdjust[statKey]) attrAdjust[statKey] = { value: 0, unit };
+      attrAdjust[statKey].value += inc;
+    }
   }
+
+  if (baseAttrs.length) {
+    addHeader("Atributos base (+ por nível)");
+    baseAttrs.forEach(([label, base, per]) => {
+      const baseNum = parseFloat(base);
+      const perNum = parseFloat(per);
+      const scaled =
+        Number.isFinite(baseNum) && Number.isFinite(perNum)
+          ? baseNum + perNum * Math.max(0, mainDrifterLevel - 1)
+          : null;
+      const perText = per != null && String(per).trim() !== "" ? ` (+${per} por nível)` : "";
+      const baseText = scaled != null ? scaled.toFixed(2) : base;
+      addLine(`${label}: ${baseText}${perText}`);
+    });
+  }
+
+  // Support station bonus/malus
+  if (supportSrc && (supportSrc.supportBonus || supportSrc.supportMalus)) {
+    addHeader("Support Station");
+    const buff = buildBuffText(supportSrc.supportBonus, supportSrc.supportBonusValue);
+    const debuff = buildBuffText(supportSrc.supportMalus, supportSrc.supportMalusValue);
+    addLine(buff || "Buff: —", buff ? "buff" : "muted");
+    if (debuff) addLine(debuff, "debuff");
+  }
+
+  if (!entries.length) {
+    addHeader("Stats");
+    addLine("Nenhum stat disponível.", "muted");
+    // Still render skill/passive below if present
+  }
+
   const enriched = entries.map(([key, value]) => {
     const parsed = parseStatValue(value);
     const type = statTypeMap[key] || null;
     const total = type ? currentTotalsByType[type] : null;
     const delta = total ? total.value : 0;
     const deltaUnit = total ? total.unit : "";
-    return { key, rawValue: value, parsed, type, delta, deltaUnit };
+    const attrDelta = attrAdjust[key] ? attrAdjust[key].value : 0;
+    const attrUnit = attrAdjust[key] ? attrAdjust[key].unit : "";
+    return { key, rawValue: value, parsed, type, delta, deltaUnit, attrDelta, attrUnit };
   });
 
   const sorter =
@@ -662,15 +781,20 @@ function renderMainDrifterStats(targetList) {
         }
       : (a, b) => a.key.localeCompare(b.key);
 
+  if (enriched.length) addHeader("Stats (base + efeitos)");
+
   enriched.sort(sorter).forEach((item) => {
-    const li = document.createElement("li");
     const base = item.parsed;
-    const usePercent = (base.unit === "%") || (item.deltaUnit && item.deltaUnit.includes("%"));
+    const usePercent =
+      (base.unit === "%") ||
+      (item.deltaUnit && item.deltaUnit.includes("%")) ||
+      (item.attrUnit && item.attrUnit.includes("%"));
     const baseVal = Number.isFinite(base.value) ? base.value : null;
     const deltaVal = item.delta;
+    const attrVal = item.attrDelta || 0;
     let finalVal = baseVal;
     if (baseVal != null) {
-      finalVal = baseVal + deltaVal;
+      finalVal = baseVal + attrVal + deltaVal;
     }
 
     const baseStr = baseVal != null
@@ -679,19 +803,43 @@ function renderMainDrifterStats(targetList) {
     const finalStr = finalVal != null
       ? (usePercent ? finalVal.toFixed(2) + "%" : finalVal.toFixed(2))
       : item.rawValue;
-    const deltaStr =
-      deltaVal && Math.abs(deltaVal) > 1e-6
-        ? (deltaVal > 0 ? "+" : "") +
-          (usePercent ? deltaVal.toFixed(2) + "%" : deltaVal.toFixed(2))
-        : null;
 
-    li.textContent = deltaStr
-      ? `${item.key}: ${finalStr} (base ${baseStr}; ${deltaStr})`
-      : `${item.key}: ${baseStr}`;
-    if (item.delta > 0) li.classList.add("buff");
-    if (item.delta < 0) li.classList.add("debuff");
+    const fmtDelta = (val) =>
+      (val > 0 ? "+" : "") +
+      (usePercent ? val.toFixed(2) + "%" : val.toFixed(2));
+
+    const deltaStr =
+      (deltaVal && Math.abs(deltaVal) > 1e-6) ? fmtDelta(deltaVal) : null;
+    const attrStr =
+      (attrVal && Math.abs(attrVal) > 1e-6) ? fmtDelta(attrVal) : null;
+
+    const li = document.createElement("li");
+    const parts = [];
+    if (attrStr) parts.push(`attr ${attrStr}`);
+    if (deltaStr) parts.push(`buffs ${deltaStr}`);
+    const detail = parts.length ? ` (base ${baseStr}; ${parts.join("; ")})` : "";
+    li.textContent = `${item.key}: ${finalStr}${detail}`;
+    const totalDelta = (attrVal || 0) + (deltaVal || 0);
+    if (totalDelta > 0) li.classList.add("buff");
+    if (totalDelta < 0) li.classList.add("debuff");
     list.appendChild(li);
   });
+
+  // Skills
+  const skill = raw.skill;
+  const passive = raw.passive;
+  if (skill || passive) addHeader("Skills");
+  function fmtSkill(s, label) {
+    if (!s || !s.skillName) return;
+    const parts = [];
+    if (s.cooldown) parts.push(`CD ${s.cooldown}`);
+    if (s.manaCost) parts.push(`MP ${s.manaCost}`);
+    if (s.castingRange) parts.push(`Range ${s.castingRange}`);
+    const suffix = parts.length ? ` (${parts.join(", ")})` : "";
+    addLine(`${label}: ${s.skillName}${suffix}`);
+  }
+  fmtSkill(skill, "Active");
+  fmtSkill(passive, "Passive");
 }
 
 function updateMaxToggleButton() {
@@ -699,6 +847,27 @@ function updateMaxToggleButton() {
   if (!btn) return;
   btn.classList.toggle("active", useMaximizedDefault);
   btn.textContent = useMaximizedDefault ? "Maximized ON" : "Maximized OFF";
+}
+
+function resetMainDrifterLevel() {
+  const raw = rawDriftersById[mainDrifterId];
+  const defaultLevel =
+    (raw && raw.supportLevel != null ? Number(raw.supportLevel) : 1) || 1;
+  const maxLevel =
+    (raw && raw.maxSupportLevel != null ? Number(raw.maxSupportLevel) : 50) || 50;
+  mainDrifterMaxLevel = Math.max(1, maxLevel);
+  setMainDrifterLevel(defaultLevel);
+}
+
+function setMainDrifterLevel(level) {
+  const clamped = Math.min(Math.max(1, Math.round(level)), mainDrifterMaxLevel || 50);
+  mainDrifterLevel = clamped;
+  updateMainLevelLabel();
+}
+
+function updateMainLevelLabel() {
+  const label = document.getElementById("main-level-label");
+  if (label) label.textContent = `Level: ${mainDrifterLevel}`;
 }
 
 function rebuildDriftersFromRaw() {
@@ -712,6 +881,7 @@ function rebuildDriftersFromRaw() {
 function toggleMaximizedMode() {
   useMaximizedDefault = !useMaximizedDefault;
   rebuildDriftersFromRaw();
+  resetMainDrifterLevel();
   updateMaxToggleButton();
   updateBuffs();
   buildDrifterTable();

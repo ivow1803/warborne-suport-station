@@ -1,1 +1,5 @@
 playwright_fetch.js
+scratch_playwright/
+node_modules/
+package.json
+package-lock.json
