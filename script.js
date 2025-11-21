@@ -53,6 +53,7 @@ function hasSupportData(obj) {
 
 function drifterFromJson(d) {
   if (d.show === false) return null;
+  if (!d.gameId) return null;
   const normal = d.supportStationBonus;
   const maximized = d.maximizedSupportStationBonus;
   const normalHas = hasSupportData(normal);
@@ -87,6 +88,7 @@ function drifterFromJson(d) {
     : (d.supportLevel != null ? d.supportLevel : 1);
 
   return {
+    id: d.gameId,
     name,
     buff: buff || "—",
     debuff: debuff || "",
@@ -159,7 +161,7 @@ function initDrifterSelects() {
     sel.appendChild(empty);
     for (const d of sortedByName) {
       const opt = document.createElement("option");
-      opt.value = d.name;
+      opt.value = d.id;
       opt.textContent = d.name;
       if (undesirableDrifters.includes(d.name)) {
         opt.classList.add("undesirable-name");
@@ -185,9 +187,9 @@ function updateSelectOptions() {
     selectedByIndex[i] = sel.value || "";
   }
 
-  const used = new Set(
-    Object.values(selectedByIndex).filter((v) => v && v.length > 0)
-  );
+    const used = new Set(
+      Object.values(selectedByIndex).filter((v) => v && v.length > 0)
+    );
 
   selects.forEach((sel, idx) => {
     const ownValue = selectedByIndex[idx + 1];
@@ -210,8 +212,8 @@ function updateBuffs() {
     const buffCell = document.getElementById(`buff-${i}`);
     const debuffCell = document.getElementById(`debuff-${i}`);
 
-    const name = sel.value;
-    const drifter = drifters.find(d => d.name === name);
+    const drifterId = sel.value;
+    const drifter = drifters.find(d => d.id === drifterId);
 
     if (!drifter) {
       buffCell.textContent = "–";
@@ -229,6 +231,7 @@ function updateBuffs() {
 
     currentDrifterEffects.push({
       slot: i,
+      id: drifter.id,
       name: drifter.name,
       buff: drifter.buff,
       debuff: drifter.debuff
@@ -263,10 +266,11 @@ function buildCompanionTable() {
     qtyTd.appendChild(qtyPill);
 
     const membersTd = document.createElement("td");
-    for (const name of comp.members) {
+    const members = comp.memberIds && comp.memberIds.length ? comp.memberIds : comp.members;
+    for (const name of members) {
       const span = document.createElement("span");
       span.className = "comp-member";
-      span.dataset.name = name;
+      span.dataset.id = name;
       span.textContent = name;
       membersTd.appendChild(span);
     }
@@ -321,6 +325,7 @@ function buildDrifterTable() {
   for (const d of sorted) {
     const tr = document.createElement("tr");
     tr.dataset.name = d.name;
+    tr.dataset.id = d.id;
     tr.classList.add("drifter-table-row");
 
     const tdName = document.createElement("td");
@@ -402,8 +407,8 @@ function updateCompanions() {
 
     const memberSpans = tr.querySelectorAll(".comp-member");
     memberSpans.forEach((span) => {
-      const name = span.dataset.name;
-      span.classList.toggle("selected", selected.has(name));
+      const id = span.dataset.id || span.dataset.name;
+      span.classList.toggle("selected", selected.has(id));
     });
 
     if (active) {
