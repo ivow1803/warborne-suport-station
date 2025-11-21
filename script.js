@@ -467,34 +467,71 @@ function updateSummary() {
     ([, value]) => Math.abs(value) > 1e-6
   );
 
+  const buckets = {
+    ataque: [],
+    defesa: [],
+    cura: [],
+    outros: []
+  };
+
+  function categorize(label) {
+    const l = label.toLowerCase();
+    if (l.includes("damage") || l.includes("attack") || l.includes("critical") || l.includes("melee") || l.includes("ranged") || l.includes("skill")) {
+      return "ataque";
+    }
+    if (l.includes("resistance") || l.includes("armor") || l.includes("hp") || l.includes("def")) {
+      return "defesa";
+    }
+    if (l.includes("healing") || l.includes("heal")) {
+      return "cura";
+    }
+    return "outros";
+  }
+
+  function renderBucket(key, entries) {
+    if (!entries.length) return;
+    const title = {
+      ataque: "Ataque",
+      defesa: "Defesa",
+      cura: "Cura/Suporte",
+      outros: "Outros"
+    }[key] || key;
+
+    const header = document.createElement("li");
+    header.className = "muted";
+    header.textContent = title;
+    tList.appendChild(header);
+
+    entries
+      .sort(([kA], [kB]) => kA.localeCompare(kB))
+      .forEach(([label, value, cls]) => {
+        const li = document.createElement("li");
+        li.textContent = `${label}: ${value}`;
+        if (cls) li.classList.add(cls);
+        tList.appendChild(li);
+      });
+  }
+
   if (totalEntries.length === 0) {
     const li = document.createElement("li");
     li.className = "muted";
     li.textContent = "Nenhum efeito combinado.";
     tList.appendChild(li);
   } else {
-    totalEntries
-      .sort(([kA, vA], [kB, vB]) => {
-        const signA = vA >= 0 ? 0 : 1;
-        const signB = vB >= 0 ? 0 : 1;
-        if (signA !== signB) return signA - signB;
-        return kA.localeCompare(kB);
-      })
-      .forEach(([key, value]) => {
-        const li = document.createElement("li");
-        const hasPercent = key.endsWith("%");
-        const label = hasPercent ? key.slice(0, -1).trim() : key.trim();
-        const formatted =
-          (value >= 0 ? "+" : "") +
-          (hasPercent ? value.toFixed(2) + "%" : value.toFixed(2));
-        li.textContent = `${label}: ${formatted}`;
-        if (value > 0) {
-          li.classList.add("buff");
-        } else if (value < 0) {
-          li.classList.add("debuff");
-        }
-        tList.appendChild(li);
-      });
+    totalEntries.forEach(([key, value]) => {
+      const hasPercent = key.endsWith("%");
+      const label = hasPercent ? key.slice(0, -1).trim() : key.trim();
+      const formatted =
+        (value >= 0 ? "+" : "") +
+        (hasPercent ? value.toFixed(2) + "%" : value.toFixed(2));
+      const cls = value > 0 ? "buff" : value < 0 ? "debuff" : "";
+      buckets[categorize(label)].push([label, formatted, cls]);
+    });
+
+    renderBucket("ataque", buckets.ataque);
+    renderBucket("defesa", buckets.defesa);
+    renderBucket("cura", buckets.cura);
+    renderBucket("outros", buckets.outros);
   }
 }
 
