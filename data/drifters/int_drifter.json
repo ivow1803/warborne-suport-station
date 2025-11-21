@@ -14,13 +14,17 @@
         "supportBonus": "Magic Damage Bonus",
         "supportMalus": "Magic Resistance ",
         "supportBonusValue": " +3.23%",
-        "supportMalusValue": "-3.23%"
+        "supportMalusValue": "-3.23%",
+        "type_buff": "magic_dmg_bonus",
+        "type_debuff": "magic_resist"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Magic Damage Bonus",
         "supportMalus": "Magic Resistance ",
         "supportBonusValue": "+5.70%",
-        "supportMalusValue": "-3.23%"
+        "supportMalusValue": "-3.23%",
+        "type_buff": "magic_dmg_bonus",
+        "type_debuff": "magic_resist"
       },
       "stats": {
         "Max HP Bonus": "6.2%",
@@ -80,13 +84,17 @@
         "supportBonus": "Healing Bonus",
         "supportMalus": "Healing Received",
         "supportBonusValue": " +3.23%",
-        "supportMalusValue": " -2.15%"
+        "supportMalusValue": " -2.15%",
+        "type_buff": "healing_bonus",
+        "type_debuff": "healing_received"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Healing Bonus",
         "supportMalus": "Healing Received",
         "supportBonusValue": "+5.15%",
-        "supportMalusValue": "-3.43%"
+        "supportMalusValue": "-3.43%",
+        "type_buff": "healing_bonus",
+        "type_debuff": "healing_received"
       },
       "stats": {
         "Max HP Bonus": "6.2%",
@@ -146,13 +154,17 @@
         "supportBonus": "Magic Resistance",
         "supportMalus": "Magic Damage Bonus",
         "supportBonusValue": " +9.25%",
-        "supportMalusValue": " -3.70%"
+        "supportMalusValue": " -3.70%",
+        "type_buff": "magic_resist",
+        "type_debuff": "magic_dmg_bonus"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Magic Resistance",
         "supportMalus": "Magic Damage Bonus",
         "supportBonusValue": "+8.28%",
-        "supportMalusValue": "-3.31%"
+        "supportMalusValue": "-3.31%",
+        "type_buff": "magic_resist",
+        "type_debuff": "magic_dmg_bonus"
       },
       "stats": {
         "Max HP Bonus": "7.5%",
@@ -212,13 +224,17 @@
         "supportBonus": "Damage Resistance (PvP)",
         "supportMalus": "Damage Bonus (PvP)",
         "supportBonusValue": " +1.61%",
-        "supportMalusValue": " -1.07%"
+        "supportMalusValue": " -1.07%",
+        "type_buff": "dmg_resist_pvp",
+        "type_debuff": "dmg_bonus_pvp"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Damage Resistance (PvP)",
         "supportMalus": "Damage Bonus (PvP)",
         "supportBonusValue": "+2.85%",
-        "supportMalusValue": "-1.90%"
+        "supportMalusValue": "-1.90%",
+        "type_buff": "dmg_resist_pvp",
+        "type_debuff": "dmg_bonus_pvp"
       },
       "stats": {
         "Max HP Bonus": "10%",
@@ -278,13 +294,17 @@
         "supportBonus": "Skill Cooldown Rate",
         "supportMalus": "Skill Bonus ",
         "supportBonusValue": " +1.61%",
-        "supportMalusValue": "-1.07%"
+        "supportMalusValue": "-1.07%",
+        "type_buff": "skill_cdr",
+        "type_debuff": "skill_bonus"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Skill Cooldown Rate",
         "supportMalus": "Skill Bonus ",
         "supportBonusValue": "+2.85%",
-        "supportMalusValue": "-1.90%"
+        "supportMalusValue": "-1.90%",
+        "type_buff": "skill_cdr",
+        "type_debuff": "skill_bonus"
       },
       "stats": {
         "Max HP Bonus": "5.5%",
@@ -344,13 +364,17 @@
         "supportBonus": "Max MP Bonus",
         "supportMalus": "Max HP Bonus ",
         "supportBonusValue": " +5.38%",
-        "supportMalusValue": "-2.15%"
+        "supportMalusValue": "-2.15%",
+        "type_buff": "max_mp_bonus",
+        "type_debuff": "max_hp_bonus"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Max MP Bonus",
         "supportMalus": "Max HP Bonus ",
         "supportBonusValue": "+5.38%",
-        "supportMalusValue": "-2.15%"
+        "supportMalusValue": "-2.15%",
+        "type_buff": "max_mp_bonus",
+        "type_debuff": "max_hp_bonus"
       },
       "stats": {
         "Max HP Bonus": "7.5%",
@@ -410,13 +434,17 @@
         "supportBonus": "Damage Bonus (PvP) ",
         "supportMalus": "Damage Resistance (PvP)",
         "supportBonusValue": "+1.61%",
-        "supportMalusValue": " -1.07%"
+        "supportMalusValue": " -1.07%",
+        "type_buff": "dmg_bonus_pvp",
+        "type_debuff": "dmg_resist_pvp"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Damage Bonus (PvP) ",
         "supportMalus": "Damage Resistance (PvP)",
         "supportBonusValue": "+2.85%",
-        "supportMalusValue": "-1.90%"
+        "supportMalusValue": "-1.90%",
+        "type_buff": "dmg_bonus_pvp",
+        "type_debuff": "dmg_resist_pvp"
       },
       "stats": {
         "Max HP Bonus": "8.2%",
@@ -477,13 +505,17 @@
         "supportBonus": "World Loot Bonus",
         "supportMalus": "",
         "supportBonusValue": "+2.15%",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": "world_loot",
+        "type_debuff": null
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "",
         "supportMalus": "",
         "supportBonusValue": "",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": null,
+        "type_debuff": null
       },
       "stats": {
         "Max HP Bonus": "8.7%",
@@ -542,13 +574,17 @@
         "supportBonus": "Gathering Experience Bonus",
         "supportMalus": "",
         "supportBonusValue": " +2.15%",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": "gathering_exp",
+        "type_debuff": null
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Gathering Experience Bonus",
         "supportMalus": "",
         "supportBonusValue": "+3.80%",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": "gathering_exp",
+        "type_debuff": null
       },
       "stats": {
         "Max HP Bonus": "7.5%",
@@ -626,13 +662,17 @@
         "supportBonus": "Healing Bonus",
         "supportMalus": "Damage Boost",
         "supportBonusValue": "+3.23%",
-        "supportMalusValue": "-1.07%"
+        "supportMalusValue": "-1.07%",
+        "type_buff": "healing_bonus",
+        "type_debuff": "dmg_boost"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "",
         "supportMalus": "",
         "supportBonusValue": "",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": null,
+        "type_debuff": null
       },
       "skill": {
         "gameId": "Paragon_Skill_Int_13",
@@ -653,7 +693,7 @@
         "cooldown": "25",
         "castingRange": "",
         "type": "passive",
-        "description": "Dealing damage with skills or attacks marks the target. After 6s, the mark detonates, inflicting 30% True Damage of total damage received during the mark’s duration, and restoring 20% Health to the caster. (\nCooldown: 25s)",
+        "description": "Dealing damage with skills or attacks marks the target. After 6s, the mark detonates, inflicting 30% True Damage of total damage received during the mark\u2019s duration, and restoring 20% Health to the caster. (\nCooldown: 25s)",
         "tierUnlock": "4"
       },
       "supportLevel": 1,

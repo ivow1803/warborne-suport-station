@@ -14,13 +14,17 @@
         "supportBonus": "Base Control Resistance",
         "supportMalus": "Damage Boost",
         "supportBonusValue": "+3.23",
-        "supportMalusValue": "-1.07%"
+        "supportMalusValue": "-1.07%",
+        "type_buff": "control_resist_base",
+        "type_debuff": "dmg_boost"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Base Control Resistance",
         "supportMalus": "Damage Boost",
         "supportBonusValue": "+5.70%",
-        "supportMalusValue": "-1.90%"
+        "supportMalusValue": "-1.90%",
+        "type_buff": "control_resist_base",
+        "type_debuff": "dmg_boost"
       },
       "stats": {
         "Max HP Bonus": "11%",
@@ -80,13 +84,17 @@
         "supportBonus": "Armor ",
         "supportMalus": "Physical Damage Bonus",
         "supportBonusValue": "+9.00%",
-        "supportMalusValue": " -3.60%"
+        "supportMalusValue": " -3.60%",
+        "type_buff": "armor",
+        "type_debuff": "physical_dmg_bonus"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Armor ",
         "supportMalus": "Physical Damage Bonus",
         "supportBonusValue": "+9.50%",
-        "supportMalusValue": "-3.80%"
+        "supportMalusValue": "-3.80%",
+        "type_buff": "armor",
+        "type_debuff": "physical_dmg_bonus"
       },
       "stats": {
         "Max HP Bonus": "10%",
@@ -147,13 +155,17 @@
         "supportBonus": "Control Boost (PvP)",
         "supportMalus": "Damage Resistance",
         "supportBonusValue": "+3.23%",
-        "supportMalusValue": "-1.07%"
+        "supportMalusValue": "-1.07%",
+        "type_buff": "control_boost_pvp",
+        "type_debuff": "dmg_resist"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "",
         "supportMalus": "",
         "supportBonusValue": "",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": null,
+        "type_debuff": null
       },
       "stats": {
         "Max HP Bonus": "11%",
@@ -212,13 +224,17 @@
         "supportBonus": "Damage Bonus (PvE)",
         "supportMalus": "Damage Resistance (PvE)",
         "supportBonusValue": " +4.52",
-        "supportMalusValue": " -3.01%"
+        "supportMalusValue": " -3.01%",
+        "type_buff": "dmg_bonus_pve",
+        "type_debuff": "dmg_resist_pve"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Damage Bonus (PvE)",
         "supportMalus": "Damage Resistance (PvE)",
         "supportBonusValue": "+5.70%",
-        "supportMalusValue": "-3.80%"
+        "supportMalusValue": "-3.80%",
+        "type_buff": "dmg_bonus_pve",
+        "type_debuff": "dmg_resist_pve"
       },
       "stats": {
         "Max HP Bonus": "3.7%",
@@ -278,13 +294,17 @@
         "supportBonus": "Damage Resistance (PvE)",
         "supportMalus": "Damage Bonus (PvE) ",
         "supportBonusValue": " +3.23%",
-        "supportMalusValue": "-2.15%"
+        "supportMalusValue": "-2.15%",
+        "type_buff": "dmg_resist_pve",
+        "type_debuff": "dmg_bonus_pve"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Damage Resistance (PvE)",
         "supportMalus": "Damage Bonus (PvE) ",
         "supportBonusValue": "+5.70%",
-        "supportMalusValue": "-3.80%"
+        "supportMalusValue": "-3.80%",
+        "type_buff": "dmg_resist_pve",
+        "type_debuff": "dmg_bonus_pve"
       },
       "stats": {
         "Max HP Bonus": "10%",
@@ -344,13 +364,17 @@
         "supportBonus": "Max HP",
         "supportMalus": "Max MP Bonus",
         "supportBonusValue": " +3.23%",
-        "supportMalusValue": " -3.23%"
+        "supportMalusValue": " -3.23%",
+        "type_buff": "max_hp",
+        "type_debuff": "max_mp_bonus"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Max HP",
         "supportMalus": "Max MP Bonus",
         "supportBonusValue": "+5.70%",
-        "supportMalusValue": "-5.70%"
+        "supportMalusValue": "-5.70%",
+        "type_buff": "max_hp",
+        "type_debuff": "max_mp_bonus"
       },
       "stats": {
         "Max HP Bonus": "11%",
@@ -410,13 +434,17 @@
         "supportBonus": "Gathering Yield Bonus",
         "supportMalus": "",
         "supportBonusValue": " +2.15%",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": "gathering_yield",
+        "type_debuff": null
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Gathering Yield Bonus",
         "supportMalus": "",
         "supportBonusValue": "+3.80%",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": "gathering_yield",
+        "type_debuff": null
       },
       "stats": {
         "Max HP Bonus": "10%",
@@ -476,13 +504,17 @@
         "supportBonus": "Healing Received",
         "supportMalus": "Healing Bonus",
         "supportBonusValue": " +3.23%",
-        "supportMalusValue": " -2.15%"
+        "supportMalusValue": " -2.15%",
+        "type_buff": "healing_received",
+        "type_debuff": "healing_bonus"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Healing Received",
         "supportMalus": "Healing Bonus",
         "supportBonusValue": "+5.31%",
-        "supportMalusValue": "-3.54%"
+        "supportMalusValue": "-3.54%",
+        "type_buff": "healing_received",
+        "type_debuff": "healing_bonus"
       },
       "stats": {
         "Max HP Bonus": "10%",
@@ -542,13 +574,17 @@
         "supportBonus": "Ranged Damage Bonus",
         "supportMalus": "Damage Resistance",
         "supportBonusValue": " +1.93%",
-        "supportMalusValue": " -1.07%"
+        "supportMalusValue": " -1.07%",
+        "type_buff": "ranged_dmg_bonus",
+        "type_debuff": "dmg_resist"
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Ranged Damage Bonus",
         "supportMalus": "Damage Resistance",
         "supportBonusValue": "+3.41%",
-        "supportMalusValue": "-1.90%"
+        "supportMalusValue": "-1.90%",
+        "type_buff": "ranged_dmg_bonus",
+        "type_debuff": "dmg_resist"
       },
       "stats": {
         "Max HP Bonus": "8.7%",
@@ -608,13 +644,17 @@
         "supportBonus": "N/A",
         "supportMalus": "",
         "supportBonusValue": "",
-        "supportMalusValue": ""
+        "supportMalusValue": "",
+        "type_buff": null,
+        "type_debuff": null
       },
       "maximizedSupportStationBonus": {
         "supportBonus": "Damage Resistance",
         "supportMalus": "Damage Boost",
         "supportBonusValue": "+5.70%",
-        "supportMalusValue": "-1.90%"
+        "supportMalusValue": "-1.90%",
+        "type_buff": "dmg_resist",
+        "type_debuff": "dmg_boost"
       },
       "stats": {
         "Max HP Bonus": "%",

@@ -51,6 +51,8 @@ function drifterFromJson(d) {
   const src = preferMax ? d.maximizedSupportStationBonus : d.supportStationBonus;
   const buff = buildBuffText(src.supportBonus, src.supportBonusValue);
   const debuff = buildBuffText(src.supportMalus, src.supportMalusValue);
+  const typeBuff = src.type_buff || null;
+  const typeDebuff = src.type_debuff || null;
   const tier = preferMax ? d.maxSupportTier || "XI" : d.supportTier || "I";
   const level = preferMax
     ? (d.maxSupportLevel != null ? d.maxSupportLevel : 50)
@@ -61,6 +63,8 @@ function drifterFromJson(d) {
     name,
     buff: buff || "—",
     debuff: debuff || "—",
+    typeBuff,
+    typeDebuff,
     tier,
     level,
     maxed: preferMax
@@ -87,7 +91,7 @@ async function loadExternalData() {
     throw new Error("Nenhum Drifter carregado dos arquivos JSON.");
   }
   rawDrifters = rawLoaded;
-  drifters = rawDrifters.map((d) => drifterFromJson(d));
+  drifters = rawDrifters.map((d) => drifterFromJson(d)).filter(Boolean);
   driftersById = Object.fromEntries(drifters.map((d) => [d.id, d]));
   drifterNameById = Object.fromEntries(drifters.map((d) => [d.id, d.name]));
 
@@ -100,6 +104,7 @@ async function loadExternalData() {
     bonus: c.bonus,
     required: Number(c.required || c.driftersNeeded || 0),
     memberIds: c.drifterIds || [],
+    type_bonus: c.type_bonus,
     category: c.category || "N/A"
   }));
 }
@@ -112,8 +117,7 @@ function parseEffectStr(effectStr) {
   const value = parseFloat(m[2]);
   if (!Number.isFinite(value)) return null;
   const unit = m[3] || "";
-  const key = `${label} ${unit}`;
-  return { key, value, label, unit };
+  return { value, label, unit };
 }
 
 function initDrifterSelects() {
@@ -204,14 +208,16 @@ function updateBuffs() {
       id: drifter.id,
       name: drifter.name,
       buff: drifter.buff,
-      debuff: drifter.debuff
+      debuff: drifter.debuff,
+      typeBuff: drifter.typeBuff,
+      typeDebuff: drifter.typeDebuff
     });
 
     const effectsForSlot = [];
     const effBuff = parseEffectStr(drifter.buff);
-    if (effBuff) effectsForSlot.push(effBuff);
+    if (effBuff) effectsForSlot.push({ ...effBuff, type: drifter.typeBuff });
     const effDebuff = parseEffectStr(drifter.debuff);
-    if (effDebuff) effectsForSlot.push(effDebuff);
+    if (effDebuff) effectsForSlot.push({ ...effDebuff, type: drifter.typeDebuff });
     slotEffects[i] = effectsForSlot;
   }
 
@@ -447,25 +453,73 @@ function updateSummary() {
   const totals = {};
   const effects = currentDrifterEffects || [];
 
-  function accumulate(effectStr) {
+  function accumulateFrom(effectStr, type) {
+    if (!type) return;
     const eff = parseEffectStr(effectStr);
     if (!eff) return;
-    totals[eff.key] = (totals[eff.key] || 0) + eff.value;
+    const entry = totals[type] || { value: 0, label: eff.label, unit: eff.unit };
+    entry.value += eff.value;
+    totals[type] = entry;
   }
 
   for (const eff of effects) {
-    if (eff.buff) accumulate(eff.buff);
-    if (eff.debuff) accumulate(eff.debuff);
+    if (eff.buff) accumulateFrom(eff.buff, eff.typeBuff);
+    if (eff.debuff) accumulateFrom(eff.debuff, eff.typeDebuff);
   }
 
   const activeComps = currentActiveCompanions || [];
   for (const comp of activeComps) {
-    if (comp.bonus) accumulate(comp.bonus);
+    if (comp.bonus) accumulateFrom(comp.bonus, comp.type_bonus);
   }
 
   const totalEntries = Object.entries(totals).filter(
-    ([, value]) => Math.abs(value) > 1e-6
+    ([, data]) => Math.abs(data.value) > 1e-6
   );
+
+  const buckets = {
+    ataque: [],
+    defesa: [],
+    cura: [],
+    outros: []
+  };
+
+  function categorize(label) {
+    const l = label.toLowerCase();
+    if (l.includes("damage") || l.includes("attack") || l.includes("critical") || l.includes("melee") || l.includes("ranged") || l.includes("skill")) {
+      return "ataque";
+    }
+    if (l.includes("resistance") || l.includes("armor") || l.includes("hp") || l.includes("def")) {
+      return "defesa";
+    }
+    if (l.includes("healing") || l.includes("heal")) {
+      return "cura";
+    }
+    return "outros";
+  }
+
+  function renderBucket(key, entries) {
+    if (!entries.length) return;
+    const title = {
+      ataque: "Ataque",
+      defesa: "Defesa",
+      cura: "Cura/Suporte",
+      outros: "Outros"
+    }[key] || key;
+
+    const header = document.createElement("li");
+    header.className = "muted";
+    header.textContent = title;
+    tList.appendChild(header);
+
+    entries
+      .sort(([kA], [kB]) => kA.localeCompare(kB))
+      .forEach(([label, value, cls]) => {
+        const li = document.createElement("li");
+        li.textContent = `${label}: ${value}`;
+        if (cls) li.classList.add(cls);
+        tList.appendChild(li);
+      });
+  }
 
   if (totalEntries.length === 0) {
     const li = document.createElement("li");
@@ -473,28 +527,20 @@ function updateSummary() {
     li.textContent = "Nenhum efeito combinado.";
     tList.appendChild(li);
   } else {
-    totalEntries
-      .sort(([kA, vA], [kB, vB]) => {
-        const signA = vA >= 0 ? 0 : 1;
-        const signB = vB >= 0 ? 0 : 1;
-        if (signA !== signB) return signA - signB;
-        return kA.localeCompare(kB);
-      })
-      .forEach(([key, value]) => {
-        const li = document.createElement("li");
-        const hasPercent = key.endsWith("%");
-        const label = hasPercent ? key.slice(0, -1).trim() : key.trim();
-        const formatted =
-          (value >= 0 ? "+" : "") +
-          (hasPercent ? value.toFixed(2) + "%" : value.toFixed(2));
-        li.textContent = `${label}: ${formatted}`;
-        if (value > 0) {
-          li.classList.add("buff");
-        } else if (value < 0) {
-          li.classList.add("debuff");
-        }
-        tList.appendChild(li);
-      });
+    totalEntries.forEach(([type, data]) => {
+      const label = data.label || type;
+      const hasPercent = (data.unit || "").includes("%");
+      const formatted =
+        (data.value >= 0 ? "+" : "") +
+        (hasPercent ? data.value.toFixed(2) + "%" : data.value.toFixed(2));
+      const cls = data.value > 0 ? "buff" : data.value < 0 ? "debuff" : "";
+      buckets[categorize(label)].push([label, formatted, cls]);
+    });
+
+    renderBucket("ataque", buckets.ataque);
+    renderBucket("defesa", buckets.defesa);
+    renderBucket("cura", buckets.cura);
+    renderBucket("outros", buckets.outros);
   }
 }
 
@@ -506,7 +552,9 @@ function updateMaxToggleButton() {
 }
 
 function rebuildDriftersFromRaw() {
-  drifters = rawDrifters.map((d) => drifterFromJson(d));
+  drifters = rawDrifters.map((d) => drifterFromJson(d)).filter(Boolean);
+  driftersById = Object.fromEntries(drifters.map((d) => [d.id, d]));
+  drifterNameById = Object.fromEntries(drifters.map((d) => [d.id, d.name]));
 }
 
 function toggleMaximizedMode() {
@@ -600,7 +648,8 @@ function updateIncompatibilities() {
     const effects = slotEffects[i] || [];
     const map = {};
     for (const eff of effects) {
-      map[eff.key] = (map[eff.key] || 0) + eff.value;
+      if (!eff.type) continue;
+      map[eff.type] = (map[eff.type] || 0) + eff.value;
     }
     sumsBySlot[i] = map;
   }
