@@ -130,6 +130,7 @@ async function loadExternalData() {
     name: c.name,
     bonus: c.bonus,
     required: Number(c.required || c.driftersNeeded || 0),
+    memberIds: c.drifterIds && c.drifterIds.length ? c.drifterIds : c.drifters,
     members: c.drifters,
     category: c.category || "N/A"
   }));
@@ -377,8 +378,8 @@ function buildDrifterTable() {
 function updateCompanions() {
   const selected = new Set();
   for (let i = 1; i <= 5; i++) {
-    const name = document.getElementById(`slot-${i}`).value;
-    if (name) selected.add(name);
+    const id = document.getElementById(`slot-${i}`).value;
+    if (id) selected.add(id);
   }
 
   currentActiveCompanions = [];
@@ -426,8 +427,8 @@ function updateDrifterTableHighlight() {
 
   const selected = new Set();
   for (let i = 1; i <= 5; i++) {
-    const name = document.getElementById(`slot-${i}`).value;
-    if (name) selected.add(name);
+    const id = document.getElementById(`slot-${i}`).value;
+    if (id) selected.add(id);
   }
 
   tbody.querySelectorAll(".drifter-table-row").forEach((tr) => {
