@@ -1,0 +1,480 @@
+{
+  "lastUpdate": "June 6, 2025 6 AM",
+  "mods": [
+    {
+      "name": "Живучесть",
+      "iconName": "ArmorRare1",
+      "rarity": "rare",
+      "slot": "all",
+      "description": "Увеличивает Макс. ОЗ на %s1%",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[60~300]"
+        }
+      ]
+    },
+    {
+      "name": "Броня",
+      "iconName": "ArmorRare2",
+      "rarity": "rare",
+      "slot": "all",
+      "description": "Увеличивает Броню на %s1%",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[4.8~24]"
+        }
+      ]
+    },
+    {
+      "name": "Магическая броня",
+      "iconName": "ArmorRare3",
+      "rarity": "rare",
+      "slot": "all",
+      "description": "Увеличивает Сопротивление магии на %s1%",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[4.8~24]"
+        }
+      ]
+    },
+    {
+      "name": "Психика",
+      "iconName": "ArmorRare4",
+      "rarity": "rare",
+      "slot": "all",
+      "description": "Увеличивает Макс. МР на %s1%",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[4~20]"
+        }
+      ]
+    },
+    {
+      "name": "Наказание",
+      "iconName": "ArmorEpic1",
+      "rarity": "epic",
+      "slot": "all",
+      "description": "При получении прямого урона от базовых атак, есть шанс (оружие ближнего боя %s1% / оружие дальнего боя %s2%) увеличить Скорость атаки атакующего на -%s3% на 6 с. Интервал срабатывания: 30 с",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[10%~20%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[-20%~40%]"
+        },
+        {
+          "argumentName": "s3",
+          "argumentRange": "[-8%~-40%]"
+        }
+      ]
+    },
+    {
+      "name": "Физическое сопротивление",
+      "iconName": "ArmorEpic2",
+      "rarity": "epic",
+      "slot": "all",
+      "description": "При получении прямого физического урона, есть шанс %s1% увеличить Броню на %s2% на 4 с. Интервал срабатывания: 30 с.",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[17%~35%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[8%~40%]"
+        }
+      ]
+    },
+    {
+      "name": "Сила доблести",
+      "iconName": "ArmorEpic3",
+      "rarity": "epic",
+      "slot": "all",
+      "description": "При воздействии эффектов жесткого контроля (Оглушение, Страх, Заморозка, Подбрасывание, Окаменение), есть шанс %s1% увеличить Сопротивление эффектам контроля на %s2% на 6 с. Перезарядка: 30 с",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[17%~35%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[5~25]"
+        }
+      ]
+    },
+    {
+      "name": "Отскок",
+      "iconName": "ArmorEpic4",
+      "rarity": "epic",
+      "slot": "all",
+      "description": "Получение прямого урона от базовых атак имеет шанс (%s2% для оружия дальнего боя / %s1% для оружия ближнего боя) дать бафф на 5 с: получение прямого урона от базовых атак имеет шанс (%s2% для оружия дальнего боя / %s1% для оружия ближнего боя) нанести %s3% физического урона атакующему. Интервал срабатывания: 25 с.",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[10%~20%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[15%~30%]"
+        },
+        {
+          "argumentName": "s3",
+          "argumentRange": "[40%~200%]"
+        }
+      ]
+    },
+    {
+      "name": "Бешенство",
+      "iconName": "ArmorEpic5",
+      "rarity": "epic",
+      "slot": "all",
+      "description": "При получении прямого урона от базовых атак, есть шанс %s1% увеличить Скорость атаки на %s2% на 5 с. Перезарядка 30 с после срабатывания.",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[8%~40%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[8=6%~40%]"
+        }
+      ]
+    },
+    {
+      "name": "Подражание",
+      "iconName": "ArmorEpic6",
+      "rarity": "epic",
+      "slot": "all",
+      "description": "При получении критического удара, есть %s1% шанс увеличить Шанс критического удара базовой атаки на %s2% на 5 с. Интервал срабатывания: 30 с.",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[8%~40%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[3%~15%]"
+        }
+      ]
+    },
+    {
+      "name": "Магическое сопротивление",
+      "iconName": "ArmorEpic7",
+      "rarity": "epic",
+      "slot": "all",
+      "description": "При получении магического урона, есть шанс %s1% увеличить Магическое сопротивление на %s2% на 4 с. Интервал срабатывания: 30 с.",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[17%~35%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[8%~40%]"
+        }
+      ]
+    },
+    {
+      "name": "Барьер",
+      "iconName": "ArmorEpic8",
+      "rarity": "epic",
+      "slot": "all",
+      "description": "При получении прямого урона от умений, есть шанс %s1% получить Щит на [3%~15%] от Макс. ОЗ цели на 4 с. Интервал срабатывания: 30 с.",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[17%~35%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[3%~15%]"
+        }
+      ]
+    },
+    {
+      "name": "Поглощение",
+      "iconName": "ArmorEpic9",
+      "rarity": "epic",
+      "slot": "all",
+      "description": "При получении прямого урона от умений, есть шанс %s1% восстановить %s2% ОЗ и %s3% МР. Интервал срабатывания: 30 с.",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[6%~30%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[1.6%~8%]"
+        },
+        {
+          "argumentName": "s3",
+          "argumentRange": "[6~30]"
+        }
+      ]
+    },
+    {
+      "name": "Агрессия",
+      "iconName": "ArmorEpic10",
+      "rarity": "epic",
+      "slot": "all",
+      "description": "При получении Щита, есть %s1% шанс увеличить Шанс критического удара базовой атаки на %s2% на 4 с. Перезарядка: 30 с.",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[8%~40%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[2.5%~12%]"
+        }
+      ]
+    },
+    {
+      "name": "Неумолимость",
+      "iconName": "ArmorEpic11",
+      "rarity": "epic",
+      "slot": "all",
+      "description": "При получении Щита, есть %s1% шанс увеличить Шанс критического удара умения на %s2% на 4 с. Перезарядка: 30 с.",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[8%~40%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[1.5%~7.5%]"
+        }
+      ]
+    },
+    {
+      "name": "Маневрирование",
+      "iconName": "ArmorEpic12",
+      "rarity": "epic",
+      "slot": "all",
+      "description": "При уклонении от базовой атаки, есть %s1% шанс восстановить %s2% ОЗ. Перезарядка: 20 с.",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[10%~50%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[1.6%~8%]"
+        }
+      ]
+    },
+    {
+      "name": "Запугивание",
+      "iconName": "ArmorExclusiveLgdr1",
+      "rarity": "legendary",
+      "slot": "Chest",
+      "description": "При использовании умений нагрудника, есть %s4% шанс нанести [Коэффициент урона: %s1%] магического урона ближайшим врагам и снизить их Скорость передвижения на %s3% и наносимый урон на %s2% на 4 с. Интервал срабатывания: 10 с",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[20%~100%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[-3%~-15%]"
+        },
+        {
+          "argumentName": "s3",
+          "argumentRange": "[-6%~-30%]"
+        },
+        {
+          "argumentName": "s4",
+          "argumentRange": "[12%~-60%]"
+        }
+      ]
+    },
+    {
+      "name": "Заряд",
+      "iconName": "ArmorExclusiveLgdr2",
+      "rarity": "legendary",
+      "slot": "Chest",
+      "description": "При использовании умений нагрудника, взрывается через 1 с, чтобы нанести [Коэффициент урона: %s1%] физического урона ближайшим врагам и снизить их Скорость атаки на %s2% на 6 с. Интервал срабатывания: 10 с",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[26%~130%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[-12%~-60%]"
+        }
+      ]
+    },
+    {
+      "name": "Облегчение боли",
+      "iconName": "ArmorExclusiveLgdr3",
+      "rarity": "legendary",
+      "slot": "Chest",
+      "description": "При использовании умений нагрудника, восстанавливает %s1% ОЗ и %s2% МР ближайшим союзникам. Интервал срабатывания: 10 с.",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[1.6%~8.2%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[10~50]"
+        }
+      ]
+    },
+    {
+      "name": "Защита",
+      "iconName": "ArmorExclusiveLgdr4",
+      "rarity": "legendary",
+      "slot": "Boots",
+      "description": "При использовании умений ботинок, персонаж получает дополнительный Щит, равный [5%~25%] от Макс. ОЗ цели, на 4 с. Интервал срабатывания: 20 с",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[5%~25%]"
+        }
+      ]
+    },
+    {
+      "name": "Обман",
+      "iconName": "ArmorExclusiveLgdr5",
+      "rarity": "legendary",
+      "slot": "Boots",
+      "description": "При использовании умений ботинок, бросает под ноги ловушку; при срабатывании врагом, наносит [Коэффициент урона: %s1%] физического урона и оглушает его на %s2%. Интервал срабатывания: 20 с",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[16%~80%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[0.4~2]"
+        }
+      ]
+    },
+    {
+      "name": "Божественное благословение",
+      "iconName": "ArmorExclusiveLgdr6",
+      "rarity": "legendary",
+      "slot": "Boots",
+      "description": "При использовании умений ботинок, восстанавливает %s1% ОЗ истановится невосприимчивым к эффектам контроля на %s2%с. Перезарядка: 20 с",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[1.3%~6.5%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[0.4%~2]"
+        }
+      ]
+    },
+    {
+      "name": "Рев",
+      "iconName": "ArmorLgdr1",
+      "rarity": "legendary",
+      "slot": "all",
+      "description": "При воздействии эффектов жесткого контроля (Оглушение, Страх, Заморозка, Подбрасывание, Окаменение), есть шанс %s1% издать Рев, который наносит %s2% физического урона ближайшим врагам и накладывает Страх на 1 с. Перезарядка: 20 с после срабатывания.",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[8%~40%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[20%~100%]"
+        }
+      ]
+    },
+    {
+      "name": "Контратака",
+      "iconName": "ArmorLgdr2",
+      "rarity": "legendary",
+      "slot": "all",
+      "description": "При получении прямого урона от базовых атак, есть шанс %s1% сработать: в течение следующих 5 секунд любой прямой урон от базовых атак отражает %s2% магического урона атакующему и изменяет их Броню на %s3% на 4 с. Перезарядка: 25 с.",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[15%~30%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[16%~80%]"
+        },
+        {
+          "argumentName": "s3",
+          "argumentRange": "[-4%~-20%]"
+        }
+      ]
+    },
+    {
+      "name": "Намордник",
+      "iconName": "ArmorLgdr3",
+      "rarity": "legendary",
+      "slot": "all",
+      "description": "При получении прямого урона от умений, есть шанс %s1% нанести [Коэффициент урона: %s2%] магического урона всем врагам в радиусе действия источника урона, слить %s4% МР, и снизить наносимый ими урон на %s3% на 4 с. Интервал срабатывания: 30 с",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[15%~30%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[12%~60%]"
+        },
+        {
+          "argumentName": "s3",
+          "argumentRange": "[-4%~-20%]"
+        },
+        {
+          "argumentName": "s4",
+          "argumentRange": "[5~25]"
+        }
+      ]
+    },
+    {
+      "name": "Удача",
+      "iconName": "ArmorLgdr4",
+      "rarity": "legendary",
+      "slot": "all",
+      "description": "При получении урона, равного более чем 25% от Макс. ОЗ в течение 2 с, есть шанс %s1% восстановить %s2% ОЗ и получить Неуязвимость к урону на %s3%. Перезарядка: 30 с.",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[6%~30%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[1.6%~8%]"
+        },
+        {
+          "argumentName": "s3",
+          "argumentRange": "[0.4%~2%]"
+        }
+      ]
+    },
+    {
+      "name": "Решимость",
+      "iconName": "ArmorLgdr5",
+      "rarity": "legendary",
+      "slot": "all",
+      "description": "При воздействии эффектов жесткого контроля (Оглушение, Страх, Заморозка, Подбрасывание, Окаменение, Сон), есть шанс %s1% увеличить Коэффициент сопротивления эффектам контроля на %s2% на 4 с. Перезарядка: 30 с",
+      "arguments": [
+        {
+          "argumentName": "s1",
+          "argumentRange": "[6%~30%%]"
+        },
+        {
+          "argumentName": "s2",
+          "argumentRange": "[1.9%~9.5%]"
+        }
+      ]
+    }
+  ]
+}

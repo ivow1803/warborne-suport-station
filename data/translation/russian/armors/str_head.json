@@ -1,0 +1,142 @@
+{
+  "lastUpdate": "Сентябрь 15, 2025 6 AM",
+  "head_strength": [
+    {
+      "gameId": "Helm_Str_5",
+      "gearName": "Шлем фурора",
+      "skillName": "Бешенство",
+      "gearIcon": "SpecImage_HELMET3",
+      "manaCost": "",
+      "cooldown": "30",
+      "castingRange": "",
+      "type": "passive",
+      "description": "При нанесении прямого урона обычными атаками на 6сек.увеличивает физический урон на 20%.Интервал срабатывания: 30сек.",
+      "tierUnlock": "0",
+      "rarity": "rare",
+      "stats": {
+        "hp": "675",
+        "dmgBonus": "9.6%"
+      }
+    },
+    {
+      "gameId": "Helm_Str_4",
+      "gearName": "Бронированный шлем",
+      "skillName": "Железная стена",
+      "gearIcon": "SpecImage_HELMET4",
+      "manaCost": "",
+      "cooldown": "60",
+      "castingRange": "",
+      "type": "passive",
+      "description": "Если ОЗ ниже 30%, при получении урона на 6сек. увеличиваетсопротивление урону на 50%.Интервал срабатывания: 60сек.",
+      "tierUnlock": "1",
+      "rarity": "epic",
+      "stats": {
+        "hp": "714",
+        "dmgBonus": "9.8%"
+      }
+    },
+    {
+      "gameId": "Helm_Str_3",
+      "gearName": "Адский визор",
+      "skillName": "Огненная звезда",
+      "gearIcon": "SpecImage_HELMET2",
+      "manaCost": "",
+      "cooldown": "30",
+      "castingRange": "",
+      "type": "passive",
+      "description": "При нанесении прямого урона обычными атаками на бсек. создаетвокруг персонажа огненную звезду. Снижает магическоесопротивление врагов в радиусе 7м на 40% и каждую секундунаносит [Уровень урона: 50%] ед. мегического урона.Интервал срабатывания: 30 сек.",
+      "tierUnlock": "1",
+      "rarity": "epic",
+      "stats": {
+        "hp": "714",
+        "dmgBonus": "9.8%"
+      }
+    },
+    {
+      "gameId": "Helm_Str_1",
+      "gearName": "Рептильный шлем",
+      "skillName": "Чешуйчатая броня",
+      "gearIcon": "SpecImage_HELMET6",
+      "manaCost": "",
+      "cooldown": "30",
+      "castingRange": "",
+      "type": "passive",
+      "description": "При воздействии эффектов жесткого контроля(оглушение, страх,глубокая заморозка, подбрасывание, окаменение)на 6сек. получает щит мощностью [Зависит от параметра: Макс. ОЗ25%].Интервал срабатывания: 30сек.",
+      "tierUnlock": "1",
+      "rarity": "epic",
+      "stats": {
+        "hp": "714",
+        "dmgBonus": "9.8%"
+      }
+    },
+    {
+      "gameId": "Helm_Str_6",
+      "gearName": "Шлем безумия",
+      "skillName": "Взрыв ЭМИ",
+      "gearIcon": "SpecImage_HELMET1",
+      "manaCost": "",
+      "cooldown": "30",
+      "castingRange": "",
+      "type": "passive",
+      "description": "При нанесении прямого урона обычнйо атакой вызывает взрыв ЭМИ.Через 1сек. наносит [Уровень урона: 250%] ед. физического уронаврагам в радиусе 6м. оглушает их на 1сек. и на 6сек. снижает их урон на 20%.Интервал срабатывания: 30сек.",
+      "tierUnlock": "1",
+      "rarity": "epic",
+      "stats": {
+        "hp": "714",
+        "dmgBonus": "9.8%"
+      }
+    },
+    {
+      "gameId": "Helm_Str_7",
+      "gearName": "Маска бури",
+      "skillName": "Самум",
+      "gearIcon": "SpecImage_HELMET5",
+      "manaCost": "",
+      "cooldown": "30",
+      "castingRange": "",
+      "type": "passive",
+      "description": "При нанесении прямого урона обычными атаками на 6сек. вызываетвокруг заклинателя песчаную бурю. Враги в радиусе 6мзамедляются на 40% и разоружаются.Интервал срабатывания: 30сек.",
+      "tierUnlock": "1",
+      "rarity": "legendary",
+      "stats": {
+        "hp": "755",
+        "dmgBonus": "9.9%"
+      }
+    },
+    {
+      "gameId": "Helm_Str_8",
+      "gearName": "Взор стража",
+      "skillName": "Фронтальная защита",
+      "gearIcon": "SpecImage_HELMET7",
+      "manaCost": "",
+      "cooldown": "30",
+      "castingRange": "",
+      "type": "passive",
+      "description": "При воздействии обездвиживения или принудительногоперемещения (отталкивание, притягивание)мгновенно снимает все эффекты обездвиживания, замедления ипринудительного перемещения, а также увеличивает сопротивлениеурону на 25%, дает иммунитет к замедлению, обездвиживанию ипринудительному перемещению на 8сек..Интервал срабатывания: 30 сек.",
+      "tierUnlock": "1",
+      "rarity": "legendary",
+      "stats": {
+        "hp": "755",
+        "dmgBonus": "9.9%"
+      }
+    },
+    {
+      "gameId": "Helm_Str_9",
+      "gearName": "Шлем контратаки",
+      "skillName": "Закаленный страж",
+      "gearIcon": "SpecImage_HELMET8",
+      "manaCost": "",
+      "cooldown": "25",
+      "castingRange": "",
+      "type": "passive",
+      "description": "После получения урона от 3 базовых атак в течение 5с, получает 65 значения Блока (масштабируется с Силой) на 6 с. Этот эффект уходит на перезарядку 25с после срабатывания.",
+      "tierUnlock": "1",
+      "rarity": "epic",
+      "stats": {
+        "hp": "",
+        "dmgBonus": "",
+        "mpRecovery": ""
+      }
+    }
+  ]
+}

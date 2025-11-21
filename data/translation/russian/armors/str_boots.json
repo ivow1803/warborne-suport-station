@@ -1,0 +1,124 @@
+{
+  "lastUpdate": "сентябрь 15, 2025 6 AM",
+  "boots_strength": [
+    {
+      "gameId": "Shoes_Str_4",
+      "gearName": "Энергетические ботинки",
+      "skillName": "Живучесть",
+      "gearIcon" : "SpecImage_BOOTS4",
+      "manaCost": "",
+      "cooldown": "27",
+      "castingRange": "6",
+      "type": "skill",
+      "description": "Увеличивает скорость передвижения на 50% и каждую секунду втечение 5сек. восстанавливает [Уровень лечения: 24%] ОЗ.",
+      "tierUnlock": "1",
+      "rarity": "rare",
+      "stats": {
+        "hp": "675",
+        "dmgBonus": "9.6%"
+      }
+    },
+    {
+      "gameId": "Shoes_Str_5",
+      "gearName": "Шаги гнева",
+      "skillName": "Месть",
+      "gearIcon" : "SpecImage_BOOTS5",
+      "manaCost": "",
+      "cooldown": "27",
+      "castingRange": "6",
+      "type": "skill",
+      "description": "За каждые 10: потерянных ОЗ скорость передвижения на 5сек.увеличивается на 17%, а урон на 4.5%. Эффект накапливается до 7раз.",
+      "tierUnlock": "1",
+      "rarity": "epic",
+      "stats": {
+        "hp": "714",
+        "dmgBonus": "9.8%"
+      }
+    },
+    {
+      "gameId": "Shoes_Str_2",
+      "gearName": "Сапоги оплота",
+      "skillName": "Страж",
+      "gearIcon" : "SpecImage_BOOTS1",
+      "manaCost": "",
+      "cooldown": "27",
+      "castingRange": "10",
+      "type": "skill",
+      "description": "Прыгает в указанную область. При приземленни на 6сек. даетближайшим союзникам щит прочностью [Зависит от параметра:Макс. ОЗ 22%] ед.",
+      "tierUnlock": "1",
+      "rarity": "epic",
+      "stats": {
+        "hp": "714",
+        "dmgBonus": "9.8%"
+      }
+    },
+    {
+      "gameId": "Shoes_Str_1",
+      "gearName": "Ходоки титана",
+      "skillName": "Титанический рост",
+      "gearIcon" : "SpecImage_BOOTS2",
+      "manaCost": "",
+      "cooldown": "41",
+      "castingRange": "6",
+      "type": "skill",
+      "description": "Увеличивает скорость передвижения на 30%, макс. и текущий запасОЗ - на 80%, а также дает иммунитет к принудительномуперемещению (притягивание, отбрасывание) на 6сек..",
+      "tierUnlock": "1",
+      "rarity": "epic",
+      "stats": {
+        "hp": "714",
+        "dmgBonus": "9.8%"
+      }
+    },
+    {
+      "gameId": "Shoes_Str_6",
+      "gearName": "Марш авангарда",
+      "skillName": "Авангард",
+      "gearIcon" : "SpecImage_BOOTS6",
+      "manaCost": "",
+      "cooldown": "27",
+      "castingRange": "6",
+      "type": "skill",
+      "description": "Снимает эффекты замедления и обездвиживания. Увеличиваетскорость передвижения на 80% и на 4сек. дает иммунитет кзамедлению и обездвиживанию",
+      "tierUnlock": "1",
+      "rarity": "epic",
+      "stats": {
+        "hp": "714",
+        "dmgBonus": "9.8%"
+      }
+    },
+    {
+      "gameId": "Shoes_Str_3",
+      "gearName": "Тяжелые ударные боты",
+      "skillName": "Выпад",
+      "gearIcon" : "SpecImage_BOOTS3",
+      "manaCost": "",
+      "cooldown": "36",
+      "castingRange": "14",
+      "type": "skill",
+      "description": "Делает рывок вперед, 5 раз наносит [Уровень урона: 50%] ед.физического урона врагам на пути и каждый раз отбрасывает их на 4м. При ударе о препятствие враги оглушаются на 2сек..Во время рывка игрок невосприимчив к контролю и получает +80% ксопротивлению урону.",
+      "tierUnlock": "1",
+      "rarity": "legendary",
+      "stats": {
+        "hp": "755",
+        "dmgBonus": "9.9%"
+      }
+    },
+    {
+      "gameId": "Shoes_Str_7",
+      "gearName": "Лавинные сапоги",
+      "skillName": "Горный удар",
+      "gearIcon" : "SpecImage_BOOTS7",
+      "manaCost": "",
+      "cooldown": "27",
+      "castingRange": "9",
+      "type": "skill",
+      "description": "Прыгает в указанную точку, наносит [Уровень урона: 150%] ед.физического урона и подбрасывает врагов на 1сек. при приземлении.Затем меняет направление и снова прыгает к цели, повторно наносит[Уровень урона: 150%] ед. физического урона и подбрасывает враговна 1сек. после приземеления.На время действия умения получает иммунитет к контролю и +80% ксопротивлению урону.",
+      "tierUnlock": "1",
+      "rarity": "legendary",
+      "stats": {
+        "hp": "755",
+        "dmgBonus": "9.9%"
+      }
+    }
+  ]
+}

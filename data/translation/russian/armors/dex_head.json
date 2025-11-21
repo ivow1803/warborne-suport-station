@@ -1,0 +1,150 @@
+{
+  "lastUpdate": "Сентябрь 15, 2025 6 AM",
+  "head_dexterity": [
+    {
+      "gameId": "Helm_Dex_2",
+      "gearName": "Жизненная мантия",
+      "skillName": "Вспышка жизни",
+      "gearIcon": "SpecImage_HOOD2",
+      "manaCost": "",
+      "cooldown": "60",
+      "castingRange": "",
+      "type": "passive",
+      "description": "Если ОЗ ниже 30%, при получении урона немедленно начинаеткаждую секунду в течение 5сек. восстанавливать [Уровень лечения: 48%] ОЗ.Интервал срабатывания: 60сек.",
+      "tierUnlock": "1",
+      "rarity": "rare",
+      "stats": {
+        "hp": "714",
+        "dmgBonus": "9.8%",
+        "mpRecovery": "5"
+      }
+    },
+    {
+      "gameId": "Helm_Dex_3",
+      "gearName": "Капюшон буревестника",
+      "skillName": "Электроудар",
+      "gearIcon": "SpecImage_HOOD1",
+      "manaCost": "",
+      "cooldown": "30",
+      "castingRange": "",
+      "type": "passive",
+      "description": "При использовании обычной атаки каждая из следующих 5 атак(включая текущую) в течение 8сек. будет выпускать по врагамцепную молнию. При попадении молния автоматически до 5 разотскакивает в ближайшую цель и с каждым попаданием наносит[Уровень урона: 60%] ед. физического урона. (Интервалсрабатывания: 0.6 сек.)Урон зависит от бонусов к обычной атаке и может оказатьсякритическим так же, как урон обычной атаки.Откат: 30 сек.",
+      "tierUnlock": "1",
+      "rarity": "epic",
+      "stats": {
+        "hp": "714",
+        "dmgBonus": "9.8%",
+        "mpRecovery": "5"
+      }
+    },
+    {
+      "gameId": "Helm_Dex_5",
+      "gearName": "Маска тени",
+      "skillName": "Исчезновение",
+      "gearIcon": "SpecImage_HOOD5",
+      "manaCost": "",
+      "cooldown": "60",
+      "castingRange": "",
+      "type": "passive",
+      "description": "Если О3 ниже 30%, при получении урона мгновенно переходит врежим скрытности и на 5сек. увеличивает скорость передвиженияHa 30%.Эффект скрытности снимается при использовании навыка,нанесении урона или прямом исцелении, а также после 1.5 сек. врежиме скрытности.Интервал срабатывания: 60 сек.",
+      "tierUnlock": "1",
+      "rarity": "epic",
+      "stats": {
+        "hp": "714",
+        "dmgBonus": "9.8%",
+        "mpRecovery": "5"
+      }
+    },
+    {
+      "gameId": "Helm_Dex_8",
+      "gearName": "Покров очищения",
+      "skillName": "Уклонение",
+      "gearIcon": "SpecImage_HOOD7",
+      "manaCost": "",
+      "cooldown": "25",
+      "castingRange": "",
+      "type": "passive",
+      "description": "После получения урона от базовых атак, немедленно получает 50% эффекта пассивного усиления «Разгон рефлексов» на 8с. Этот эффект уходит на перезарядку 25с после срабатывания.",
+      "tierUnlock": "1",
+      "rarity": "epic",
+      "stats": {
+        "hp": "714",
+        "dmgBonus": "9.8%",
+        "mpRecovery": "5"
+      }
+    },
+    {
+      "gameId": "Helm_Dex_7",
+      "gearName": "Гневная тень",
+      "skillName": "Ярость",
+      "gearIcon": "SpecImage_HOOD6",
+      "manaCost": "",
+      "cooldown": "25",
+      "castingRange": "",
+      "type": "passive",
+      "description": "При нанесении прямого урона обычными атаками на 6сек. дает +10%к шансу критического урона и +35% к скорости атаки.Интервал срабатывания: 25сек.",
+      "tierUnlock": "1",
+      "rarity": "epic",
+      "stats": {
+        "hp": "714",
+        "dmgBonus": "9.8%",
+        "mpRecovery": "5"
+      }
+    },
+    {
+      "gameId": "Helm_Dex_1",
+      "gearName": "Маска железной воли",
+      "gearIcon": "SpecImage_HOOD3",
+      "skillName": "Defiance",
+      "manaCost": "",
+      "cooldown": "120",
+      "castingRange": "",
+      "type": "passive",
+      "description": "Если ОЗ ниже 20%, при получении урона предотвращает падение ОЗ ниже 1 и каждую секунду в течение 4сек. восстанавливает [Уровень лечения: 36%] ОЗ. Эффект нельзя развеять.Интервал срабатывания: 120сек",
+      "tierUnlock": "1",
+      "rarity": "legendary",
+      "stats": {
+        "hp": "755",
+        "dmgBonus": "9.9%",
+        "mpRecovery": "5"
+      }
+    },
+    {
+      "gameId": "Helm_Dex_4",
+      "gearName": "Шлем глупца",
+      "skillName": "Освобождение",
+      "gearIcon": "SpecImage_HOOD4",
+      "manaCost": "",
+      "cooldown": "45",
+      "castingRange": "",
+      "type": "passive",
+      "description": "При воздействии эффектов жесткого контроля (Оглушение, Страх, Заморозка, Подбрасывание, Окаменение, Сон), Безмолвия или Обездвиживания, мгновенно снимает все эффекты контроля и дебаффы, дает иммунитет ко всем эффектам контроля и дебаффам, увеличивает Скорость на 25% на 3с. Этот эффект уходит на перезарядку 45с после срабатывания.",
+      "tierUnlock": "1",
+      "rarity": "legendary",
+      "stats": {
+        "hp": "755",
+        "dmgBonus": "9.9%",
+        "mpRecovery": "5"
+      }
+    },
+    {
+      "isActive": false,
+      "gearIcon": "SpecImage_HOOD8",
+      "gameId": "Helm_Dex_9",
+      "gearName": "Helm_Dex_9",
+      "skillName": "Helm_Dex_9",
+      "manaCost": "",
+      "cooldown": "",
+      "castingRange": "",
+      "type": "skill",
+      "description": "",
+      "tierUnlock": "1",
+      "rarity": "legendary",
+      "stats": {
+        "hp": "",
+        "dmgBonus": "",
+        "mpRecovery": ""
+      }
+    }
+  ]
+}

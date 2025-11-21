@@ -1,0 +1,216 @@
+{
+  "lastUpdate": "June 6, 2025 6 AM",
+  "links": [
+    {
+      "linkName": "Warden",
+      "linkBonus": "Усиливание эффекта исцеления на 4%",
+      "driftersNeeded": "2",
+      "drifters": [
+        {
+          "drifterId": "paragon_int_2"
+        },
+        {
+          "drifterId": "paragon_int_7"
+        },
+        {
+          "drifterId": "paragon_int_11"
+        },
+        {
+          "drifterId": "paragon_int_10"
+        }
+      ]
+    },
+    {
+      "linkName": "Skillful",
+      "linkBonus": "Увеличение урона и исцеления от навыков на 2,5%",
+      "driftersNeeded": "3",
+      "drifters": [
+        {
+          "drifterId": "paragon_str_4"
+        },
+        {
+          "drifterId": "paragon_dex_1"
+        },
+        {
+          "drifterId": "paragon_int_2"
+        }
+      ]
+    },
+    {
+      "linkName": "Resilient Mind",
+      "linkBonus": "Увеличивает сопротивление массовому контролю  на 5",
+      "driftersNeeded": "2",
+      "drifters": [
+        {
+          "drifterId": "paragon_str_2"
+        },
+        {
+          "drifterId": "paragon_str_4"
+        },
+        {
+          "drifterId": "paragon_str_5"
+        },
+        {
+          "drifterId": "paragon_str_7"
+        }
+      ]
+    },
+    {
+      "linkName": "Powerhouse",
+      "linkBonus": "Повышает ловкость на 10",
+      "driftersNeeded": "3",
+      "drifters": [
+        {
+          "drifterId": "paragon_str_5"
+        },
+        {
+          "drifterId": "paragon_dex_3"
+        },
+        {
+          "drifterId": "paragon_int_6"
+        }
+      ]
+    },
+    {
+     
+      "linkName": "Stalwart",
+      "linkBonus": "Устойчивость к повреждениям повышена на 2%",
+      "driftersNeeded": "2",
+      "drifters": [
+        {
+          "drifterId": "paragon_str_6"
+        },
+        {
+          "drifterId": "paragon_str_1"
+        },
+        {
+          "drifterId": "paragon_str_3"
+        },
+        {
+          "drifterId": "paragon_str_8"
+        }
+      ]
+    },
+    {
+      "linkName": "Task Force",
+      "linkBonus": "Увеличивает урон в ближнем бою на 4%",
+      "driftersNeeded": "2",
+      "drifters": [
+        {
+          "drifterId": "paragon_dex_1"
+        },
+        {
+          "drifterId": "paragon_dex_7"
+        },
+        {
+          "drifterId": "paragon_dex_9"
+        },
+        {
+          "drifterId": "paragon_dex_3"
+        }
+      ]
+    },
+    {
+      "linkName": "Premonition",
+      "linkBonus": "Сокращение времени восстановления навыка на 2,5%",
+      "driftersNeeded": "3",
+      "drifters": [
+        {
+          "drifterId": "paragon_str_9"
+        },
+        {
+          "drifterId": "paragon_int_9"
+        },
+        {
+          "drifterId": "paragon_dex_7"
+        }
+      ]
+    },
+    {
+      "linkName": "Strategic Mind",
+      "linkBonus": "Увеличивает дальнобойный урон на 4%",
+      "driftersNeeded": "2",
+      "drifters": [
+        {
+          "drifterId": "paragon_int_1"
+        },
+        {
+          "drifterId": "paragon_int_6"
+        },
+        {
+          "drifterId": "paragon_int_4"
+        },
+        {
+          "drifterId": "paragon_int_3"
+        }
+      ]
+    },
+    {
+      "linkName": "Vibrant Bloodline",
+      "linkBonus": "Увеличение ОЗ на 4%",
+      "driftersNeeded": "3",
+      "drifters": [
+        {
+          "drifterId": "paragon_str_2"
+        },
+        {
+          "drifterId": "paragon_dex_7"
+        },
+        {
+          "drifterId": "paragon_int_3"
+        }
+      ]
+    },
+    {
+      "linkName": "Ancestral Heritage",
+      "linkBonus": "Повышает интеллект на 10",
+      "driftersNeeded": "3",
+      "drifters": [
+        {
+          "drifterId": "paragon_str_3"
+        },
+        {
+          "drifterId": "paragon_dex_4"
+        },
+        {
+          "drifterId": "paragon_int_7"
+        }
+      ]
+    },
+    {
+      "linkName": "Force of Nature",
+      "linkBonus": "Увеличивает критический урон от базовой атаки на 8%",
+      "driftersNeeded": "2",
+      "drifters": [
+        {
+          "drifterId": "paragon_dex_2"
+        },
+        {
+          "drifterId": "paragon_dex_5"
+        },
+        {
+          "drifterId": "paragon_dex_6"
+        },
+        {
+          "drifterId": "paragon_dex_8"
+        }
+      ]
+    },
+    {
+      "linkName": "Exotic Brawn",
+      "linkBonus": "Увеличивает силу на 10",
+      "driftersNeeded": "3",
+      "drifters": [
+        {
+          "drifterId": "paragon_str_1"
+        },
+        {
+          "drifterId": "paragon_dex_9"
+        },
+        {
+          "drifterId": "paragon_int_4"
+        }
+      ]
+    }
+  ]
+}

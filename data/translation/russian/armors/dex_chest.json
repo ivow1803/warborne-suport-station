@@ -1,0 +1,106 @@
+{
+  "lastUpdate": "Сентярбь 15, 2025 6 AM",
+  "chest_dexterity": [
+    {
+      "gameId": "Cloth_Dex_6",
+      "gearName": "Жилет восстановления",
+      "skillName": "Бинт",
+      "gearIcon": "SpecImage_JACKET6",
+      "manaCost": "",
+      "cooldown": "32",
+      "castingRange": "6",
+      "type": "skill",
+      "description": "Кратковременно перевяжитесь, затем восстанавливайте [Коэффициент исцеления: 48%] Жизненной силы каждую секунду в течение 4с.",
+      "tierUnlock": "1",
+      "rarity": "rare"
+    },
+    {
+      "gameId": "Cloth_Dex_3",
+      "gearName": "Мантия смерти",
+      "skillName": "Добивание",
+      "gearIcon": "SpecImage_JACKET3",
+      "manaCost": "",
+      "cooldown": "32",
+      "castingRange": "7",
+      "type": "skill",
+      "description": "Наносит ближайшим врагам [Уровень урона: 100%] ед. чистого урона.Урон увеличивается на 15% за каждые 10% недостающих ОЗ у цели.",
+      "tierUnlock": "1",
+      "rarity": "epic"
+    },
+    {
+      "gameId": "Cloth_Dex_4",
+      "gearName": "Нагрудник отмщения",
+      "skillName": "Отражение",
+      "gearIcon": "SpecImage_JACKET4",
+      "manaCost": "",
+      "cooldown": "36",
+      "castingRange": "6",
+      "type": "skill",
+      "description": "На 6сек. увеличивает сопротивление урону на 30%. В это времяотражает 100% от полученного урона в виде магического урона,который получает нападющий.",
+      "tierUnlock": "1",
+      "rarity": "epic"
+    },
+    {
+      "gameId": "Cloth_Dex_5",
+      "gearName": "Туманное одеяние",
+      "skillName": "Дымовая завеса",
+      "gearIcon": "SpecImage_JACKET7",
+      "manaCost": "",
+      "cooldown": "45",
+      "castingRange": "12",
+      "type": "skill",
+      "description": "На 6сек. создает дымовую завесу радиусом 12м. Входит в режимскрытности на 6сек.. Каждые 0.5 сек. в дымовой завесе на 6сек.увеличивает скорость следующей обычной атаки на 60%. Эффектнакапливается до 8 раз.При использовании навыка, который напрямую исцеляет или наноситурон, а также при выходе из дымовой завесы дым рассеивается, аэффект скрытности теряется.",
+      "tierUnlock": "1",
+      "rarity": "epic"
+    },
+    {
+      "gameId": "Cloth_Dex_7",
+      "gearName": "Дикарский покров",
+      "skillName": "Рычание",
+      "gearIcon": "SpecImage_JACKET2",
+      "manaCost": "",
+      "cooldown": "32",
+      "castingRange": "12",
+      "type": "skill",
+      "description": "Рычит в указанном направлении, наносит [Уровень урона: 200%] ед.физического урона врагам в радиусе поражения. Снижает ихскорость передвижения на 40%, наносимый урон на 50% и на 5сек.лишает возможности перейти в режим скрытности.",
+      "tierUnlock": "1",
+      "rarity": "epic"
+    },
+    {
+      "gameId": "Cloth_Dex_1",
+      "gearName": "Шкура следопыта",
+      "skillName": "Разрушитель брони",
+      "gearIcon": "SpecImage_JACKET1",
+      "manaCost": "",
+      "cooldown": "25",
+      "castingRange": "7",
+      "type": "skill",
+      "description": "Наносит [Коэффициент урона: 200%] физического урона окружающим врагам, снижает их сопротивление урону на 20% на 6с и увеличивает собственный урон на 15% на 6с.",
+      "tierUnlock": "1",
+      "rarity": "legendary",
+      "stats": {
+        "dmgBonus": "25%",
+        "armor": "181",
+        "magicResi": "181"
+      }
+    },
+    {
+      "gameId": "Cloth_Dex_2",
+      "gearName": "Объятия героя",
+      "skillName": "Сбор",
+      "gearIcon": "SpecImage_JACKET5",
+      "manaCost": "",
+      "cooldown": "27",
+      "castingRange": "7",
+      "type": "skill",
+      "description": "Создает ауру Сбора вокруг заклинателя, действующую 8 секунд. Союзники в радиусе 7м получают +30% к скорости атаки и +30% к уменьшению перезарядки",
+      "tierUnlock": "1",
+      "rarity": "legendary",
+      "stats": {
+        "dmgBonus": "25%",
+        "armor": "181",
+        "magicResi": "181"
+      }
+    }
+  ]
+}

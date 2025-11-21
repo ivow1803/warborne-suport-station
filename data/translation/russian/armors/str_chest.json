@@ -1,0 +1,123 @@
+{
+  "lastUpdate": "Сентярбь 15, 2025 6 AM",
+  "chest_strength": [
+    {
+      "gameId": "Cloth_Str_4",
+      "gearName": "Благословение стража",
+      "skillName": "Блок",
+      "gearIcon": "SpecImage_ARMOR4",
+      "manaCost": "",
+      "cooldown": "32",
+      "castingRange": "6 ",
+      "type": "skill",
+      "description": "Направляет навык в течение 2.5сек. Увеличивает сопротивлениеурону на 90%.Во время применения можно двигаться, но скорость снижена на 40%",
+      "tierUnlock": "1",
+      "rarity": "rare"
+    },
+    {
+      "gameId": "Cloth_Str_1",
+      "gearName": "Латы охраны",
+      "skillName": "Щит",
+      "gearIcon": "SpecImage_ARMOR1",
+      "manaCost": "",
+      "cooldown": "32",
+      "castingRange": "7 ",
+      "type": "skill",
+      "description": "На 6сек. дает ближайшим союзникам щит мощностью [Зависит отпараметра: Макс. ОЗ 20%].Если ОЗ ниже 40%, мощность щита увеличивается до [Зависит отпараметра: Макс. ОЗ 35%].",
+      "tierUnlock": "1",
+      "rarity": "epic"
+    },
+    {
+      "gameId": "Cloth_Str_2",
+      "gearName": "Ослепляющий стражник",
+      "skillName": "Оглушение",
+      "gearIcon": "SpecImage_ARMOR2",
+      "manaCost": "",
+      "cooldown": "27",
+      "castingRange": "7 ",
+      "type": "skill",
+      "description": "Наносит ближайшим врагам [Уровень урона: 250%] ед. физическогоурона, оглушает их на 2сек. и на 4сек. снижает их скорость на 40%.",
+      "tierUnlock": "1",
+      "rarity": "epic"
+    },
+    {
+      "gameId": "Cloth_Str_6",
+      "gearName": "Штормовой разряд",
+      "skillName": "Заряд",
+      "gearIcon": "SpecImage_ARMOR6",
+      "manaCost": "",
+      "cooldown": "32",
+      "castingRange": "7 ",
+      "type": "skill",
+      "description": "В течение 5сек. звучит боевой рог.Сопротивление урону союзников в радиусе 7м увеличивается на 30%,а сопротивление контролю - на 50; кроме того, они получаютиммунитет к принудительному перемещению (отбрасывание,притягивание).",
+      "tierUnlock": "1",
+      "rarity": "epic"
+    },
+    {
+      "gameId": "Cloth_Str_8",
+      "gearName": "Охранный покров",
+      "skillName": "Хватка корней",
+      "gearIcon": "SpecImage_ARMOR7",
+      "manaCost": "",
+      "cooldown": "32",
+      "castingRange": "16 ",
+      "type": "skill",
+      "description": "Выпускает абордажный трос, наносит врагу [Уровень урона: 100%] ед.физического урона, обездвиживает его на 2сек. и притягивает к себе, также притягиваясь навстречу.",
+      "tierUnlock": "1",
+      "rarity": "epic"
+    },
+    {
+      "gameId": "Cloth_Str_3",
+      "gearName": "Панцирь хранителя",
+      "skillName": "Уязвимость",
+      "gearIcon": "SpecImage_ARMOR3",
+      "manaCost": "",
+      "cooldown": "36",
+      "castingRange": "7 ",
+      "type": "skill",
+      "description": "Увеличивает сопротивление урону на 30% и на 6сек. создает вокругсебя ослабляющее поле.Враги в радиусе 7м наносят на 80% меньше урона и не могут перейтив режим скрытности.",
+      "tierUnlock": "1",
+      "rarity": "legendary",
+      "stats": {
+        "armor": "331",
+        "magicResi": "251"
+      }
+    },
+    {
+      "gameId": "Cloth_Str_5",
+      "gearName": "Магнитная броня",
+      "skillName": "Схождение",
+      "gearIcon": "SpecImage_ARMOR5",
+      "manaCost": "",
+      "cooldown": "30",
+      "castingRange": "7 ",
+      "type": "skill",
+      "description": "Создает силовое поле схождения. Через 1,5сек. наносит [Уровеньурона: 250%] ед. физического урона врагам в радиусе 7м.притягивает их к центру, оглушает на 0.5сек. и на 4сек. замедляет ихна 30%.",
+      "tierUnlock": "1",
+      "rarity": "legendary",
+      "stats": {
+        "armor": "331",
+        "magicResi": "251"
+      }
+    },
+    {
+      "isActive": false,
+      "gearIcon": "SpecImage_ARMOR8",
+      "gameId": "Cloth_Str_9",
+      "gearName": "Cloth_Str_9",
+      "skillName": "Cloth_Str_9",
+      "manaCost": "",
+      "cooldown": "",
+      "castingRange": "",
+      "type": "skill",
+      "description": "",
+      "tierUnlock": "1",
+      "rarity": "legendary",
+      "stats": {
+        "hp": "",
+        "dmgBonus": "",
+        "mpRecovery": ""
+      }
+    }
+  ]
+}

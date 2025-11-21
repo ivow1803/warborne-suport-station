@@ -1,0 +1,126 @@
+{
+  "lastUpdate": "Сентябрь 15, 2025",
+  "chest_intelligence": [
+    {
+      "gameId": "Cloth_Int_3",
+      "gearName": "Плащ выносливости",
+      "skillName": "Лечение",
+      "gearIcon": "SpecImage_ROBE3",
+      "manaCost": "",
+      "cooldown": "32",
+      "castingRange": "7",
+      "type": "skill",
+      "description": "Мгновенно восстанавливает [Уровень лечения: 120%]ОЗ ближайшим союзникам",
+      "tierUnlock": "1",
+      "rarity": "rare"
+    },
+    {
+      "gameId": "Cloth_Int_1",
+      "gearName": "Очищающая роба",
+      "skillName": "Очищение",
+      "gearIcon": "SpecImage_ROBE1",
+      "manaCost": "",
+      "cooldown": "27",
+      "castingRange": "6",
+      "type": "skill",
+      "description": "Мгновенно снимает все эффекты контроля, восстанавливает[Уровень лечения: 180%] ОЗ и на 2сек. дает иммунитет к контролю.Можно использовать, когда навыки недоступны",
+      "tierUnlock": "1",
+      "rarity": "epic"
+    },
+    {
+      "gameId": "Cloth_Int_4",
+      "gearName": "Ткач заклинаний",
+      "skillName": "Источник маны",
+      "gearIcon": "SpecImage_ROBE4",
+      "manaCost": "",
+      "cooldown": "32",
+      "castingRange": "7",
+      "type": "skill",
+      "description": "на 6сек. создает вокруг заклинателя источник манырадиусом 7м.Союзники внутри получают +80% к скорости применения навыков и каждую секундувосстанавливают 10 ОМ",
+      "tierUnlock": "1",
+      "rarity": "epic"
+    },
+    {
+      "gameId": "Cloth_Int_5",
+      "gearName": "Роба экзорциста",
+      "skillName": "Рассеивание",
+      "gearIcon": "SpecImage_ROBE6",
+      "manaCost": "",
+      "cooldown": "27",
+      "castingRange": "16",
+      "type": "skill",
+      "description": "Выпускает в указанном направлении снаряд рассеивания, которыйнаносит врагам в зоне поражения [Уровень урона: 120%] ед.магического урона, снимает все усиления и щиты, а также на 6сек.снижает физический урон на 40%",
+      "tierUnlock": "1",
+      "rarity": "epic"
+    },
+    {
+      "gameId": "Cloth_Int_7",
+      "gearName": "Мантия отторжения",
+      "skillName": "Отпор",
+      "gearIcon": "SpecImage_ROBE2",
+      "manaCost": "",
+      "cooldown": "27",
+      "castingRange": "6",
+      "type": "skill",
+      "description": "Наносит ближайшим врагам [Уровень урона: 200%] ед. магическогоурона, отталкивает их на 10м. разоружает и на 4сек. снижаетскорость передвижения на 40%",
+      "tierUnlock": "1",
+      "rarity": "epic"
+    },
+    {
+      "gameId": "Cloth_Int_8",
+      "gearName": "Защитны покров",
+      "skillName": "Барьер",
+      "gearIcon": "SpecImage_ROBE7",
+      "manaCost": "",
+      "cooldown": "27",
+      "castingRange": "6",
+      "type": "skill",
+      "description": "Дает щит мощностью [Зависит от параметра: Макс. ОЗ 45%] ед. на6сек.. Пока щит активен, восстанавливает 10 ОМ при каждомполучении урона.",
+      "tierUnlock": "1", 
+      "rarity": "legendary",
+      "stats": {
+        "hp": "755",
+        "dmgBonus": "56%",
+        "armor": "64",
+        "magicResi": "119"
+      }
+    },
+    {
+      "gameId": "Cloth_Int_2",
+      "gearName": "Плащ ужаса",
+      "skillName": "Паника",
+      "gearIcon": "SpecImage_ROBE5",
+      "manaCost": "",
+      "cooldown": "45",
+      "castingRange": "",
+      "type": "skill",
+      "description": "на 6сек. создает вокруг заклинателя поле панического проклятия.Враги в радиусе 6м. использующие навыки получают [Уровеньурона: 200%] ед. магического урона и испытывают страх в течение1.5сек.",
+      "tierUnlock": "1",
+      "rarity": "legendary",
+      "stats": {
+        "hp": "755",
+        "dmgBonus": "56%",
+        "armor": "64",
+        "magicResi": "119"
+      }
+    },
+    {
+      "gameId": "Cloth_Int_10",
+      "gearName": "Одежда преломления",
+      "skillName": "Рефракция",
+      "gearIcon": "SpecImage_ROBE8",
+      "manaCost": "",
+      "cooldown": "27",
+      "castingRange": "6",
+      "type": "skill",
+      "description": "Получает +120 к Броне (масштабируется с Силой) на 6 с. Пока эффект активен, при получении урона от базовых атак или умений, снижает наносимый атакующим урон на 40% и Скорость передвижения на 30% на 4с.",
+      "tierUnlock": "1",
+      "rarity": "epic",
+      "stats": {
+        "hp": "",
+        "dmgBonus": "",
+        "mpRecovery": ""
+      }
+    }
+  ]
+}

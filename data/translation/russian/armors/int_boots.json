@@ -1,0 +1,130 @@
+{
+  "lastUpdate": "Сентябрь 15, 2025",
+    "boots_intelligence": [
+      {
+        "gameId": "Shoes_Int_4",
+        "gearName": "Арканные ботинки",
+        "skillName": "Изобилие",
+        "gearIcon" : "SpecImage_SANDALS2",
+        "manaCost": "",
+        "cooldown": "27",
+        "castingRange": "6",
+        "type": "skill",
+        "description": "Увеличивает скорость передвижения на 50% и каждуюсекунду в течение 5сек. восстанавливает 8 ОМ.",
+        "tierUnlock": "1",
+        "rarity": "rare",
+        "stats": {
+          "hp": "675",
+          "dmgBonus": "9.6%",
+          "mpRecovery": "10"
+        }
+      },
+      {
+        "gameId": "Shoes_Int_1",
+        "gearName": "Скороступы",
+        "skillName": "Молниеносный шаг",
+        "gearIcon" : "SpecImage_SANDALS1",
+        "manaCost": "",
+        "cooldown": "22",
+        "castingRange": "12",
+        "type": "skill",
+        "description": "Перемещается на 12м в указанном направлении.Восстанавливает [Уровень лечения: 150%] ОЗ и 25 ОМ.",
+        "tierUnlock": "1",
+        "rarity": "epic"
+      },
+      {
+        "gameId": "Shoes_Int_3",
+        "gearName": "Ледоступы",
+        "skillName": "Мороз",
+        "gearIcon" : "SpecImage_SANDALS4",
+        "manaCost": "",
+        "cooldown": "27",
+        "castingRange": "6",
+        "type": "skill",
+        "description": "Увеличивает скорость передвижения на 55% на 5 секунд. Создает ледяную тропу, которая действует 4 секунды. Враги на тропе замедляются на 40%, а их скорость атаки снижается на 45% на 2 секунды.",
+        "tierUnlock": "1",
+        "rarity": "epic"
+      },
+      {
+        "gameId": "Shoes_Int_5",
+        "gearName": "Топотуны миазмов",
+        "skillName": "Разложение",
+        "gearIcon" : "SpecImage_SANDALS5",
+        "manaCost": "",
+        "cooldown": "27",
+        "castingRange": "6",
+        "type": "skill",
+        "description": "Увеличивает скорость передвижения на 55% на 5 секунд;создает на пути передвижения полосу разрушения продолжительностью 4 секунды.Враги на тропе наносят на 35% меньше урона,а получаемое ими исцеление снижается - на 30% на 5 секунд.",
+        "tierUnlock": "1",
+        "rarity": "epic"
+      },
+      {
+        "gameId": "Shoes_Int_6",
+        "gearName": "Ходоки транслокации",
+        "skillName": "Перестановка",
+        "gearIcon" : "SpecImage_SANDALS6",
+        "manaCost": "",
+        "cooldown": "27",
+        "castingRange": "16",
+        "type": "",
+        "description": "На 4сек. дает щит мощностью [Зависит от параметра: Макс. ОЗ 25%] ед. и меняется местами с указанным игроком.",
+        "tierUnlock": "1",
+        "rarity": "epic"
+      },
+      {
+        "gameId": "Shoes_Int_7",
+        "gearName": "Призрачные шагоходы",
+        "gearIcon" : "SpecImage_SANDALS7",
+        "skillName": "Ghost",
+        "manaCost": "",
+        "cooldown": "36",
+        "castingRange": "6",
+        "type": "skill",
+        "description": "После подготовки в течение 1.5сек. переходит впризрачную форму, в которой на 70% увеличиваетсяскорость передвижения, а также на 3сек.накладывается иммунитет к урону и эффектамконтроля. В этом состоянии нельзя использоватьнавыки и атаковать.",
+        "tierUnlock": "1",
+        "rarity": "legendary",
+        "stats": {
+          "hp": "755",
+          "dmgBonus": "9.9%",
+          "mpRecovery": "10"
+        }
+      },
+      {
+        "gameId": "Shoes_Int_2",
+        "gearName": "Сапоги дикости",
+        "skillName": "Берсерк",
+        "gearIcon" : "SpecImage_SANDALS3",
+        "manaCost": "",
+        "cooldown": "27",
+        "castingRange": "6",
+        "type": "skill",
+        "description": "На 5сек. увеличивает скорость передвижения на 70% иурон на 20%.По окончанию эффекта на 5сек. снижает сопротивлениеурону на 20%.",
+        "tierUnlock": "1",
+        "rarity": "legendary",
+        "stats": {
+          "hp": "755",
+          "dmgBonus": "9.9%",
+          "mpRecovery": "10"
+        }
+      },
+      {
+        "isActive": false,
+        "gearIcon" : "SpecImage_SANDALS8",
+        "gameId": "Shoes_Int_8",
+        "gearName": "Shoes_Int_8",
+        "skillName": "Shoes_Int_8",
+        "manaCost": "",
+        "cooldown": "",
+        "castingRange": "",
+        "type": "skill",
+        "description": "",
+        "tierUnlock": "1",
+        "rarity": "legendary",
+        "stats": {
+          "hp": "",
+          "dmgBonus": "",
+          "mpRecovery": ""
+        }
+      }
+    ]
+}
